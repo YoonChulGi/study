@@ -1,0 +1,3 @@
+#els url sunbyeoljinryoso
+#els.url=http://127.0.0.1:9200
+els.url=http://127.0.0.1:9200/_all/_search

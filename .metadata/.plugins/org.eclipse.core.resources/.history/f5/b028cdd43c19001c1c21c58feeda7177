@@ -1,0 +1,7 @@
+package spb.ubooks.service;
+
+public interface SearchService {
+	public String sendREST(String sendUrl, String jsonValue) throws IllegalStateException;
+
+	String Ark(String url, String jsonValue) throws Exception;
+}

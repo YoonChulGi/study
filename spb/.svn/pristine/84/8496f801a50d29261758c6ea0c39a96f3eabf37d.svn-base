@@ -1,0 +1,92 @@
+<!-- 
+THEME: Aviato | E-commerce template
+VERSION: 1.0.0
+AUTHOR: Themefisher
+
+HOMEPAGE: https://themefisher.com/products/aviato-e-commerce-template/
+DEMO: https://demo.themefisher.com/aviato/
+GITHUB: https://github.com/themefisher/Aviato-E-Commerce-Template/
+
+WEBSITE: https://themefisher.com
+TWITTER: https://twitter.com/themefisher
+FACEBOOK: https://www.facebook.com/themefisher
+-->
+
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+  <!-- Basic Page Needs
+  ================================================== -->
+  <meta charset="utf-8">
+  <title>Aviato | E-commerce template</title>
+
+  <!-- Mobile Specific Metas
+  ================================================== -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Construction Html5 Template">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="author" content="Themefisher">
+  <meta name="generator" content="Themefisher Constra HTML Template v1.0">
+  
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/ubooks/favicon.png}" />
+  
+  <!-- Themefisher Icon font -->
+  <link rel="stylesheet" th:href="@{/plugins/ubooks/themefisher-font/style.css}"/>
+  <!-- bootstrap.min css -->
+  <link rel="stylesheet" th:href="@{/plugins/ubooks/bootstrap/css/bootstrap.min.css}"/>
+  
+  <!-- Animate css -->
+  <link rel="stylesheet" th:href="@{/plugins/ubooks/animate/animate.css}"/>
+  <!-- Slick Carousel -->
+  <link rel="stylesheet" th:href="@{/plugins/ubooks/slick/slick.css}"/>
+  <link rel="stylesheet" th:href="@{/plugins/ubooks/slick/slick-theme.css}"/>
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" th:href="@{/css/ubooks/style.css}"/>
+
+</head>
+
+<body id="body">
+
+<section class="coming-soon bg-coming-soon text-center overly">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div class="block">
+					<div class="count-down">
+						<div class="syotimer">
+							<div class="your_selector_to_countdown" id="simple-timer"></div>
+						</div>
+					</div>
+					<h1>Hello, we're Aviato and <br> we are almost ready for launch</h1>
+					<div class="social-media-icons mt-20">
+						<ul>
+							<li><a href="https://themefisher.com/"><i class="tf-ion-social-facebook"></i></a></li>
+							<li><a href="https://themefisher.com/"><i class="tf-ion-social-twitter"></i></a></li>
+							<li><a href="https://themefisher.com/"><i class="tf-ion-social-linkedin"></i></a></li>
+							<li><a href="https://themefisher.com/"><i class="tf-ion-social-octocat"></i></a></li>
+							<li><a href="https://themefisher.com/"><i class="tf-ion-social-pinterest"></i></a></li>
+							<li><a href="https://themefisher.com/"><i class="tf-ion-social-instagram"></i></a></li>
+
+						</ul>
+
+
+					</div>
+
+					<p class="copyright-text">Copyright &copy; 2020. Designed &amp; Developed by <a href="https://themefisher.com/">Themefisher</a></p>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<div th:insert="/ubooks/common/script :: script"></div>
+    
+
+
+  </body>
+  </html>

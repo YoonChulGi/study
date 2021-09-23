@@ -1,0 +1,7 @@
+package board.elastic.service;
+
+import java.util.Map;
+
+public interface ElasticService {
+	public Map<String, Object> sendGET() throws Exception;
+}

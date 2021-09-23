@@ -1,0 +1,31 @@
+package board;
+
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import board.component.ElasticApi;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+class BoardApplicationTests {
+	@Autowired
+	ElasticApi elasticApi;
+	
+	private final String ELASTIC_INDEX = "선별진료소";
+	private final String ELASTIC_TYPE = "test_type";
+	
+	@Test
+	public void send_GET() {
+		String id = "DfbtunsBcW0Djpftabvh";
+		String url = ELASTIC_INDEX + "/" + ELASTIC_TYPE+"/"+id;
+		Map<String, Object> result = elasticApi.callElasticApi("GET", url, null, null);
+		System.out.println(result.get("resultCode"));
+		System.out.println(result.get("resultBody"));
+	}
+}

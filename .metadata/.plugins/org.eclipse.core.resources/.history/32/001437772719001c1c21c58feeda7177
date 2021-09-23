@@ -1,0 +1,5 @@
+package spb.configuration;
+
+public class ElasticSearchConfiguration {
+
+}
