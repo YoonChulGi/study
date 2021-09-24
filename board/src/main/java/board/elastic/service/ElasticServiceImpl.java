@@ -110,7 +110,8 @@ public class ElasticServiceImpl implements ElasticService{
 			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 			searchSourceBuilder.size(30);
 			searchSourceBuilder.timeout(new TimeValue(60,TimeUnit.SECONDS));
-			searchSourceBuilder.query(QueryBuilders.termQuery("관할보건소", "강남구보건소")); // match_all 조건
+//			searchSourceBuilder.query(QueryBuilders.termQuery("관할보건소", "강남구보건소")); // match_all 조건
+			searchSourceBuilder.query(QueryBuilders.matchAllQuery()); // match_all 조건
 			searchSourceBuilder.sort(new ScoreSortBuilder().order(SortOrder.DESC));  // score 높은순 (default)
 			searchSourceBuilder.sort(new FieldSortBuilder("_id").order(SortOrder.ASC)); // id오름차순 정렬 
 			searchRequest.source(searchSourceBuilder);
@@ -175,7 +176,7 @@ public class ElasticServiceImpl implements ElasticService{
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-			client.close();
+			// client.close();
 		}
 		return list;
 	}

@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="list"/>
+		<item key="selection" value=""/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value=" "/>
+			<item value="board"/>
+			<item value=","/>
+			<item value="elastic"/>
 			<item value="client"/>
 			<item value="list"/>
 			<item value="관할보건소"/>
 			<item value="RestClient"/>
-			<item value="RestHighLevelClient"/>
-			<item value="elastic"/>
-			<item value="org.elasticsearch:elasticsearch"/>
-			<item value="maven"/>
 		</list>
 		<list key="replacehistory">
+			<item value="\n"/>
 			<item value=""/>
 			<item value=".jpg}"/>
 			<item value="th:src=&quot;@{images/ubooks"/>
@@ -25,7 +26,6 @@
 			<item value="th:src=&quot;images/ubooks"/>
 			<item value=".png}"/>
 			<item value="th:src=&apos;@{images/ubooks/"/>
-			<item value="/signin"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

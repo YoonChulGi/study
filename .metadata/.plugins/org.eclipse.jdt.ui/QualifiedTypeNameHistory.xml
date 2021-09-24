@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="org.elasticsearch.action.bulk.BulkRequest"/>
-    <fullyQualifiedTypeName name="org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories"/>
-    <fullyQualifiedTypeName name="org.springframework.context.annotation.ComponentScan"/>
     <fullyQualifiedTypeName name="org.springframework.context.annotation.Bean"/>
-    <fullyQualifiedTypeName name="org.elasticsearch.client.RestHighLevelClient"/>
     <fullyQualifiedTypeName name="org.springframework.data.elasticsearch.client.ClientConfiguration"/>
     <fullyQualifiedTypeName name="org.springframework.data.elasticsearch.client.RestClients"/>
     <fullyQualifiedTypeName name="org.springframework.data.elasticsearch.core.ElasticsearchOperations"/>
@@ -34,7 +30,6 @@
     <fullyQualifiedTypeName name="jdk.jfr.ContentType"/>
     <fullyQualifiedTypeName name="board.component.ElasticApi"/>
     <fullyQualifiedTypeName name="org.junit.Test"/>
-    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="org.elasticsearch.search.SearchService"/>
     <fullyQualifiedTypeName name="com.google.gson.Gson"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
@@ -54,10 +49,15 @@
     <fullyQualifiedTypeName name="org.elasticsearch.search.sort.SortOrder"/>
     <fullyQualifiedTypeName name="org.elasticsearch.client.RequestOptions"/>
     <fullyQualifiedTypeName name="org.elasticsearch.search.SearchHits"/>
-    <fullyQualifiedTypeName name="org.apache.lucene.search.TotalHits"/>
     <fullyQualifiedTypeName name="org.elasticsearch.search.SearchHit"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="board.elastic.document.선별진료소Dto"/>
     <fullyQualifiedTypeName name="java.io.IOException"/>
     <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="spb.configuration.ElasticSearchConfiguration"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+    <fullyQualifiedTypeName name="org.elasticsearch.client.RestHighLevelClient"/>
+    <fullyQualifiedTypeName name="org.apache.lucene.search.TotalHits"/>
+    <fullyQualifiedTypeName name="spb.ubooks.dto.ComBookDto"/>
+    <fullyQualifiedTypeName name="java.lang.Integer"/>
 </qualifiedTypeNameHistroy>
