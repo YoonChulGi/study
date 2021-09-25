@@ -8,6 +8,7 @@
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="Reef"/>
 			<item value=" "/>
 			<item value="board"/>
 			<item value=","/>
@@ -15,7 +16,6 @@
 			<item value="client"/>
 			<item value="list"/>
 			<item value="관할보건소"/>
-			<item value="RestClient"/>
 		</list>
 		<list key="replacehistory">
 			<item value="\n"/>
