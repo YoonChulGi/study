@@ -1,0 +1,14 @@
+spring.datasource.hikari.driver-class-name=net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+#spring.datasource.hikari.driver-class-name=org.mariadb.jdbc.Driver
+spring.datasource.hikari.jdbc-url=jdbc:log4jdbc:mariadb://:3306/spb?useUnicode=true&characterEncoding=utf-8
+spring.datasource.hikari.username=
+spring.datasource.hikari.password=
+
+mybatis.configuration.map-underscore-to-camel-case=true
+# using name="_hidden" value="put" 
+spring.mvc.hiddenmethod.filter.enabled=true
+
+#ElasticSearch
+es.url=localhost
+es.port=9200
+

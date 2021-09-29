@@ -1,0 +1,5 @@
+package board2.configuration;
+
+public class DatabaseConfiguration {
+
+}

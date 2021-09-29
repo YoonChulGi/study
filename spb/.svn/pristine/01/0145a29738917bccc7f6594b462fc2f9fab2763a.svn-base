@@ -1,0 +1,43 @@
+<!-- 
+THEME: Aviato | E-commerce template
+VERSION: 1.0.0
+AUTHOR: Themefisher
+
+HOMEPAGE: https://themefisher.com/products/aviato-e-commerce-template/
+DEMO: https://demo.themefisher.com/aviato/
+GITHUB: https://github.com/themefisher/Aviato-E-Commerce-Template/
+
+WEBSITE: https://themefisher.com
+TWITTER: https://twitter.com/themefisher
+FACEBOOK: https://www.facebook.com/themefisher
+-->
+
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤드-->
+<th:block th:replace="/ubooks/common/header :: headFragment"></th:block>
+
+<body id="body">
+	<section class="page-404">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<a href="/index">
+						<img th:src="@{images/ubooks/logo.png}" alt="site logo" />
+					</a>
+					<h1>404</h1>
+					<h2>Page Not Found</h2>
+					<a href="/index" class="btn btn-main"><i class="tf-ion-android-arrow-back"></i> Go Home</a>
+					<p class="copyright-text">© 2018 Themefisher All Rights Reserved</p>
+				</div>
+			</div>
+		</div>
+	</section>
+<!-- 공통 스크립트-->
+<th:block th:replace="/ubooks/common/script :: scriptFragment"></th:block>
+    
+
+
+  </body>
+  </html>

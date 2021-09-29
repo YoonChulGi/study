@@ -1,0 +1,56 @@
+<!-- 
+THEME: Aviato | E-commerce template
+VERSION: 1.0.0
+AUTHOR: Themefisher
+
+HOMEPAGE: https://themefisher.com/products/aviato-e-commerce-template/
+DEMO: https://demo.themefisher.com/aviato/
+GITHUB: https://github.com/themefisher/Aviato-E-Commerce-Template/
+
+WEBSITE: https://themefisher.com
+TWITTER: https://twitter.com/themefisher
+FACEBOOK: https://www.facebook.com/themefisher
+-->
+
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤드-->
+<th:block th:replace="/ubooks/common/header :: headFragment"></th:block>
+
+<body id="body">
+
+<section class="signin-page account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="block text-center">
+          <a class="logo" href="/index">
+            <img th:src="@{images/ubooks/logo.png}" alt="">
+          </a>
+          <h2 class="text-center">Welcome Back</h2>
+          <form class="text-left clearfix" action="/index" >
+            <div class="form-group">
+              <input type="email" class="form-control"  placeholder="Email">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="Password">
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-main text-center" >Login</button>
+            </div>
+          </form>
+          <p class="mt-20">New in this site ?<a href="/signin"> Create New Account</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 공통 스크립트-->
+<th:block th:replace="/ubooks/common/script :: scriptFragment"></th:block>
+    
+
+
+  </body>
+  </html>
