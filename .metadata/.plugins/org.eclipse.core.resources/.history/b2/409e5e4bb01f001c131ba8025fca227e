@@ -1,5 +1,0 @@
-package board2.board.service;
-
-public interface BoardService {
-
-}
