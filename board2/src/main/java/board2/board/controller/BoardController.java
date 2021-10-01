@@ -26,13 +26,6 @@ public class BoardController {
 	
 	@RequestMapping("/board/openBoardList.do")
 	public ModelAndView openBoardList() throws Exception {
-		
-		log.trace("trace level message");
-		log.debug("debug level message");
-		log.info("info level message");
-		log.warn("warn level message");
-		log.error("error level message");
-		
 		log.debug("openBoardList");		
 		ModelAndView mv = new ModelAndView("/board/boardList");
 		
