@@ -1,6 +1,6 @@
 TODO) 
 
-1. restfull 관련 포스팅하기 
+1. REST API로 변경하기 포스팅하기
 
 
 ★TODO) 
