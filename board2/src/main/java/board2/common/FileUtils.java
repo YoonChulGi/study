@@ -13,15 +13,17 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import board2.board.dto.BoardFileDto;
+import board2.board.entity.BoardFileEntity;
 
 @Component // @Component 어노테이션을 이용해서 FileUtils클래스를 스프링의 빈으로 등록합니다. 
 public class FileUtils {
-	public List<BoardFileDto> parseFileInfo(int boardIdx, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
+	// JPA의 @OneToMany 어노테이션으로 연관고나계를 가지고 있기 때문에 첨부파일 클래스(BoardFileENtity)에 게시글 번호를 따로 저장할 필요가 없습니다. 
+	public List<BoardFileEntity> parseFileInfo(MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
 		if(ObjectUtils.isEmpty(multipartHttpServletRequest)) {
 			return null;
 		}
 		
-		List<BoardFileDto> fileList = new ArrayList<>();
+		List<BoardFileEntity> fileList = new ArrayList<>();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
 		ZonedDateTime current = ZonedDateTime.now();
 		String path = "images/" + current.format(format);
@@ -56,12 +58,12 @@ public class FileUtils {
 					
 					// 서버에 저장될 파일 이름을 생성합니다. 파일이 업로드된 나노초를 이용해서 새로운 파일 이름으로 지정했습니다. 밀리초를 이용할 경우 중복될 가능성이 있습니다. 
 					newFileName = Long.toString(System.nanoTime()) + originalFileExtension;
-					// 데이터베이스에 저장할 파일 정보를 앞에서 만든 BoardFIleDto에 저장합니다. 
-					BoardFileDto boardFile = new BoardFileDto();
-					boardFile.setBoardIdx(boardIdx);
+					// 데이터베이스에 저장할 파일 정보를 앞에서 만든 BoardFileEntity에 저장합니다. 
+					BoardFileEntity boardFile = new BoardFileEntity(); // BoardFileEntity 클래스로 변경합니다. 
 					boardFile.setFileSize(multipartFile.getSize());
 					boardFile.setOriginalFileName(multipartFile.getOriginalFilename());
 					boardFile.setStoredFilePath(path + "/" + newFileName);
+					boardFile.setCreatorId("admin");
 					fileList.add(boardFile);
 					
 					file = new File(path + "/" + newFileName);
