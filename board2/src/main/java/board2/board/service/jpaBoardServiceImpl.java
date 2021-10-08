@@ -4,13 +4,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import board2.board.entity.BoardEntity;
 import board2.board.entity.BoardFileEntity;
+import board2.board.repository.JpaBoardRepository;
 import board2.common.FileUtils;
 
+@Service
 public class jpaBoardServiceImpl implements JpaBoardService{
 	
 	@Autowired
@@ -28,9 +31,9 @@ public class jpaBoardServiceImpl implements JpaBoardService{
 	@Override
 	public void saveBoard(BoardEntity board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
 		board.setCreatorId("admin");
-		// 첨부파일의 정보를 저장하는 클래스가 BoardFileDto 클래스에서 BoardFileENtity 클래스로 변경되었기 때문에,
+		// 첨부파일의 정보를 저장하는 클래스가 BoardFileDto 클래스에서 BoardFileEntity 클래스로 변경되었기 때문에,
 		// FileUtils 클래스의 parseFileInfo 메서드를 새로 만들었습니다. 뒤에서 살펴보겠습니다. 
-		List<BoardEntity> list = fileUtils.parseFileInfo(multipartHttpServletRequest);
+		List<BoardFileEntity> list = fileUtils.parseFileInfo(multipartHttpServletRequest);
 		if(CollectionUtils.isEmpty(list)== false) {
 			// 첨부파일 목록을 BoardFileEntity 클래스에 추가합니다. 앞에서는 첨부파일 정보를 저장하는 쿼리를 따로 실행했지만 
 			// 여기서는 게시글을 저장할 때 그 게시글에 포함된 첨부파일의 목록도 자동으로 저장합니다. 

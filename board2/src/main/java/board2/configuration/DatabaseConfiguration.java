@@ -20,6 +20,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Configuration
 @PropertySource("classpath:/application.properties")
 @EnableTransactionManagement

@@ -30,10 +30,10 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void insertBoard(BoardDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
 		boardMapper.insertBoard(board); // 업로드된 파일의 정보를 확인하는 목적이기 때문에 게시글이 저장되지 않도록 주석 처리합니다. 
-		List<BoardFileDto> list = fileUtils.parseFileInfo(board.getBoardIdx(), multipartHttpServletRequest);
-		if(CollectionUtils.isEmpty(list) == false) {
-			boardMapper.insertBoardFileList(list);
-		}
+//		List<BoardFileDto> list = fileUtils.parseFileInfo(board.getBoardIdx(), multipartHttpServletRequest);
+//		if(CollectionUtils.isEmpty(list) == false) {
+//			boardMapper.insertBoardFileList(list);
+//		}
 	}
 
 	@Override

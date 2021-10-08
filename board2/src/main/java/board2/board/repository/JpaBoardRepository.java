@@ -15,7 +15,7 @@ public interface JpaBoardRepository extends CrudRepository<BoardEntity,Integer>{
 	List<BoardEntity> findAllByOrderByBoardIdxDesc(); // 게시글 번호로 정렬해서 전체 게시글을 조회합니다. 규칙에 맞도록 리포지터리에 메서드를 추가하면 실행 시 메서드의 이름에 따라 쿼리가 생성되어 실행됩니다.
 	
 	// @Query 어노테이션을 이용해서 첨부파일의 정보를 조회합니다. @Query 어노테이션을 사용하면 실행하고 싶은 쿼리를 직접 정의할 수 있습니다. 쿼리 메서드로도 개발할 수도 있습니다.  
-	@Query("SELECT file FROM BoardFileENtity file WHERE board_idx = :boardIdx And idx = :idx")
+	@Query("SELECT file FROM BoardFileEntity file WHERE board_idx = :boardIdx And idx = :idx")
 	BoardFileEntity findBoardFile(@Param("boardIdx") int boardIdx, @Param("idx") int idx);
 
 }
