@@ -145,8 +145,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 									<a th:if="${list.title.length > 15 }" href="/product-single" th:text="${#strings.substring(list.title,0,15) + '...'}"></a>
 									<a th:unless="${list.title.length > 15 }" href="/product-single" th:text="${list.title}"></a>
 								</h4>
-								
-								<p class="price" th:text="${list.price + '&#8361;'}"></p>
+								<p class="price" th:text="${#numbers.formatInteger(list.price, 0, 'DEFAULT') + '&#8361;'}"></p>
 							</div>
 						</div>
 					</div>

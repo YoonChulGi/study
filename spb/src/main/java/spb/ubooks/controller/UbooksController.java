@@ -6,22 +6,18 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.mysql.cj.xdevapi.JsonArray;
 
+import lombok.extern.slf4j.Slf4j;
 import spb.ubooks.service.SearchService;
 
-
+@Slf4j
 @Controller
 public class UbooksController {
 	
@@ -30,6 +26,7 @@ public class UbooksController {
 	
 	@RequestMapping(value={"/","/index"})
 	public ModelAndView ubooksHome() throws Exception{
+		log.debug("ubooksHome");
 		ModelAndView mv = new ModelAndView("/ubooks/index");
 		return mv;
 	}
@@ -158,6 +155,7 @@ public class UbooksController {
 		ModelAndView mv = new ModelAndView("ubooks/blog/blog-left-sidebar");
 		return mv;
 	}
+	
 	@RequestMapping("/blog-right-sidebar")
 	public ModelAndView blogRightSidebar() throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/blog/blog-right-sidebar");
@@ -169,6 +167,7 @@ public class UbooksController {
 		ModelAndView mv = new ModelAndView("/ubooks/blog/blog-full-width");
 		return mv;
 	}
+	
 	@RequestMapping("/blog-grid")
 	public ModelAndView blogGrid() throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/blog/blog-grid");
@@ -205,6 +204,7 @@ public class UbooksController {
 	/********* S:전집 ***********************************************/
 	@RequestMapping("/complete-works")
 	public ModelAndView ubooksCompleteWorks() throws Exception {
+		log.debug("complete-works");
 		ModelAndView mv = new ModelAndView("/ubooks/buy/complete-works");
 		mv.addObject("res",searchService.sendHighLevelApi("combook_*"));
 		return mv;
@@ -215,51 +215,14 @@ public class UbooksController {
 	@RequestMapping("/usedBooks")
 	public ModelAndView ubooks() throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/shop/usedBooks");
-		HashMap<String, Object> resultMap = new HashMap();
-		resultMap.put("key", "data");
-		ObjectMapper mapper = new ObjectMapper();
-		String json = mapper.writeValueAsString(resultMap);
-		String msgMap = sendREST("127.0.0.1", json);
-		System.out.println("msgMap: " + msgMap);
+//		HashMap<String, Object> resultMap = new HashMap();
+//		resultMap.put("key", "data");
+//		ObjectMapper mapper = new ObjectMapper();
+//		String json = mapper.writeValueAsString(resultMap);
+//		String msgMap = sendREST("127.0.0.1", json);
+//		System.out.println("msgMap: " + msgMap);
 		return mv;
 	}
 	/********* E:중고단행본 ***********************************************/
 	
-	public static String sendREST(String sendUrl, String jsonValue) throws IllegalStateException {
-        String inputLine = null;
-        StringBuffer outResult = new StringBuffer();
-        
-        try {
-            System.out.println("REST API Start");
-            URL url = new URL(sendUrl);
-            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-            conn.setDoOutput(true);
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("Accept-Charset", "UTF-8");
-            conn.setConnectTimeout(10000);
-            conn.setReadTimeout(10000);
-            /****** 인증이 있는경우 
-            String id_pass = "id:password";
-            String base64Credentials = new String(Base64.getEncoder().encode(id_pass.getBytes()));
-            conn.setRequestProperty("Authorization", "Basic " + base64Credentials);
-            */
-            
-            OutputStream os = conn.getOutputStream();
-            os.write(jsonValue.getBytes("UTF-8"));
-            os.flush();
-            
-            // 리턴된 결과 읽기
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            while ((inputLine = in.readLine()) != null) {
-                outResult.append(inputLine);
-            }
-            
-            conn.disconnect();
-            System.out.println("REST API End");
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
-        return outResult.toString();
-    }
 }

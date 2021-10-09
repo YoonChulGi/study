@@ -27,6 +27,9 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class SearchServiceImpl implements SearchService{
 	
@@ -173,16 +176,17 @@ public class SearchServiceImpl implements SearchService{
 			list = new ArrayList<Map<String,Object>>();
 			for (SearchHit hit : searchHits) {
 				Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-				System.out.println("sourceAsMap: " + sourceAsMap);
+				log.debug("sourceAsMap: " + sourceAsMap);
 				list.add(sourceAsMap);
+			}
+			for(Map<String,Object> m : list) {
+				log.debug(m.toString());
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 		}
-		for(Map<String,Object> m : list) {
-			System.out.println(m);
-		}
+		
 		return list;
 	}
 }
