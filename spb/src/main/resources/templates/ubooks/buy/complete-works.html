@@ -117,13 +117,18 @@ FACEBOOK: https://www.facebook.com/themefisher
 				</div>
 			</div>
 			<div class="col-md-9">
+				<input type="search" class="form-control" placeholder="Search...">
+				<div th:with="totalHits=${#strings.replace(res.get('totalHits'),' hits','')}">
+					검색결과는 총 <span id="totalHits" th:text="${totalHits}"></span> 건 입니다.
+				</div>
+				
 				<div class="row">
-					
-					<div class="col-md-4" th:if="${#lists.size(list)}" th:each="list : ${res}">
+					<div class="col-md-4" th:if="${#lists.size(list)}" th:each="list : ${res.get('searchResult')}">
 						<div class="product-item">
 							<div class="product-thumb">
 								<!-- <span class="bage">Sale</span> -->
-								<img class="img-responsive" th:src="@{images/ubooks/shop/products/product-1.jpg}" alt="product-img" />
+								<img th:if="${#strings.equals(list.images,null)}" class="img-responsive" th:src="@{images/ubooks/shop/products/product-1.jpg}" alt="product-img" />
+								<img th:unless="${#strings.equals(list.images,null)}" class="img-responsive" th:src="@{${#strings.arraySplit(list.images,'|')[0]}}" alt="product-img" />
 								<div class="preview-meta">
 									<ul>
 										<li>
@@ -149,215 +154,6 @@ FACEBOOK: https://www.facebook.com/themefisher
 							</div>
 						</div>
 					</div>
-		 	<div class="col-md-4">
-				<div class="product-item">
-					<div class="product-thumb">
-						<img class="img-responsive" th:src="@{images/ubooks/shop/products/product-2.jpg}" alt="product-img" />
-						<div class="preview-meta">
-							<ul>
-								<li>
-									<span  data-toggle="modal" data-target="#product-modal">
-										<i class="tf-ion-ios-search-strong"></i>
-									</span>
-								</li>
-								<li>
-			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
-								</li>
-							</ul>
-                      	</div>
-					</div>
-					<div class="product-content">
-						<h4><a href="/product-single">Rainbow Shoes</a></h4>
-						<p class="price">$200</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="product-item">
-					<div class="product-thumb">
-						<img class="img-responsive" th:src="@{images/ubooks/shop/products/product-3.jpg}" alt="product-img" />
-						<div class="preview-meta">
-							<ul>
-								<li>
-									<span  data-toggle="modal" data-target="#product-modal">
-										<i class="tf-ion-ios-search-strong"></i>
-									</span>
-								</li>
-								<li>
-			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
-								</li>
-							</ul>
-                      	</div>
-					</div>
-					<div class="product-content">
-						<h4><a href="/product-single">Strayhorn SP</a></h4>
-						<p class="price">$230</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="product-item">
-					<div class="product-thumb">
-						<img class="img-responsive" th:src="@{images/ubooks/shop/products/product-4.jpg}" alt="product-img" />
-						<div class="preview-meta">
-							<ul>
-								<li>
-									<span  data-toggle="modal" data-target="#product-modal">
-										<i class="tf-ion-ios-search-strong"></i>
-									</span>
-								</li>
-								<li>
-			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
-								</li>
-							</ul>
-                      	</div>
-					</div>
-					<div class="product-content">
-						<h4><a href="/product-single">Bradley Mid</a></h4>
-						<p class="price">$200</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="product-item">
-					<div class="product-thumb">
-						<img class="img-responsive" th:src="@{images/ubooks/shop/products/product-5.jpg}" alt="product-img" />
-						<div class="preview-meta">
-							<ul>
-								<li>
-									<span  data-toggle="modal" data-target="#product-modal">
-										<i class="tf-ion-ios-search-strong"></i>
-									</span>
-								</li>
-								<li>
-			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
-								</li>
-							</ul>
-                      	</div>
-					</div>
-					<div class="product-content">
-						<h4><a href="/product-single">Rainbow Shoes</a></h4>
-						<p class="price">$200</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="product-item">
-					<div class="product-thumb">
-						<img class="img-responsive" th:src="@{images/ubooks/shop/products/product-6.jpg}" alt="product-img" />
-						<div class="preview-meta">
-							<ul>
-								<li>
-									<span  data-toggle="modal" data-target="#product-modal">
-										<i class="tf-ion-ios-search-strong"></i>
-									</span>
-								</li>
-								<li>
-			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
-								</li>
-							</ul>
-                      	</div>
-					</div>
-					<div class="product-content">
-						<h4><a href="/product-single">Rainbow Shoes</a></h4>
-						<p class="price">$200</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="product-item">
-					<div class="product-thumb">
-						<span class="bage">Sale</span>
-						<img class="img-responsive" th:src="@{images/ubooks/shop/products/product-7.jpg}" alt="product-img" />
-						<div class="preview-meta">
-							<ul>
-								<li>
-									<span  data-toggle="modal" data-target="#product-modal">
-										<i class="tf-ion-ios-search-strong"></i>
-									</span>
-								</li>
-								<li>
-			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
-								</li>
-							</ul>
-                      	</div>
-					</div>
-					<div class="product-content">
-						<h4><a href="/product-single">Rainbow Shoes</a></h4>
-						<p class="price">$200</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="product-item">
-					<div class="product-thumb">
-						<img class="img-responsive" th:src="@{images/ubooks/shop/products/product-8.jpg}" alt="product-img" />
-						<div class="preview-meta">
-							<ul>
-								<li>
-									<span  data-toggle="modal" data-target="#product-modal">
-										<i class="tf-ion-ios-search-strong"></i>
-									</span>
-								</li>
-								<li>
-			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
-								</li>
-							</ul>
-                      	</div>
-					</div>
-					<div class="product-content">
-						<h4><a href="/product-single">Rainbow Shoes</a></h4>
-						<p class="price">$200</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="product-item">
-					<div class="product-thumb">
-						<img class="img-responsive" th:src="@{images/ubooks/shop/products/product-9.jpg}" alt="product-img" />
-						<div class="preview-meta">
-							<ul>
-								<li>
-									<span  data-toggle="modal" data-target="#product-modal">
-										<i class="tf-ion-ios-search-strong"></i>
-									</span>
-								</li>
-								<li>
-			                        <a href="#" ><i class="tf-ion-ios-heart"></i></a>
-								</li>
-								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
-								</li>
-							</ul>
-                      	</div>
-					</div>
-					<div class="product-content">
-						<h4><a href="/product-single">Rainbow Shoes</a></h4>
-						<p class="price">$200</p>
-					</div>
-				</div>
-			</div>
 		
 		<!-- Modal -->
 		<div class="modal product-modal fade" id="product-modal">

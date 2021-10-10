@@ -17,3 +17,4 @@ local.properties
 board2/images/
 application.properties
 spb/images/
+spb/src/main/resources/static/images/

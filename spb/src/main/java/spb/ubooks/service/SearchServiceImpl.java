@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -139,7 +140,8 @@ public class SearchServiceImpl implements SearchService{
 	}
 
 	@Override
-	public List<Map<String,Object>> sendHighLevelApi(String indexName) throws Exception {
+	public Map<String,Object> sendHighLevelApi(String indexName) throws Exception {
+		Map<String,Object> resultMap = new HashMap<String,Object>();
 		ArrayList<Map<String,Object>> list = null;
 		try {
 			SearchRequest searchRequest = new SearchRequest(indexName);
@@ -147,8 +149,9 @@ public class SearchServiceImpl implements SearchService{
 			searchSourceBuilder.size(100);
 			searchSourceBuilder.timeout(new TimeValue(60,TimeUnit.SECONDS));
 			searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+			searchSourceBuilder.sort(new FieldSortBuilder("reg_date.keyword").order(SortOrder.ASC)); // 등록일순 정렬
 			searchSourceBuilder.sort(new ScoreSortBuilder().order(SortOrder.DESC));  // score 높은순 (default)
-			searchSourceBuilder.sort(new FieldSortBuilder("_id").order(SortOrder.ASC)); // id오름차순 정렬 
+			//searchSourceBuilder.sort(new FieldSortBuilder("_id").order(SortOrder.ASC)); // id오름차순 정렬 
 			searchRequest.source(searchSourceBuilder);
 			
 			SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
@@ -174,19 +177,26 @@ public class SearchServiceImpl implements SearchService{
 			
 			SearchHit[] searchHits = hits.getHits();
 			list = new ArrayList<Map<String,Object>>();
+			
+			resultMap.put("totalHits", totalHits);
+			
 			for (SearchHit hit : searchHits) {
 				Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-				log.debug("sourceAsMap: " + sourceAsMap);
+				// log.debug("sourceAsMap: " + sourceAsMap);
 				list.add(sourceAsMap);
 			}
+			
 			for(Map<String,Object> m : list) {
 				log.debug(m.toString());
 			}
+			
+			resultMap.put("totalHits", totalHits);
+			resultMap.put("searchResult", list);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 		}
 		
-		return list;
+		return resultMap;
 	}
 }

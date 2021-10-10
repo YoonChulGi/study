@@ -8,5 +8,5 @@ public interface SearchService {
 
 	public String sendRest(String url, String jsonValue) throws Exception ;
 	
-	public List<Map<String,Object>> sendHighLevelApi(String indexName) throws Exception;
+	public Map<String,Object> sendHighLevelApi(String indexName) throws Exception;
 }

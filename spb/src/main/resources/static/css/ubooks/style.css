@@ -2699,3 +2699,8 @@ input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focu
 }
 
 /*# sourceMappingURL=style.css.map */
+
+#totalHits {
+	font-size: 24px;
+	color: #009;
+}
