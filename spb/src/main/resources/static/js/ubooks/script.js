@@ -84,7 +84,16 @@
     pauseOnFocus: false,
     pauseOnHover: false
   });
+
   $('.hero-slider').slickAnimation();
 
 
+
 })(jQuery);
+
+
+function prevAjax(book_id) {
+	alert(book_id);
+	
+	
+}

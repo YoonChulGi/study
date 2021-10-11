@@ -127,12 +127,12 @@ FACEBOOK: https://www.facebook.com/themefisher
 						<div class="product-item">
 							<div class="product-thumb">
 								<!-- <span class="bage">Sale</span> -->
-								<img th:if="${#strings.equals(list.images,null)}" class="img-responsive" th:src="@{images/ubooks/shop/products/product-1.jpg}" alt="product-img" />
-								<img th:unless="${#strings.equals(list.images,null)}" class="img-responsive" th:src="@{${#strings.arraySplit(list.images,'|')[0]}}" alt="product-img" />
+								<img th:if="${#strings.equals(list.images,null)}" class="img-responsive card-img" th:src="@{images/ubooks/shop/products/product-1.jpg}" alt="product-img" />
+								<img th:unless="${#strings.equals(list.images,null)}" class="img-responsive card-img" th:src="@{${#strings.arraySplit(list.images,'|')[0]}}" alt="product-img" />
 								<div class="preview-meta">
 									<ul>
 										<li>
-											<span  data-toggle="modal" data-target="#product-modal">
+											<span  data-toggle="modal" data-target="#product-modal" th:onclick="|javascript:prevAjax('${list.book_id}')|">
 												<i class="tf-ion-ios-search-strong"></i>
 											</span>
 										</li>
@@ -166,7 +166,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 			        	<div class="row">
 			        		<div class="col-md-8 col-sm-6 col-xs-12">
 			        			<div class="modal-image">
-				        			<img class="img-responsive" th:src="@{images/ubooks/shop/products/modal-product.jpg}" alt="product-img" />
+				        			<img id="cardPreviewImage" class="img-responsive" th:src="@{images/ubooks/shop/products/modal-product.jpg}" alt="product-img" />
 			        			</div>
 			        		</div>
 			        		<div class="col-md-4 col-sm-6 col-xs-12">

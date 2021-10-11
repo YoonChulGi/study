@@ -11,6 +11,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -31,7 +33,7 @@ public class DatabaseConfiguration {
    }
    
    @Bean
-   public DataSource dataSoutce() throws Exception{
+   public DataSource dataSource() throws Exception{ 
       DataSource dataSource = new HikariDataSource(hikariConfig());
       System.out.println("dataSourceTostice : "+dataSource.toString());
       
@@ -59,6 +61,13 @@ public class DatabaseConfiguration {
    public org.apache.ibatis.session.Configuration mybatisConfig(){
 	   return new org.apache.ibatis.session.Configuration();
    }
+   
+   @Bean
+	public PlatformTransactionManager transactionManager() throws Exception {
+		return new DataSourceTransactionManager(dataSource());
+	} // 스프링이 제공하는 트랜잭션 매니저를 등록
+   
+   
    
    
    

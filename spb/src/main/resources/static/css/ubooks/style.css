@@ -2704,3 +2704,8 @@ input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focu
 	font-size: 24px;
 	color: #009;
 }
+
+.card-img {
+	/* object-fit: cover; */
+	height: 25rem !important;
+}
