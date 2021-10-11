@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -195,9 +196,24 @@ public class SearchServiceImpl implements SearchService{
 			resultMap.put("searchResult", list);
 		}catch (Exception e) {
 			e.printStackTrace();
-		}finally {
 		}
 		
 		return resultMap;
+	}
+
+	@Override
+	public String searchPrev(String indexName, int bookId) throws Exception {
+		SearchRequest searchRequest = new SearchRequest(indexName);
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		searchSourceBuilder.size(1);
+		searchSourceBuilder.timeout(new TimeValue(60,TimeUnit.SECONDS));
+		searchSourceBuilder.query(QueryBuilders.matchQuery("book_id", bookId));
+		searchRequest.source(searchSourceBuilder);
+		
+		SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+		SearchHits hits = searchResponse.getHits();
+		SearchHit[] searchHits = hits.getHits();
+		
+		return searchHits[0].getSourceAsString();
 	}
 }

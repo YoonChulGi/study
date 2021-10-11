@@ -87,13 +87,65 @@
 
   $('.hero-slider').slickAnimation();
 
+	/*$("#product-modal").on('stylechanged',function(param1,param2,param3){
+		console.dir(param1);
+		console.dir(param2);
+		console.dir(param3);
 
+	});*/
+	/*$("#product-modal").on('click',function(){
+		$("#modal-title").text('');
+		$("#modal-price").text('');
+		$("#modal-state").text('');
+		$("#cardPreviewImage").attr('src','');
+		$('#cardPreviewImage').css("display", "none");   
 
+	});
+	$(".tf-ion-close").on('click',function(){
+		$("#modal-title").text('');
+		$("#modal-price").text('');
+		$("#modal-state").text('');
+		$("#cardPreviewImage").attr('src','');
+		$('#cardPreviewImage').css("display", "none");
+	});*/
+	
 })(jQuery);
 
 
 function prevAjax(book_id) {
-	alert(book_id);
-	
-	
+	$("#modal-title").text('');
+	$("#modal-price").text('');
+	$("#modal-state").text('');
+	$("#cardPreviewImage").attr('src','');
+	$('#cardPreviewImage').css("display", "none");
+	$('#modal-cart').css("display", "none");
+	$('#modal-detail').css("display", "none");
+	$.ajax({
+		type: "GET",
+		url: "/searchPrev/" + book_id,
+		dataType: 'json',
+		// data: {"bookId" : target, "range" : range, "collection" : collection, "datatype": datatype},
+		success: function(text) {
+			$("#modal-title").text(text.title);
+			$("#modal-price").text('₩'+addComma(text.price));
+			$("#modal-state").text(text.state);
+			let image = text.images.split('|')[0];
+			$("#cardPreviewImage").attr('src',image);
+			$('#cardPreviewImage').css("display", "block");   
+			$('#modal-cart').css("display", "inline-block");
+			$('#modal-detail').css("display", "inline-block");
+			console.dir(text.title);
+		}, 
+		error:function(request,status,error) {
+			console.dir(request);
+			console.dir(status);
+			console.error(error);
+		}
+		
+	});
+}
+
+function addComma(value){
+    value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return value; 
 }
