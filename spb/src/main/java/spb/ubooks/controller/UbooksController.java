@@ -2,6 +2,7 @@ package spb.ubooks.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -198,6 +199,15 @@ public class UbooksController {
 		log.debug("complete-works");
 		ModelAndView mv = new ModelAndView("/ubooks/buy/complete-works");
 		mv.addObject("res",searchService.sendHighLevelApi("combook_*"));
+		return mv;
+	}
+	
+	@RequestMapping("/complete-works/{bookId}")
+	public ModelAndView ubooksCompleteWorksDetail(@PathVariable("bookId") int bookId) throws Exception {
+		ModelAndView mv = new ModelAndView("/ubooks/buy/complete-works-detail");
+		
+		mv.addObject("res",searchService.searchOneAsMap("combook_*",bookId));
+		
 		return mv;
 	}
 	/********* E:전집 ***********************************************/

@@ -1,5 +1,7 @@
 package spb.ubooks.controller;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +18,11 @@ public class RestUbooksController {
 	@Autowired
 	private SearchService searchService;
 	
-	@RequestMapping(value="/searchPrev/{bookId}", method=RequestMethod.GET) 
-	public String modalAjax(@PathVariable("bookId") int bookId) throws Exception {
-		return searchService.searchPrev("combook_*", bookId);
+	@RequestMapping(value="/searchOne/{bookId}", method=RequestMethod.GET) 
+	public String searchOne(@PathVariable("bookId") int bookId, HttpServletResponse response) throws Exception {
+		log.debug("/searchOne/" + bookId);
+		response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+		return searchService.searchOneAsJson("combook_*", bookId);
 	}
 }

@@ -2705,7 +2705,8 @@ input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focu
 	color: #009;
 }
 
-.card-img {
-	/* object-fit: cover; */
-	height: 25rem !important;
+@media(min-width:992px){
+	.card-img {
+		height: 25rem !important;
+	}
 }

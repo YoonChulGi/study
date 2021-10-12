@@ -9,5 +9,7 @@ public interface SearchService {
 	
 	public Map<String,Object> sendHighLevelApi(String indexName) throws Exception;
 	
-	public String searchPrev(String indexName, int bookId) throws Exception;
+	public String searchOneAsJson(String indexName, int bookId) throws Exception;
+	
+	public Map<String,Object> searchOneAsMap(String indexName, int bookId) throws Exception;
 }
