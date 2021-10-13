@@ -135,6 +135,7 @@ function prevAjax(book_id) {
 			$("#cardPreviewImage").attr('src',image);
 			$('#cardPreviewImage').css("display", "block");   
 			$('#modal-cart').css("display", "inline-block");
+			$('#modal-detail').attr('href','/complete-works/' + text.book_id);
 			$('#modal-detail').css("display", "inline-block");
 			// console.dir(text.title);
 		}, 

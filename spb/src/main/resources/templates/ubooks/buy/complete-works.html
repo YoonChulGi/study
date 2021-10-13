@@ -128,7 +128,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 							<div class="product-thumb">
 								<!-- <span class="bage">Sale</span> -->
 								<img th:if="${#strings.equals(list.images,null)}" class="img-responsive card-img" th:src="@{images/ubooks/shop/products/product-1.jpg}" alt="product-img" />
-								<img th:unless="${#strings.equals(list.images,null)}" class="img-responsive card-img" th:src="@{${#strings.arraySplit(list.images,'|')[0]}}" alt="product-img" />
+								<img th:unless="${#strings.equals(list.images,null)}" class="img-responsive card-img" th:src="|@{${#strings.arraySplit(list.images,'|')[0]}}|" alt="product-img" />
 								<div class="preview-meta">
 									<ul>
 										<li>
@@ -147,8 +147,8 @@ FACEBOOK: https://www.facebook.com/themefisher
 							</div>
 							<div class="product-content">
 								<h4>
-									<a th:if="${list.title.length > 15 }" href="/product-single" th:text="${#strings.substring(list.title,0,15) + '...'}"></a>
-									<a th:unless="${list.title.length > 15 }" href="/product-single" th:text="${list.title}"></a>
+									<a th:if="${list.title.length > 15 }" th:href="|/complete-works/${list.book_id}|" th:text="${#strings.substring(list.title,0,15) + '...'}"></a>
+									<a th:unless="${list.title.length > 15 }" th:href="|/complete-works/${list.book_id}|" th:text="${list.title}"></a>
 								</h4>
 								<p class="price" th:text="${#numbers.formatInteger(list.price, 0, 'DEFAULT') + '&#8361;'}"></p>
 							</div>
@@ -175,7 +175,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 			        				<p id="modal-price" class="product-price"></p>
 			        				<p id="modal-state" class="product-short-description"></p>
 			        				<a id="modal-cart" href="/cart" class="btn btn-main">Add To Cart</a>
-			        				<a id="modal-detail" href="/product-single" class="btn btn-transparent">View Product Details</a>
+			        				<a id="modal-detail" href="#" class="btn btn-transparent">View Product Details</a>
 			        			</div>
 			        		</div>
 			        	</div>

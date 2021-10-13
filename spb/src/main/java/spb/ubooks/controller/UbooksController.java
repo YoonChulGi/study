@@ -1,5 +1,7 @@
 package spb.ubooks.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -205,8 +207,9 @@ public class UbooksController {
 	@RequestMapping("/complete-works/{bookId}")
 	public ModelAndView ubooksCompleteWorksDetail(@PathVariable("bookId") int bookId) throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/buy/complete-works-detail");
-		
-		mv.addObject("res",searchService.searchOneAsMap("combook_*",bookId));
+		Map<String,Object> res = searchService.searchOneAsMap("combook_*",bookId);
+		log.debug(res.toString());
+		mv.addObject("res",res);
 		
 		return mv;
 	}
