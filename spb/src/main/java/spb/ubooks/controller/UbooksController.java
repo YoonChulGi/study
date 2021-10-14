@@ -207,10 +207,7 @@ public class UbooksController {
 	@RequestMapping("/complete-works/{bookId}")
 	public ModelAndView ubooksCompleteWorksDetail(@PathVariable("bookId") int bookId) throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/buy/complete-works-detail");
-		Map<String,Object> res = searchService.searchOneAsMap("combook_*",bookId);
-		log.debug(res.toString());
-		mv.addObject("res",res);
-		
+		mv.addObject("res",searchService.searchOneAsMap("combook_*",bookId));
 		return mv;
 	}
 	/********* E:전집 ***********************************************/
