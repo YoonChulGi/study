@@ -95,27 +95,11 @@
 		$('#modal-cart').css("display", "none");
 		$('#modal-detail').css("display", "none");
 	});
-	/*$("#product-modal").on('stylechanged',function(param1,param2,param3){
-		console.dir(param1);
-		console.dir(param2);
-		console.dir(param3);
-
-	});*/
-	/*$("#product-modal").on('click',function(){
-		$("#modal-title").text('');
-		$("#modal-price").text('');
-		$("#modal-state").text('');
-		$("#cardPreviewImage").attr('src','');
-		$('#cardPreviewImage').css("display", "none");   
-
+	$("#selectSort").on("change",(event)=>{
+		let sort = event.target.value;
+		$("#sort").val(sort);
+		$("#searchForm").submit();
 	});
-	$(".tf-ion-close").on('click',function(){
-		$("#modal-title").text('');
-		$("#modal-price").text('');
-		$("#modal-state").text('');
-		$("#cardPreviewImage").attr('src','');
-		$('#cardPreviewImage').css("display", "none");
-	});*/
 	
 })(jQuery);
 
@@ -152,3 +136,4 @@ function addComma(value){
     value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return value; 
 }
+

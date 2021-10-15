@@ -1,11 +1,13 @@
 package spb.ubooks.controller;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
@@ -197,10 +199,14 @@ public class UbooksController {
 	
 	/********* S:전집 ***********************************************/
 	@RequestMapping("/complete-works")
-	public ModelAndView ubooksCompleteWorks() throws Exception {
+	public ModelAndView ubooksCompleteWorks(@RequestParam(value="sort", defaultValue="") String sort) throws Exception {
 		log.debug("complete-works");
 		ModelAndView mv = new ModelAndView("/ubooks/buy/complete-works");
-		mv.addObject("res",searchService.sendHighLevelApi("combook_*"));
+		mv.addObject("res",searchService.sendHighLevelApi("combook_*",sort));
+		
+		Map<String,Object> searchParam = new LinkedHashMap<String,Object>();
+		searchParam.put("sort", sort);
+		mv.addObject("searchParam",searchParam);
 		return mv;
 	}
 	

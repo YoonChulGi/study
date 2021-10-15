@@ -45,14 +45,16 @@ FACEBOOK: https://www.facebook.com/themefisher
 			<div class="col-md-3">
 				<div class="widget">
 					<h4 class="widget-title">정렬 기준</h4>
-					<form method="post" action="#">
-                        <select class="form-control">
-                            <option>Man</option>
-                            <option>Women</option>
-                            <option>Accessories</option>
-                            <option>Shoes</option>
-                        </select>
-                    </form>
+                    <select id="selectSort" class="form-control" >
+                        <option value="date" th:if="${#strings.equals(searchParam.sort,'date') or #strings.equals(searchParam.sort,'')}" selected>신규등록순</option>
+                        <option value="date" th:unless="${#strings.equals(searchParam.sort,'date') or #strings.equals(searchParam.sort,'')}">신규등록순</option>
+                        <option value="cheap" th:if="${#strings.equals(searchParam.sort,'cheap')}" selected>낮은가격순</option>
+                        <option value="cheap" th:unless="${#strings.equals(searchParam.sort,'cheap')}">낮은가격순</option>
+                        <option value="expensive" th:if="${#strings.equals(searchParam.sort,'expensive')}" selected>높은가격순</option>
+                        <option value="expensive" th:unless="${#strings.equals(searchParam.sort,'expensive')}" >높은가격순</option>
+                        <option value="best" th:if="${#strings.equals(searchParam.sort,'best')}" selected>한달판매순</option>
+                        <option value="best" th:unless="${#strings.equals(searchParam.sort,'best')}" >한달판매순</option>
+                    </select>
 	            </div>
 				<div class="widget product-category">
 					<h4 class="widget-title">카테고리</h4>
@@ -117,7 +119,10 @@ FACEBOOK: https://www.facebook.com/themefisher
 				</div>
 			</div>
 			<div class="col-md-9">
-				<input type="search" class="form-control" placeholder="Search...">
+				<form method="post" action="/complete-works" id="searchForm" name="searchForm">
+					<input type="text" class="form-control" placeholder="Search..." value="">
+					<input type="hidden" name="sort" id="sort" th:value="${searchParam.sort}"/> 
+				</form>
 				<div th:with="totalHits=${#strings.replace(res.get('totalHits'),' hits','')}">
 					검색결과는 총 <span id="totalHits" th:text="${totalHits}"></span> 건 입니다.
 				</div>

@@ -8,7 +8,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -142,16 +141,25 @@ public class SearchServiceImpl implements SearchService{
 	}
 
 	@Override
-	public Map<String,Object> sendHighLevelApi(String indexName) throws Exception {
+	public Map<String,Object> sendHighLevelApi(String indexName,String sort) throws Exception {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		ArrayList<Map<String,Object>> list = null;
+		if("".equals(sort)) sort = "date";
 		try {
 			SearchRequest searchRequest = new SearchRequest(indexName);
 			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 			searchSourceBuilder.size(100);
 			searchSourceBuilder.timeout(new TimeValue(60,TimeUnit.SECONDS));
 			searchSourceBuilder.query(QueryBuilders.matchAllQuery());
-			searchSourceBuilder.sort(new FieldSortBuilder("reg_date.keyword").order(SortOrder.ASC)); // 등록일순 정렬
+			
+			log.debug("sort: "+sort);
+			if("date".equals(sort)) {
+				searchSourceBuilder.sort(new FieldSortBuilder("reg_date.keyword").order(SortOrder.ASC)); // 등록일순 정렬
+			} else if("cheap".equals(sort) ) {
+				searchSourceBuilder.sort(new FieldSortBuilder("price").order(SortOrder.ASC)); // 등록일순 정렬
+			} else if("expensive".equals(sort) ) {
+				searchSourceBuilder.sort(new FieldSortBuilder("price").order(SortOrder.DESC)); // 등록일순 정렬
+			}
 			searchSourceBuilder.sort(new ScoreSortBuilder().order(SortOrder.DESC));  // score 높은순 (default)
 			//searchSourceBuilder.sort(new FieldSortBuilder("_id").order(SortOrder.ASC)); // id오름차순 정렬 
 			searchRequest.source(searchSourceBuilder);
