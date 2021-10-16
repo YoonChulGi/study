@@ -96,10 +96,29 @@
 		$('#modal-detail').css("display", "none");
 	});
 	$("#selectSort").on("change",(event)=>{
-		let sort = event.target.value;
+		let sort = event.target.value.trim();
 		$("#sort").val(sort);
 		$("#searchForm").submit();
 	});
+	
+	$(".cateAge").on("click",(event)=>{
+		let age = event.target.innerText.trim();
+		$("#age").val(age);
+		$("#searchForm").submit();
+	});
+	
+	$(".catePublisher").on("click",(event)=>{
+		let publisher = event.target.innerText.trim();
+		$("#publisher").val(publisher);
+		$("#searchForm").submit();
+	});
+	
+	$(".cateDepartment").on("click",(event)=>{
+		let department = event.target.innerText.trim();
+		$("#department").val(department);
+		$("#searchForm").submit();
+	});
+	
 	
 })(jQuery);
 

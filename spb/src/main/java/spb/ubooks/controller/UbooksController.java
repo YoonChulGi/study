@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
+import spb.ubooks.mapper.CombookMapper;
 import spb.ubooks.service.SearchService;
 
 @Slf4j
@@ -19,6 +20,9 @@ public class UbooksController {
 	
 	@Autowired
 	SearchService searchService;
+	
+	@Autowired
+	CombookMapper combookMapper;
 	
 	@RequestMapping(value={"/","/index"})
 	public ModelAndView ubooksHome() throws Exception{
@@ -199,14 +203,28 @@ public class UbooksController {
 	
 	/********* S:전집 ***********************************************/
 	@RequestMapping("/complete-works")
-	public ModelAndView ubooksCompleteWorks(@RequestParam(value="sort", defaultValue="") String sort) throws Exception {
+	public ModelAndView ubooksCompleteWorks(
+			@RequestParam(value="sort", defaultValue="") String sort, 
+			@RequestParam(value="department", defaultValue="") String department, 
+			@RequestParam(value="publisher", defaultValue="") String publisher,
+			@RequestParam(value="age", defaultValue="") String age) throws Exception {
+		
 		log.debug("complete-works");
 		ModelAndView mv = new ModelAndView("/ubooks/buy/complete-works");
-		mv.addObject("res",searchService.sendHighLevelApi("combook_*",sort));
+		mv.addObject("res",searchService.sendHighLevelApi("combook_*",sort,department,publisher,age)); // elasticsearch - high level client - search
+		
+		mv.addObject("departmentsList", combookMapper.selectDepartments()); // departments - mariadb
+		mv.addObject("publishersList", combookMapper.selectPublishers()); // publishers - mariadb
+		mv.addObject("agesList",combookMapper.selectAges()); // ages - mariadb
 		
 		Map<String,Object> searchParam = new LinkedHashMap<String,Object>();
 		searchParam.put("sort", sort);
+		searchParam.put("department", department);
+		searchParam.put("publisher", publisher);
+		searchParam.put("age", age);
 		mv.addObject("searchParam",searchParam);
+		
+		
 		return mv;
 	}
 	

@@ -62,17 +62,13 @@ FACEBOOK: https://www.facebook.com/themefisher
 					  	<div class="panel panel-default">
 						    <div class="panel-heading" role="tab" id="headingOne">
 						      	<h4 class="panel-title">
-						        	<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-						          	연령별
-						        	</a>
+						        	<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">연령별</a>
 						      	</h4>
 						    </div>
 					    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 							<div class="panel-body">
 								<ul>
-									<li><a href="#!">Brand & Twist</a></li>
-									<li><a href="#!">Shoe Color</a></li>
-									<li><a href="#!">Shoe Color</a></li>
+									<li class="cateAge" th:each="age : ${agesList}"><a href="#!" th:text="${age}"></a></li>
 								</ul>
 							</div>
 					    </div>
@@ -88,9 +84,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 					    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 					    	<div class="panel-body">
 					     		<ul>
-									<li><a href="#!">Brand & Twist</a></li>
-									<li><a href="#!">Shoe Color</a></li>
-									<li><a href="#!">Shoe Color</a></li>
+									<li class="catePublisher" th:each="publisher : ${publishersList}"><a href="#!" th:text="${publisher}"></a></li>
 								</ul>
 					    	</div>
 					    </div>
@@ -106,10 +100,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 					    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
 					    	<div class="panel-body">
 					      		<ul>
-									<li><a href="#!">Brand & Twist</a></li>
-									<li><a href="#!">Shoe Color</a></li>
-									<li><a href="#!">Gladian Shoes</a></li>
-									<li><a href="#!">Swis Shoes</a></li>
+									<li class="cateDepartment" th:each="department : ${departmentsList}"><a href="#!" th:text="${department}"></a></li>
 								</ul>
 					    	</div>
 					    </div>
@@ -122,6 +113,9 @@ FACEBOOK: https://www.facebook.com/themefisher
 				<form method="post" action="/complete-works" id="searchForm" name="searchForm">
 					<input type="text" class="form-control" placeholder="Search..." value="">
 					<input type="hidden" name="sort" id="sort" th:value="${searchParam.sort}"/> 
+					<input type="hidden" name="department" id="department" th:value="${searchParam.department}"/> 
+					<input type="hidden" name="publisher" id="publisher" th:value="${searchParam.publisher}"/> 
+					<input type="hidden" name="age" id="age" th:value="${searchParam.age}"/> 
 				</form>
 				<div th:with="totalHits=${#strings.replace(res.get('totalHits'),' hits','')}">
 					검색결과는 총 <span id="totalHits" th:text="${totalHits}"></span> 건 입니다.

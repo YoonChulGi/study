@@ -17,6 +17,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.core.TimeValue;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
@@ -141,18 +142,52 @@ public class SearchServiceImpl implements SearchService{
 	}
 
 	@Override
-	public Map<String,Object> sendHighLevelApi(String indexName,String sort) throws Exception {
+	public Map<String,Object> sendHighLevelApi(
+			String indexName, String sort, 
+			String department, String publisher, String age) throws Exception {
+		
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		ArrayList<Map<String,Object>> list = null;
+		ArrayList <String> departmentList = null;
 		if("".equals(sort)) sort = "date";
+		log.debug("sort: "+sort);
+		log.debug("publisher: " + publisher);
+		log.debug("department: " + department);
+		log.debug("age: " + age);
+		
 		try {
 			SearchRequest searchRequest = new SearchRequest(indexName);
 			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-			searchSourceBuilder.size(100);
+			searchSourceBuilder.size(10000);
 			searchSourceBuilder.timeout(new TimeValue(60,TimeUnit.SECONDS));
-			searchSourceBuilder.query(QueryBuilders.matchAllQuery());
 			
-			log.debug("sort: "+sort);
+			BoolQueryBuilder query = new BoolQueryBuilder();
+			
+			if(!"".equals(publisher)) {
+				query.must(QueryBuilders.matchQuery("publisher.keyword",publisher));
+			}
+			
+			if(!"".equals(department)) {
+				query.must(QueryBuilders.matchQuery("department.keyword", department));
+			}
+			
+			if(!"".equals(age)) {
+				if("초등3학년이상".equals(age) || "초등전학년".equals(age)) {
+					age = age.concat("-"+age);
+				}
+				String minAge = age.split("-")[0];
+				String maxAge = age.split("-")[1].replaceAll("세", "");
+				query.must(QueryBuilders.matchQuery("min_age.keyword", minAge));
+				query.must(QueryBuilders.matchQuery("max_age.keyword", maxAge));
+			}
+			
+			if("".equals(publisher) && "".equals(department) && "".equals(age) ) {
+				searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+			} else {
+				searchSourceBuilder.query(query);
+			}
+			
+			// sort
 			if("date".equals(sort)) {
 				searchSourceBuilder.sort(new FieldSortBuilder("reg_date.keyword").order(SortOrder.ASC)); // 등록일순 정렬
 			} else if("cheap".equals(sort) ) {
@@ -160,6 +195,7 @@ public class SearchServiceImpl implements SearchService{
 			} else if("expensive".equals(sort) ) {
 				searchSourceBuilder.sort(new FieldSortBuilder("price").order(SortOrder.DESC)); // 등록일순 정렬
 			}
+			
 			searchSourceBuilder.sort(new ScoreSortBuilder().order(SortOrder.DESC));  // score 높은순 (default)
 			//searchSourceBuilder.sort(new FieldSortBuilder("_id").order(SortOrder.ASC)); // id오름차순 정렬 
 			searchRequest.source(searchSourceBuilder);
@@ -196,12 +232,14 @@ public class SearchServiceImpl implements SearchService{
 				list.add(sourceAsMap);
 			}
 			
+			departmentList = new ArrayList<String>();
 			for(Map<String,Object> m : list) {
-				log.debug(m.toString());
+				departmentList.add(m.get("department").toString());
 			}
 			
 			resultMap.put("totalHits", totalHits);
 			resultMap.put("searchResult", list);
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

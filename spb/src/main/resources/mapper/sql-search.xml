@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="spb.ubooks.mapper.CombookMapper">
+	
+	<select id="selectDepartments" resultType="string">
+		<![CDATA[
+			select DISTINCT department from combook
+		]]>
+	</select>
+	
+	<select id="selectPublishers" resultType="string">
+		<![CDATA[
+			select DISTINCT publisher from combook
+		]]>
+	</select>
+	
+	<select id="selectAges" resultType="string">
+		<![CDATA[
+			select DISTINCT IF(STRCMP(min_age,'초등전학년')=0 OR STRCMP(min_age,'초등3학년이상')=0 ,min_age,CONCAT(min_age,'-',max_age,'세')) as age 
+			from combook 
+			order by age
+		]]>
+	</select>
+	
+</mapper>
