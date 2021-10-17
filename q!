@@ -1,0 +1,330 @@
+[33mcommit ca8ab3e5065a2eba24e16e08e1abf820680ce014[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sun Oct 17 22:06:24 2021 +0900
+
+    검색 조건 선택된것들 화면에 표시 및 버튼생성 개발완료 및 RequestParam 어노테이션 포스팅을 위한 소스추가
+
+[33mcommit 67e5aeff13ddb1a8a23c18189b1d3574e0c00e85[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sun Oct 17 00:15:00 2021 +0900
+
+    todo list commit
+
+[33mcommit f876ec0f08be58717d641037768c40d77ebade18[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sun Oct 17 00:07:12 2021 +0900
+
+    연령별 출판사별 분야별 카테고리 개발완료
+
+[33mcommit 384e8bac8e9b96fae687be8f971a09b3af96d1eb[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Fri Oct 15 21:44:30 2021 +0900
+
+    정렬기준 best 뺴고 개발완료, thymeleaf 반복문 포스팅을 위한 test code 업로드
+
+[33mcommit 74c9c16686ac7a08701d2b52f86b9822c8d47dbc[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Thu Oct 14 21:26:09 2021 +0900
+
+    TODO list, UbooksController 불필요 코드제거
+
+[33mcommit 90632e1069976b4622bd7e6f26b54ad51a3c3751[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Wed Oct 13 21:32:14 2021 +0900
+
+    전집 상세화면 뿌리기 및 top 수정
+
+[33mcommit 9f749b93f1b17ccc20a650c21a626dbd07e9d2cc[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Tue Oct 12 23:52:13 2021 +0900
+
+    상품상세 작업중
+
+[33mcommit 8b7e843175b10a2079d759bb9a2bdf389492a395[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Mon Oct 11 22:47:05 2021 +0900
+
+    전집 front작업 및 modal용 api개발
+
+[33mcommit 8bf9ecc9cac59a8f06246370b78cfa864f5effb6[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Mon Oct 11 21:03:38 2021 +0900
+
+    spb프로젝트 이미지파일연동완료 및 이미지 상하간격 fix, modal page 개발중
+
+[33mcommit 029e410be96057b29836eef66c43ea3afee8cdd1[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Mon Oct 11 03:12:47 2021 +0900
+
+    메뉴이름 변경
+
+[33mcommit 88b653656402f18ead2d47fea863f64c0952dff2[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sun Oct 10 19:34:03 2021 +0900
+
+    spb 프로젝트 els와 image 파일 연동
+
+[33mcommit 755bfa0b8cf18219952531a64dacdee7748ea629[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sat Oct 9 23:21:55 2021 +0900
+
+    TODO list update
+
+[33mcommit f5b0acd58f3dc1608a37317d8dd56378f578a25e[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sat Oct 9 23:20:35 2021 +0900
+
+    application.properties 및 프로젝트 경로 내 images ignore 적용
+
+[33mcommit 7383c330526829d04a0ca5967aa2c4cb13ed22c2[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sat Oct 9 23:18:12 2021 +0900
+
+    spb프로젝트 로깅 및 elasticsearch image 파일 연동(진행중)
+
+[33mcommit a3f614e8be68d2ff6fb432716f6f053353ad011a[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Fri Oct 8 19:06:05 2021 +0900
+
+    application.properties에 적혀있는 ip를 노출하지 않기 위해 ignore 처리
+
+[33mcommit 487f2d42e9862f1cfcae6ac4a44534a9cadc1bab[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Fri Oct 8 19:04:13 2021 +0900
+
+    Spring Data JPA 사용하기 포스팅을 위한 공부 및 소스추가
+
+[33mcommit 1d126822c0448453ab18566147139308c740673d[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Thu Oct 7 22:39:08 2021 +0900
+
+    JPA관련 포스팅 관련 소스추가 - 아직 진행중
+
+[33mcommit fd5a57e6f88cb0f46dee097f437aced0f43acdaa[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Thu Oct 7 18:21:36 2021 +0900
+
+    REST API 개발하기 관련 포스팅을 위한 소스 추가
+
+[33mcommit 701486d94f1674e84693bcdbd3783825b88533cd[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Wed Oct 6 17:18:19 2021 +0900
+
+    TODO list commit
+
+[33mcommit 3edfbfd04e4a2d2928f4f314a29f63cef96e4cfb[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Tue Oct 5 21:47:47 2021 +0900
+
+    RESTful 게시판 포스팅을 위한 소스 추가
+
+[33mcommit 0a6269197bf1ffbf93121a771ceaefb410175b17[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Mon Oct 4 22:14:11 2021 +0900
+
+    파일다운로드 관련 포스팅하기위한 소스 추가
+
+[33mcommit 4b23d20ff3ee34c21b41cbee9e8c30d7afb8b24c[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Mon Oct 4 02:24:23 2021 +0900
+
+    파일 업로드 관련 포스팅을 위한 소스 추가 - 완성
+
+[33mcommit 3d7336f8ff5540b8f60f96ccdccd410ede6a80c9[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sun Oct 3 22:29:26 2021 +0900
+
+    파일 업로드 포스팅을 위한 소스추가
+
+[33mcommit a14eee37a0837126ff375fa644ced8a6814d494d[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sun Oct 3 02:15:54 2021 +0900
+
+    todo 리스트 update
+
+[33mcommit 2303d3975618f0f6608a8bf82f063fab68ffefea[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sat Oct 2 23:10:08 2021 +0900
+
+    에러처리 포스팅을 위해 일부러 발생시킨 에러 i=10/0;제거
+
+[33mcommit e9a650686a9ffa828a68663f92114a0b6631bd96[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sat Oct 2 23:08:06 2021 +0900
+
+    예외처리 포스팅을 위한 소스추가
+
+[33mcommit 88b5010bb9fd0862b2cd8c299f0111e9d7fcb308[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Fri Oct 1 22:31:08 2021 +0900
+
+    update TODO List
+
+[33mcommit 412cb1e90a1bc07360f6af9309479392d18d9ca8[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Fri Oct 1 22:29:31 2021 +0900
+
+    트랜잭션 관련 포스팅을 위한 소스추가
+
+[33mcommit b86edab081d2500fda569a41c330475b1ddae4b1[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Fri Oct 1 21:22:19 2021 +0900
+
+    AOP 사용하기 포스팅을 위한 소스 추가
+
+[33mcommit 36cab3c0ea14bcefc902dbfed74c3b2d9e46898a[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Fri Oct 1 18:11:26 2021 +0900
+
+    interceptor 포스팅을 위한 소스 추가
+
+[33mcommit 025747190c625167daeb3dc7fd1fd3362384501f[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Thu Sep 30 23:17:57 2021 +0900
+
+    TODO list commit
+
+[33mcommit f483e2b0dd16062e1a1682c701bb3483d917cb34[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Wed Sep 29 21:24:38 2021 +0900
+
+    logback, log4jdbc 사용방법 포스팅을 위한 소스 커밋
+
+[33mcommit 2c18d8947e801a302d0a691747290dc076f744f1[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Wed Sep 29 19:32:57 2021 +0900
+
+    불필요 파일 정리 포스팅을 위한 commit
+
+[33mcommit b07bd394bf705de47aaa8138739056df441b4e52[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Wed Sep 29 19:17:47 2021 +0900
+
+    gitignore를 포스팅하기위한 commit
+
+[33mcommit 927dfe10cf43cbb09f63b6df00e6e559101b1be4[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Wed Sep 29 03:21:28 2021 +0900
+
+    불필요 파일 삭제
+
+[33mcommit ef216a7f302e8e41ce535b9d9ebdb6fb96ea2218[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Wed Sep 29 03:19:36 2021 +0900
+
+    불필요 파일삭제
+
+[33mcommit 69ba8de5fffb3591f25221466298a3be5951bf53[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Wed Sep 29 00:45:13 2021 +0900
+
+    게시판 게시글 수정 및 삭제 관련 소스 추가
+
+[33mcommit 60936a137f003d8bd4762dde3114ed8e33230206[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Tue Sep 28 21:33:29 2021 +0900
+
+    게시판 만들기 포스팅 관련 소스 커밋
+
+[33mcommit 69b0d2a9127dcff793174d5fc6f9a0a6069d0e7b[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Mon Sep 27 22:46:01 2021 +0900
+
+    블로그 포스팅을 위한 board2 프로젝트 추가 및 기존 실습하였던 images 데이터 삭제
+
+[33mcommit 8bdd187250742ecc8d9d1c22941ca5fcdc7293d8[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sun Sep 26 18:32:19 2021 +0900
+
+    commit test public -> private
+
+[33mcommit 6eb8436c17bd0210c14d0bfd4a55e8dc7ba89669[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sun Sep 26 18:31:45 2021 +0900
+
+    commit test (public -> private)
+
+[33mcommit a5882d523b58114f333090236764b096b6d4e412[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sun Sep 26 18:28:02 2021 +0900
+
+    application.properties
+
+[33mcommit 4f5c17cb438a8ec0ed167bfb48725c5b409d3564[m
+Merge: c2b1b94 cdb40ca
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sun Sep 26 18:20:30 2021 +0900
+
+    commit to fix git
+
+[33mcommit c2b1b941e24be70668c76c7207db0d01c8b9dbee[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sun Sep 26 18:17:54 2021 +0900
+
+    temp commit
+
+[33mcommit 2713a942c3b0747a4fc5dd9ca0ce997be293c1bd[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sun Sep 26 18:12:53 2021 +0900
+
+    불필요 부분 정리
+
+[33mcommit cdb40caa7102e2c19e315c78066cf4ed5ac6bf69[m
+Author: 윤철기 <31471631+YoonChulGi@users.noreply.github.com>
+Date:   Sun Sep 26 18:09:11 2021 +0900
+
+    Delete .metadata directory
+
+[33mcommit 8743029a68f5a3c3ba26b2565cdb2cc1f179b779[m
+Author: 윤철기 <31471631+YoonChulGi@users.noreply.github.com>
+Date:   Sun Sep 26 16:30:13 2021 +0900
+
+    Update application.properties
+
+[33mcommit ba6e842efa9d5973728d8a26140f59adf5089803[m
+Author: 윤철기 <31471631+YoonChulGi@users.noreply.github.com>
+Date:   Sun Sep 26 16:29:31 2021 +0900
+
+    Update application.properties
+
+[33mcommit bc22bf9e4408043747c996eb2f0a09d78943fdcd[m
+Author: 윤철기 <31471631+YoonChulGi@users.noreply.github.com>
+Date:   Sun Sep 26 16:29:03 2021 +0900
+
+    Update application.properties
+
+[33mcommit 459377dcc9d5e9d28aae8541c7ffe4112e67f50f[m
+Author: 윤철기 <31471631+YoonChulGi@users.noreply.github.com>
+Date:   Sun Sep 26 16:28:24 2021 +0900
+
+    Update application.properties
+
+[33mcommit 0a4a12f5e014079606746b5dc8f56efe77691638[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sun Sep 26 02:37:49 2021 +0900
+
+    전집 첫화면 뿌리기
+
+[33mcommit ed8fa508595d530b46076943f9168c23a48a18f2[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Sat Sep 25 23:47:30 2021 +0900
+
+    엘라스틱서치 검색결과 api 리턴값 타임리프에서 사용하기 테스트
+
+[33mcommit 1c861644afc2ab406655ff1cc9586d2d7a9a1450[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Fri Sep 24 22:12:23 2021 +0900
+
+    spb project rest-high-level-client 사용하여 전집 책 데이터 검색 api 요청및 결과 받아옴
+
+[33mcommit 4cd7bd552d7ed69dbbf1bacb9aeeb0df61ae511c[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Thu Sep 23 19:25:46 2021 +0900
+
+    20210923 plugins 커밋
+
+[33mcommit 99e3ee201e43ffa0eb63ed1c0c21a8aa9d0e099a[m
+Author: YoonChulGi <dbscjfrl321@github.com>
+Date:   Thu Sep 23 10:57:59 2021 +0900
+
+    공부중인 프로젝트 및 샘플파일을 추가합니다

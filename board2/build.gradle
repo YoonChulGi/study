@@ -16,9 +16,24 @@ configurations {
 
 repositories {
 	mavenCentral()
+	//start Es
+   maven {
+        url "https://snapshots.elastic.co/maven/"
+   }
+   maven {
+	    name 'lucene-snapshots'
+	    url 'https://s3.amazonaws.com/download.elasticsearch.org/lucenesnapshots/83f9835'
+   }
+	//end Es
 }
 
 dependencies {
+
+	//start Es
+   implementation 'org.elasticsearch:elasticsearch:7.14.1'
+	implementation 'org.elasticsearch.client:elasticsearch-rest-client:7.14.1'
+	implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.14.1'
+	//end Es
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
