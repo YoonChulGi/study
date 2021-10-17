@@ -68,7 +68,9 @@ FACEBOOK: https://www.facebook.com/themefisher
 					    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 							<div class="panel-body">
 								<ul>
-									<li class="cateAge" th:each="age : ${agesList}"><a href="#!" th:text="${age}"></a></li>
+									<li class="cateAge" th:each="age : ${agesList}">
+										<a href="#!" th:text="${age}"></a>
+									</li>
 								</ul>
 							</div>
 					    </div>
@@ -110,6 +112,12 @@ FACEBOOK: https://www.facebook.com/themefisher
 				</div>
 			</div>
 			<div class="col-md-9">
+				<div class="searchBtnGroup">
+					<a id="ageBtn" th:if="${!#strings.equals(searchParam.age,'')}" th:text="|${searchParam.age} [x]|" href="#!" class="btn btn-main btn-small btn-round"></a>
+					<a id="publisherBtn" th:if="${!#strings.equals(searchParam.publisher,'')}" th:text="|${searchParam.publisher} [x]|" href="#!" class="btn btn-main btn-small btn-round"></a>
+					<a id="departmentBtn" th:if="${!#strings.equals(searchParam.department,'')}" th:text="|${searchParam.department} [x]|" href="#!" class="btn btn-main btn-small btn-round"></a>
+				</div>
+				
 				<form method="post" action="/complete-works" id="searchForm" name="searchForm">
 					<input type="text" class="form-control" placeholder="Search..." value="">
 					<input type="hidden" name="sort" id="sort" th:value="${searchParam.sort}"/> 

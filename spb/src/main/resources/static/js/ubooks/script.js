@@ -1,6 +1,7 @@
 (function ($) {
   'use strict';
 
+
   // Preloader
   $(window).on('load', function () {
     $('#preloader').fadeOut('slow', function () {
@@ -119,12 +120,44 @@
 		$("#searchForm").submit();
 	});
 	
+	$("#ageBtn").on("click",()=>{
+		$("#age").val("");
+		$("#searchForm").submit();
+	});
+	
+	$("#publisherBtn").on("click",()=>{
+		$("#publisher").val("");
+		$("#searchForm").submit();
+	});
+	
+	$("#departmentBtn").on("click",()=>{
+		$("#department").val("");
+		$("#searchForm").submit();
+	});
+	
+	for(let i=0;i<$(".cateAge").length;i++) {
+		if($("#age").val() == $(".cateAge")[i].innerText) {
+			$($(".cateAge")[i].children[0]).css("font-weight","bold");
+		}
+	}
+	
+	for(let i=0;i<$(".catePublisher").length;i++) {
+		if($("#publisher").val() == $(".catePublisher")[i].innerText) {
+			$($(".catePublisher")[i].children[0]).css("font-weight","bold");
+		}
+	}
+	
+	for(let i=0;i<$(".cateDepartment").length;i++) {
+		if($("#department").val() == $(".cateDepartment")[i].innerText) {
+			$($(".cateDepartment")[i].children[0]).css("font-weight","bold");
+		}
+	}
+	
 	
 })(jQuery);
 
 
 function prevAjax(book_id) {
-	
 	$.ajax({
 		type: "GET",
 		url: "/searchOne/" + book_id,
@@ -147,7 +180,6 @@ function prevAjax(book_id) {
 			console.dir(status);
 			console.error(error);
 		}
-		
 	});
 }
 

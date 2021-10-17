@@ -5,14 +5,7 @@
 		<title>Insert title here</title>
 	</head>
 	<body>
-		<!-- <p th:each="val : ${list}" th:text="${val}"></p> -->
-		
-		<!-- <p th:each="num : ${#numbers.sequence(1,5)}" th:text="${num}"><p> -->
-
-		<th:block th:each="i : ${#numbers.sequence(0,#lists.size(list)-1)}">
-			<p th:if="${i==0}" th:text="|첫번째 값은 ${list.get(i)} 입니다|"></p>
-			<p th:unless="${i==0}" th:text="${list.get(i)}"></p>
-		</th:block>
+		<th:block th:text="${param1}">
 
 	</body>
 </html>

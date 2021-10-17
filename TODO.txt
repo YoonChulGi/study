@@ -1,10 +1,10 @@
 TODO) 
 
-1. 좌측카테고리 백그라운드칼러 추가하기, 버튼 추가하기 
+1. @RequestParam defaultvalue 포스팅 
 2. 정렬기준, 카테고리 포스팅, 
 3. 로그인기능 개발
 4. 한달판매순 어떻게 개발할지?????? 
-5. @RequestParam defaultvalue 포스팅 
+
 
 
 ★TODO) 

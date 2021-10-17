@@ -116,7 +116,10 @@ FACEBOOK: https://www.facebook.com/themefisher
 					<div class="product-category">
 						<span>원가:</span>
 						<ul>
-							<li><p th:text="${#numbers.formatInteger(res.list_price, 0, 'DEFAULT') + '&#8361;'}"></p></li>
+							<li>
+								<p th:if="${#strings.isEmpty(res.list_price)}">표기없음</p>
+								<p th:unless="${#strings.isEmpty(res.list_price)}" th:text="${#numbers.formatInteger(res.list_price, 0, 'DEFAULT') + '&#8361;'}"></p>
+							</li>
 						</ul>
 					</div>
 					<div class="product-category">
