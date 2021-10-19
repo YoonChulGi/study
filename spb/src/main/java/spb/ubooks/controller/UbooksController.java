@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
+import spb.ubooks.dto.MemberDto; 
 import spb.ubooks.mapper.CombookMapper;
+import spb.ubooks.service.MemberService;
 import spb.ubooks.service.SearchService;
 
 @Slf4j
@@ -20,6 +23,9 @@ public class UbooksController {
 	
 	@Autowired
 	SearchService searchService;
+	
+	@Autowired
+	MemberService memberService;
 	
 	@Autowired
 	CombookMapper combookMapper;
@@ -135,10 +141,16 @@ public class UbooksController {
 		return mv;
 	}
 
-	@RequestMapping("/signin")
+	@RequestMapping(value="/signin",method=RequestMethod.GET)
 	public ModelAndView ubooksSignin() throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/pages/signin");
 		return mv;
+	}
+	
+	@RequestMapping(value="/signin",method=RequestMethod.POST)
+	public String insertMember(MemberDto member) throws Exception {
+		memberService.insertMember(member);
+		return "redirect:/login";
 	}
 	
 	
@@ -223,8 +235,6 @@ public class UbooksController {
 		searchParam.put("publisher", publisher);
 		searchParam.put("age", age);
 		mv.addObject("searchParam",searchParam);
-		
-		
 		return mv;
 	}
 	

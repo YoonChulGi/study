@@ -135,6 +135,104 @@
 		$("#searchForm").submit();
 	});
 	
+	$("#idCheckBtn").on("click",()=>{
+		let memberId = $("#memberId").val().trim();
+		if(memberId == '') {
+			$("#alertMessage").html('아이디를 입력하세요');
+			$("#alert").css("display","block");
+			return;
+		}
+		$.ajax({
+			type: "GET",
+			url: "/checkId/" + $("#memberId").val(),
+			success: function(count) {
+				if(count > 0) {
+					$("#alertMessage").html('이미 존재하는 아이디입니다. 다른 아이디를 입력해보세요!');
+					$("#alertType").html('Warning! ');
+					$("#alert").removeClass("alert-success");
+					$("#alert").addClass("alert-warning");
+					$("#alert").css("display","block");
+				} else {
+					$("#alert").removeClass("alert-warning");
+					$("#alert").addClass("alert-success");
+					$("#alertType").html('Success! ');
+					$("#alertMessage").html('사용 가능한 아이디입니다');
+					$("#alert").css("display","block");
+					$("#signinBtn").attr("disabled",false);
+				}
+			}, 
+			error:function(request,status,error) {
+				console.dir(request);
+				console.dir(status);
+				console.error(error);
+			}
+		});
+		//$("#signinForm").submit();
+	});
+	
+	$("#signinBtn").on("click",()=>{
+		let memberId = $("#memberId").val();
+		let memberPw = $("#memberPw").val();
+		let pwCheck = $("#pwCheck").val();
+		let memberName = $("#memberName").val();
+		let memberContact = $("#memberContact").val();
+		
+		if(memberId == '') {
+			$("#alert").addClass("alert-warning");
+			$("#alert").removeClass("alert-success");
+			$("#alertType").html('Warning! ');
+			$("#alertMessage").html('아이디를 입력하세요');
+			$("#alert").css("display","block");
+			return;
+		} else if(memberPw == '') {
+			$("#alert").addClass("alert-warning");
+			$("#alert").removeClass("alert-success");
+			$("#alertType").html('Warning! ');
+			$("#alertMessage").html('비밀번호를 입력하세요');
+			$("#alert").css("display","block");
+			return;
+		} else if(pwCheck == '') {
+			$("#alert").addClass("alert-warning");
+			$("#alert").removeClass("alert-success");
+			$("#alertType").html('Warning! ');
+			$("#alertMessage").html('비밀번호 확인란을 입력하세요');
+			$("#alert").css("display","block");
+			return;
+		} else if(memberName == '') {
+			$("#alert").addClass("alert-warning");
+			$("#alert").removeClass("alert-success");
+			$("#alertType").html('Warning! ');
+			$("#alertMessage").html('이름을 입력하세요');
+			$("#alert").css("display","block");
+			return;
+		} else if(memberContact == '') {
+			$("#alert").addClass("alert-warning");
+			$("#alert").removeClass("alert-success");
+			$("#alertType").html('Warning! ');
+			$("#alertMessage").html('연락처를 입력하세요');
+			$("#alert").css("display","block");
+			return;
+		} else if(memberPw != pwCheck) {
+			$("#alert").addClass("alert-warning");
+			$("#alert").removeClass("alert-success");
+			$("#alertType").html('Warning! ');
+			$("#alertMessage").html('비밀번호가 일치하지 않습니다. 비밀번호를 확인해주세요');
+			$("#alert").css("display","block");
+			return;
+		} else {
+			$("#signinForm").submit();
+		}
+		
+		
+	});
+	
+	$("#memberId").keydown(()=>{
+		$("#alert").css("display","none");
+		$("#signinBtn").attr("disabled",true);
+	});
+	
+	
+	
 	for(let i=0;i<$(".cateAge").length;i++) {
 		if($("#age").val() == $(".cateAge")[i].innerText) {
 			$($(".cateAge")[i].children[0]).css("font-weight","bold");

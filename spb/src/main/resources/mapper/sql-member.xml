@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="spb.ubooks.mapper.MemberMapper">
+
+	<select id="selectIdCheck" parameterType="string" resultType="int">
+		<![CDATA[
+			select count(*) from spb_member where member_id=#{memberId} and deleted_yn = 'N'
+		]]>
+	</select>
+	
+	<insert id="insertMember" parameterType="spb.ubooks.dto.MemberDto">
+		<![CDATA[
+			insert into spb_member
+			(
+				member_id,
+				member_pw,
+				member_name,
+				member_contact,
+				signup_time
+			)
+			values
+			(
+				#{memberId},
+				#{memberPw},
+				#{memberName},
+				#{memberContact},
+				NOW()
+			)
+		]]>
+	</insert>
+	
+</mapper>
