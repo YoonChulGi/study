@@ -231,6 +231,13 @@
 		$("#signinBtn").attr("disabled",true);
 	});
 	
+	$("#loginBtn").on("click",()=>{
+		if($("#memberId").val()=='' || $("#memberPw").val()=='') {
+			alert("아이디와 비밀번호를 입력해주세요");
+			return;
+		}
+		$("#loginForm").submit();
+	});
 	
 	
 	for(let i=0;i<$(".cateAge").length;i++) {

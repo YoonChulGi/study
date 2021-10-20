@@ -32,4 +32,10 @@
 		]]>
 	</insert>
 	
+	<select id="selectMemberCheck" parameterType="string" resultType="spb.ubooks.dto.MemberDto">
+		<![CDATA[
+			select * from spb_member where member_id=#{memberId} and deleted_yn = 'N'
+		]]>
+	</select>
+	
 </mapper>

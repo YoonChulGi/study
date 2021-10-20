@@ -29,7 +29,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <img th:src="@{images/ubooks/logo.png}" alt="">
           </a>
           <h2 class="text-center">Welcome Back</h2>
-          <form class="text-left clearfix" action="/index" >
+          <form id="loginForm" name="loginForm" class="text-left clearfix" action="/login" method="post" >
             <div class="form-group">
               <input id="memberId" name="memberId" type="text" class="form-control"  placeholder="아이디">
             </div>
@@ -37,7 +37,7 @@ FACEBOOK: https://www.facebook.com/themefisher
               <input id="memberPw" name="memberPw" type="password" class="form-control" placeholder="비밀번호">
             </div>
             <div class="text-center">
-              <button type="submit" class="btn btn-main text-center" >Login</button>
+              <button id="loginBtn" name="loginBtn" type="button" class="btn btn-main text-center" >Login</button>
             </div>
           </form>
           <p class="mt-20">New in this site ?<a href="/signin"> Create New Account</a></p>

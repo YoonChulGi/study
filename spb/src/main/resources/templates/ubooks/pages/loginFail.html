@@ -1,0 +1,34 @@
+<!-- 
+THEME: Aviato | E-commerce template
+VERSION: 1.0.0
+AUTHOR: Themefisher
+
+HOMEPAGE: https://themefisher.com/products/aviato-e-commerce-template/
+DEMO: https://demo.themefisher.com/aviato/
+GITHUB: https://github.com/themefisher/Aviato-E-Commerce-Template/
+
+WEBSITE: https://themefisher.com
+TWITTER: https://twitter.com/themefisher
+FACEBOOK: https://www.facebook.com/themefisher
+-->
+
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤드-->
+<th:block th:replace="/ubooks/common/header :: headFragment"></th:block>
+
+<body id="body">
+
+<script>
+	alert("아이디 또는 비밀번호가 오류")
+	location.href="/login";
+</script>
+
+<!-- 공통 스크립트-->
+<th:block th:replace="/ubooks/common/script :: scriptFragment"></th:block>
+    
+
+
+</body>
+</html>

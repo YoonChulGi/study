@@ -8,4 +8,5 @@ import spb.ubooks.dto.MemberDto;
 public interface MemberMapper {
 	public int selectIdCheck(String memberId) throws Exception;
 	public void insertMember(MemberDto member) throws Exception;
+	public MemberDto selectMemberCheck(String memberId) throws Exception;
 }

@@ -1,5 +1,8 @@
 package spb.ubooks.service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,5 +36,27 @@ public class MemberServiceImpl implements MemberService{
 			member.setMemberPw(passwordEncoder.encode(member.getMemberPw())); // BCryptPasswordEncoder
 			memberMapper.insertMember(member);
 		}
+	}
+
+	@Override
+	public String loginMember(MemberDto member, HttpServletRequest request) throws Exception {
+		
+		MemberDto m = memberMapper.selectMemberCheck(member.getMemberId());
+		
+		if(member!= null) {
+			if(passwordEncoder.matches(member.getMemberPw(), m.getMemberPw())) { // 로그인 성공
+				HttpSession session = request.getSession();
+				session.setAttribute("memberId", m.getMemberId());
+				session.setAttribute("memberName", m.getMemberName());
+				return "redirect:/";
+			}
+		}
+		return "redirect:/loginFail";
+	}
+
+	@Override
+	public void logoutMember(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.invalidate();
 	}
 }
