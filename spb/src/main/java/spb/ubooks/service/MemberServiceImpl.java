@@ -43,7 +43,7 @@ public class MemberServiceImpl implements MemberService{
 		
 		MemberDto m = memberMapper.selectMemberCheck(member.getMemberId());
 		
-		if(member!= null) {
+		if(m!= null) {
 			if(passwordEncoder.matches(member.getMemberPw(), m.getMemberPw())) { // 로그인 성공
 				HttpSession session = request.getSession();
 				session.setAttribute("memberId", m.getMemberId());
@@ -54,9 +54,9 @@ public class MemberServiceImpl implements MemberService{
 		return "redirect:/loginFail";
 	}
 
-	@Override
-	public void logoutMember(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		session.invalidate();
-	}
+//	@Override
+//	public void logoutMember(HttpServletRequest request) {
+//		HttpSession session = request.getSession();
+//		session.invalidate();
+//	}
 }

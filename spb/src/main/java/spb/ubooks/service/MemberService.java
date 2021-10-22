@@ -8,5 +8,5 @@ public interface MemberService {
 	public int checkId(String memberId) throws Exception;
 	public void insertMember(MemberDto member) throws Exception;
 	public String loginMember(MemberDto member, HttpServletRequest request) throws Exception;
-	public void logoutMember(HttpServletRequest request);
+	//public void logoutMember(HttpServletRequest request);
 }

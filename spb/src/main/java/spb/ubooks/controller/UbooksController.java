@@ -1,6 +1,7 @@
 package spb.ubooks.controller;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
 import spb.ubooks.dto.MemberDto;
+import spb.ubooks.entity.CartEntity;
 import spb.ubooks.mapper.CombookMapper;
+import spb.ubooks.service.CartService;
 import spb.ubooks.service.MemberService;
 import spb.ubooks.service.SearchService;
 
@@ -28,10 +31,13 @@ public class UbooksController {
 
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	CartService cartService;
 
 	@Autowired
 	CombookMapper combookMapper;
-
+	
 	@RequestMapping(value = { "/", "/index" })
 	public ModelAndView ubooksHome() throws Exception {
 		log.debug("ubooksHome");
@@ -53,9 +59,11 @@ public class UbooksController {
 	}
 
 	@RequestMapping("/cart")
-	public ModelAndView ubooksCart() throws Exception {
+	public ModelAndView ubooksCart(HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/shop/cart");
+		mv.addObject("list", cartService.selectCartList(request));
 		return mv;
+	
 	}
 
 	@RequestMapping("/pricing")
@@ -154,12 +162,6 @@ public class UbooksController {
 	public ModelAndView memberLoginFail() throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/pages/loginFail");
 		return mv;
-	}
-	
-	@RequestMapping("/memberLogout")
-	public String memberLogout(HttpServletRequest request) throws Exception {
-		memberService.logoutMember(request);
-		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/signin", method = RequestMethod.GET)

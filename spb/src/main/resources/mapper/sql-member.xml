@@ -28,7 +28,7 @@
 				#{memberName},
 				#{memberContact},
 				NOW()
-			)
+			)	
 		]]>
 	</insert>
 	

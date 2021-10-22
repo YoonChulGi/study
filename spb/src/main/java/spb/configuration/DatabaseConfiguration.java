@@ -1,5 +1,7 @@
 package spb.configuration;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -67,8 +69,10 @@ public class DatabaseConfiguration {
 		return new DataSourceTransactionManager(dataSource());
 	} // 스프링이 제공하는 트랜잭션 매니저를 등록
    
-   
-   
-   
+   @Bean
+   @ConfigurationProperties(prefix="spring.jpa")
+   public Properties hibernateConfig() {
+   	return new Properties();
+   }
    
 }
