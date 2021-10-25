@@ -1,5 +1,6 @@
 package spb.ubooks.controller;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,11 +62,22 @@ public class UbooksController {
 	@RequestMapping("/cart")
 	public ModelAndView ubooksCart(HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/shop/cart");
-		mv.addObject("list", cartService.selectCartList(request));
+		List<CartEntity> cartList = cartService.selectCartList(request);
+		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
+		for(CartEntity c : cartList) {
+			Map<String,Object> m = searchService.searchOneAsMap("combook_*", c.getBookId());
+			m.put("qty", c.getQty());
+			resultList.add(m);
+		}
+		mv.addObject("resultList", resultList);
 		return mv;
-	
 	}
-
+	
+	@RequestMapping("/addCart/{bookId}/{qty}")
+	public String ubooksAddCart(HttpServletRequest request, @PathVariable("bookId")int bookId, @PathVariable("qty")int qty) throws Exception {
+		Map<String, Object> searchResult = searchService.searchOneAsMap("combook_*",bookId);
+		return cartService.addCart(searchResult, qty, request);
+	}
 	@RequestMapping("/pricing")
 	public ModelAndView ubooksPricing() throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/shop/pricing");
@@ -248,11 +260,6 @@ public class UbooksController {
 		log.debug("complete-works");
 		ModelAndView mv = new ModelAndView("/ubooks/buy/complete-works");
 		mv.addObject("res", searchService.sendHighLevelApi("combook_*", sort, department, publisher, age)); // elasticsearch
-																											// - high
-																											// level
-																											// client -
-																											// search
-
 		mv.addObject("departmentsList", combookMapper.selectDepartments()); // departments - mariadb
 		mv.addObject("publishersList", combookMapper.selectPublishers()); // publishers - mariadb
 		mv.addObject("agesList", combookMapper.selectAges()); // ages - mariadb

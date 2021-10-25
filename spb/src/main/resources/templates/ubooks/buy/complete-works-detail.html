@@ -82,31 +82,6 @@ FACEBOOK: https://www.facebook.com/themefisher
 			<div class="col-md-7">
 				<div class="single-product-details">
 					<h2 th:text="${res.title}" ></h2>
-					
-					<!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, velit, sunt temporibus, nulla accusamus similique sapiente tempora, at atque cumque assumenda minus asperiores est esse sequi dolore magnam. Debitis, explicabo.</p> -->
-					<!-- <div class="color-swatches">
-						<span>color:</span>
-						<ul>
-							<li>
-								<a href="#!" class="swatch-violet"></a>
-							</li>
-							<li>
-								<a href="#!" class="swatch-black"></a>
-							</li>
-							<li>
-								<a href="#!" class="swatch-cream"></a>
-							</li>
-						</ul>
-					</div> -->
-					<!-- <div class="product-size">
-						<span>Size:</span>
-						<select class="form-control">
-							<option>S</option>
-							<option>M</option>
-							<option>L</option>
-							<option>XL</option>
-						</select>
-					</div> -->
 					<div class="product-category">
 						<span>판매가:</span>
 						<ul>
@@ -176,7 +151,8 @@ FACEBOOK: https://www.facebook.com/themefisher
 							<input id="product-quantity" type="text" value="0" name="product-quantity">
 						</div>
 					</div>
-					<a href="/cart" class="btn btn-main mt-20">Add To Cart</a>
+					<input type="hidden" id="bookId" th:value="${res.book_id}" />
+					<a id="addCartBtn" href="#!" class="btn btn-main mt-20">장바구니에 추가</a>
 				</div>
 			</div>
 		</div>

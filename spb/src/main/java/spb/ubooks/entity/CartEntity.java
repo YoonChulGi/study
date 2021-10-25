@@ -17,14 +17,15 @@ import lombok.NoArgsConstructor;
 public class CartEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int basketIdx;
+	private int cartIdx;
 	
 	@Column(nullable=false)
 	private String memberId;
 	
 	@Column(nullable=false)
-	private String bookId;
+	private int bookId;
 	
 	@Column(nullable=false)
 	private int qty;
+	
 }

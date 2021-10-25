@@ -239,6 +239,16 @@
 		$("#loginForm").submit();
 	});
 	
+	$("#addCartBtn").on("click",()=>{
+		let bookId = $("#bookId").val();
+		let qty = $("#product-quantity").val();
+		if(qty > 0) {
+			location.href="/addCart/" + bookId + '/' + qty;
+		} else {
+			alert("장바구니에 추가하려면 수량이 0보다 커야합니다.");
+		}
+	});
+	
 	
 	for(let i=0;i<$(".cateAge").length;i++) {
 		if($("#age").val() == $(".cateAge")[i].innerText) {
