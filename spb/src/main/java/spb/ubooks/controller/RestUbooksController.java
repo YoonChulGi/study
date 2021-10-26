@@ -1,5 +1,10 @@
 package spb.ubooks.controller;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
+import spb.ubooks.entity.CartEntity;
+import spb.ubooks.service.CartService;
 import spb.ubooks.service.MemberService;
 import spb.ubooks.service.SearchService;
 
@@ -22,6 +29,9 @@ public class RestUbooksController {
 	@Autowired 
 	private MemberService memberService;
 	
+	@Autowired
+	private CartService cartService;
+	
 	@RequestMapping(value="/searchOne/{bookId}", method=RequestMethod.GET) 
 	public String searchOne(@PathVariable("bookId") int bookId, HttpServletResponse response) throws Exception {
 		log.debug("/searchOne/" + bookId);
@@ -33,5 +43,10 @@ public class RestUbooksController {
 	@RequestMapping(value="/checkId/{memberId}", method=RequestMethod.GET) 
 	public int checkId(@PathVariable("memberId") String memberId) throws Exception {
 		return memberService.checkId(memberId);
+	}
+	
+	@RequestMapping(value="/getCartList", method=RequestMethod.GET)
+	public List<Map<String, Object>> getCartList(HttpServletRequest request) throws Exception {
+		return cartService.getCartList(request);
 	}
 }

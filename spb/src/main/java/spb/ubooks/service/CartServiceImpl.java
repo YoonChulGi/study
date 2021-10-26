@@ -1,5 +1,6 @@
 package spb.ubooks.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,13 +20,20 @@ public class CartServiceImpl implements CartService{
 	
 	@Autowired
 	CartRepository cartRepository;
+	
+	@Autowired
+	SearchService searchService;
 
 	@Override
 	public List<CartEntity> selectCartList(HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession();
-		String memberId = session.getAttribute("memberId").toString().trim();
-		log.debug(memberId);
-		return cartRepository.findAllByMemberId(memberId);
+		if(session.getAttribute("memberId")!=null) {
+			String memberId = session.getAttribute("memberId").toString().trim();
+			log.debug(memberId);
+			return cartRepository.findAllByMemberId(memberId);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -38,6 +46,41 @@ public class CartServiceImpl implements CartService{
 		cartEntity.setQty(qty);
 		cartRepository.save(cartEntity);
 		return "redirect:/cart";
+	}
+
+	@Override
+	public void deleteCart(String book_id, HttpServletRequest request) throws Exception {
+		log.debug("book_id: "+book_id);
+		String [] bookIds = book_id.split(",");
+		int[] bookIdsInt = new int[bookIds.length];
+		for(int i=0;i<bookIds.length;i++) {
+			bookIdsInt[i] = Integer.parseInt(bookIds[i]);
+		}
+		
+		HttpSession session = request.getSession();
+		if(session.getAttribute("memberId")!=null) {
+			String memberId = session.getAttribute("memberId").toString();
+			cartRepository.deleteAllByMemberIdAndBookIdIn(memberId, bookIdsInt);
+		}
+	}
+
+	@Override
+	public List<Map<String, Object>> getCartList(HttpServletRequest request) throws Exception {
+		List<CartEntity> cartList = this.selectCartList(request);
+		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
+		HttpSession session = request.getSession();
+		if(session.getAttribute("memberId")!=null) { // 로그인시
+			if(cartList!=null) {
+				for(CartEntity c : cartList) {
+					Map<String,Object> m = searchService.searchOneAsMap("combook_*", c.getBookId());
+					m.put("qty", c.getQty());
+					resultList.add(m);
+				}
+			}
+		} else { // 비로그인시
+			
+		}
+		return resultList;
 	}
 
 }

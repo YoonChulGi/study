@@ -8,5 +8,6 @@ import org.springframework.data.repository.query.Param;
 import spb.ubooks.entity.CartEntity;
 
 public interface CartRepository extends CrudRepository<CartEntity,Integer>{
-	List<CartEntity> findAllByMemberId(@Param("memberId")String memberId);
+	List<CartEntity> findAllByMemberId(@Param("memberId")String memberId) throws Exception;
+	long deleteAllByMemberIdAndBookIdIn(String memberId, int[] bookIds) throws Exception;
 }

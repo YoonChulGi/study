@@ -19,7 +19,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 <th:block th:replace="/ubooks/common/header :: headFragment"></th:block>
 
 <body id="body">
-<th:block th:text="${resultList.get(0)}"/>
+<!-- <th:block th:text="${resultList.get(0)}"/> -->
 	
 
 <!-- Start Top Header Bar -->
@@ -47,7 +47,7 @@ FACEBOOK: https://www.facebook.com/themefisher
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
-          <div class="block">
+          <div class="block" th:if="${#lists.size(resultList)}">
             <div class="product-list">
               <form method="post">
                 <table class="table">
@@ -62,12 +62,12 @@ FACEBOOK: https://www.facebook.com/themefisher
                   <tbody>
                     <tr th:each="list : ${resultList}"class="">
                     <td>
-                    	<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    	<input class="form-check-input" type="checkbox" th:value="${list.book_id}" name="cartCheck">
                     </td>
                       <td class="">
                         <div class="product-info">
                           <img width="80" th:src="|@{${#strings.arraySplit(list.images,'|')[0]}}|" alt="" />
-                          <a href="#!" th:text="${list.title}">Sunglass</a>
+                          <a th:href="|/complete-works/${list.book_id}|" th:text="${list.title}"></a>
                         </div>
                       </td>
                       <td class="" th:text="${#numbers.formatInteger(list.price, 0, 'DEFAULT') + '&#8361;'}"></td>
@@ -77,12 +77,13 @@ FACEBOOK: https://www.facebook.com/themefisher
                   </tbody>
                 </table>
                 <div class="pull-right">
-	                <a href="/checkout" class="btn btn-main ">삭제하기</a>
-	                <a href="/checkout" class="btn btn-main ">구매하기</a>
+	                <a href="#!" class="btn btn-main" id="deleteCart">삭제하기</a>
+	                <a href="/checkout" class="btn btn-main">구매하기</a>
                 </div>
               </form>
             </div>
           </div>
+		  <div th:unless="${#lists.size(resultList)}"class="alert alert-warning alert-common" role="alert"><i class="tf-ion-alert-circled"></i><span>장바구니가 비었습니다.</span> 찜하고 싶은 상품을 장바구니에 담아주세요!</div>        
         </div>
       </div>
     </div>

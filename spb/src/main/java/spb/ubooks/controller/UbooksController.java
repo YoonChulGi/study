@@ -62,14 +62,7 @@ public class UbooksController {
 	@RequestMapping("/cart")
 	public ModelAndView ubooksCart(HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/shop/cart");
-		List<CartEntity> cartList = cartService.selectCartList(request);
-		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
-		for(CartEntity c : cartList) {
-			Map<String,Object> m = searchService.searchOneAsMap("combook_*", c.getBookId());
-			m.put("qty", c.getQty());
-			resultList.add(m);
-		}
-		mv.addObject("resultList", resultList);
+		mv.addObject("resultList", cartService.getCartList(request));
 		return mv;
 	}
 	
@@ -77,6 +70,12 @@ public class UbooksController {
 	public String ubooksAddCart(HttpServletRequest request, @PathVariable("bookId")int bookId, @PathVariable("qty")int qty) throws Exception {
 		Map<String, Object> searchResult = searchService.searchOneAsMap("combook_*",bookId);
 		return cartService.addCart(searchResult, qty, request);
+	}
+	
+	@RequestMapping("/deleteCart")
+	public String ubooksDeleteCart(HttpServletRequest request, @RequestParam("book_id")String book_id) throws Exception {
+		cartService.deleteCart(book_id, request);
+		return "redirect:/cart";
 	}
 	@RequestMapping("/pricing")
 	public ModelAndView ubooksPricing() throws Exception {

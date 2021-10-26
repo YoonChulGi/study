@@ -249,6 +249,33 @@
 		}
 	});
 	
+	$("#deleteCart").on("click",()=>{
+		let checkBoxes = $("input:checkbox[name='cartCheck']"); /*.is(":checked")*/
+		let cnt = 0;
+		let book_id = '';
+		for(let i=0;i<checkBoxes.length;i++) {
+			if($(checkBoxes[i]).is(":checked")) {
+				book_id += $(checkBoxes[i]).val() + ',';
+				cnt ++;
+			}
+		}
+		if(cnt > 0) {
+			var newForm = $('<form></form>'); //set attribute (form) 
+			newForm.attr("name","deleteCartForm"); 
+			newForm.attr("method","post"); 
+			newForm.attr("action","/deleteCart");
+			// newForm.attr("target","_blank"); 
+			// create element & set attribute (input) 
+			newForm.append($('<input/>', {type: 'hidden', name: 'book_id', value:book_id })); 
+			// append form (to body) 
+			newForm.appendTo('body'); 
+			// submit form 
+			newForm.submit();
+		} else {
+			alert('선택된 상품이 없습니다.');
+		}
+	});
+	
 	
 	for(let i=0;i<$(".cateAge").length;i++) {
 		if($("#age").val() == $(".cateAge")[i].innerText) {
@@ -267,6 +294,8 @@
 			$($(".cateDepartment")[i].children[0]).css("font-weight","bold");
 		}
 	}
+	getCartList(); 
+	
 	
 	
 })(jQuery);
@@ -296,10 +325,29 @@ function prevAjax(book_id) {
 			console.error(error);
 		}
 	});
+	
+	
 }
 
 function addComma(value){
     value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return value; 
+}
+
+function getCartList(){
+	$.ajax({
+			type: "GET",
+			url: "/getCartList",
+			success: function(data) {
+				for(let i=0;i<data.length;i++) {
+					console.dir(data[i].title);
+				}
+			}, 
+			error:function(request,status,error) {
+				console.dir(request);
+				console.dir(status);
+				console.error(error);
+			}
+		});
 }
 
