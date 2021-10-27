@@ -1,11 +1,10 @@
 package spb.ubooks.controller;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
 import spb.ubooks.dto.MemberDto;
-import spb.ubooks.entity.CartEntity;
 import spb.ubooks.mapper.CombookMapper;
 import spb.ubooks.service.CartService;
 import spb.ubooks.service.MemberService;
@@ -67,14 +65,14 @@ public class UbooksController {
 	}
 	
 	@RequestMapping("/addCart/{bookId}/{qty}")
-	public String ubooksAddCart(HttpServletRequest request, @PathVariable("bookId")int bookId, @PathVariable("qty")int qty) throws Exception {
-		Map<String, Object> searchResult = searchService.searchOneAsMap("combook_*",bookId);
-		return cartService.addCart(searchResult, qty, request);
+	public String ubooksAddCart(HttpServletRequest request,HttpServletResponse response, @PathVariable("bookId")int bookId, @PathVariable("qty")int qty) throws Exception {
+		cartService.addCart(searchService.searchOneAsMap("combook_*",bookId), qty, request, response);
+		return "redirect:/cart";
 	}
 	
 	@RequestMapping("/deleteCart")
-	public String ubooksDeleteCart(HttpServletRequest request, @RequestParam("book_id")String book_id) throws Exception {
-		cartService.deleteCart(book_id, request);
+	public String ubooksDeleteCart(HttpServletRequest request, HttpServletResponse response, @RequestParam("book_id")String book_id) throws Exception {
+		cartService.deleteCart(book_id, request, response);
 		return "redirect:/cart";
 	}
 	@RequestMapping("/pricing")

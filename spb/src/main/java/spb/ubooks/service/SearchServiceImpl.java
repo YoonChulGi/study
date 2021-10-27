@@ -275,6 +275,12 @@ public class SearchServiceImpl implements SearchService{
 		SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 		SearchHits hits = searchResponse.getHits();
 		SearchHit[] searchHits = hits.getHits();
-		return searchHits[0].getSourceAsMap();
+		TotalHits totalHits = hits.getTotalHits();
+		if(totalHits.value > 0) {
+			return searchHits[0].getSourceAsMap();
+		} else {
+			return null;
+		}
+		
 	}
 }

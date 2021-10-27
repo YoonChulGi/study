@@ -249,6 +249,7 @@
 		}
 	});
 	
+	// /cart 에서 checkbox delete 
 	$("#deleteCart").on("click",()=>{
 		let checkBoxes = $("input:checkbox[name='cartCheck']"); /*.is(":checked")*/
 		let cnt = 0;
@@ -275,6 +276,8 @@
 			alert('선택된 상품이 없습니다.');
 		}
 	});
+	
+	
 	
 	
 	for(let i=0;i<$(".cateAge").length;i++) {
@@ -315,6 +318,7 @@ function prevAjax(book_id) {
 			$("#cardPreviewImage").attr('src',image);
 			$('#cardPreviewImage').css("display", "block");   
 			$('#modal-cart').css("display", "inline-block");
+			$('#modal-cart').attr("href", "/addCart/" + text.book_id + "/1");
 			$('#modal-detail').attr('href','/complete-works/' + text.book_id);
 			$('#modal-detail').css("display", "inline-block");
 			// console.dir(text.title);
@@ -339,10 +343,56 @@ function getCartList(){
 			type: "GET",
 			url: "/getCartList",
 			success: function(data) {
+				let str = '';
+				let totalPrice = 0;
 				for(let i=0;i<data.length;i++) {
 					console.dir(data[i].title);
+					str += '<div class="media" id="cart_'+data[i].book_id+'">';
+					str += '	<a class="pull-left" href="#!">';
+					str += '		<img class="media-object" src="'+ data[i].images.split('|')[0] +'" alt="image" />';
+					str += '	</a>';
+					str += '	<div class="media-body">';
+					str += '		<h4 class="media-heading"><a href="#!">'+data[i].title+'</a></h4>';
+					str += '		<div class="cart-price">';
+					str += '			<span>'+data[i].qty+' x</span>';
+					str += '			<span>'+addComma(data[i].price)+'</span>';
+					str += '		</div>';
+					str += '		<h5><strong id="price_'+data[i].book_id+'">₩'+addComma(data[i].qty*data[i].price)+'</strong></h5>'; totalPrice += (data[i].qty*data[i].price);
+					str += '	</div>';
+					str += '	<a href="javascript:removeCartOne('+data[i].book_id+')" class="remove"><i class="tf-ion-close"></i></a>';
+					str += '</div>';
 				}
+				str += '<div class="cart-summary">';
+				str += '	<span>Total</span>';
+				str += '	<span class="total-price" id="cart-total-price">₩'+addComma(totalPrice)+'</span>';
+				str += '</div>';
+				str += '<ul class="text-center cart-buttons">';
+				str += '	<li><a href="/cart" class="btn btn-small">장바구니</a></li>';
+				str += '	<li><a href="/checkout" class="btn btn-small btn-solid-border">주문하기</a></li>';
+				str += '</ul>';
+				
+				$("#cartDropdownList").html(str);
 			}, 
+			error:function(request,status,error) {
+				console.dir(request);
+				console.dir(status);
+				console.error(error);
+			}
+		});
+}
+function removeCartOne(book_id){
+	let minusPrice = parseInt($("#price_" +book_id).html().replaceAll(',','').replaceAll('₩',''));
+	let totalPrice =  parseInt($("#cart-total-price").html().replaceAll(',','').replaceAll('₩',''));
+	console.log("minusPrice: " + minusPrice);
+	console.log("totalPrice: " + totalPrice);
+	totalPrice -= minusPrice;
+	$("#cart-total-price").html('₩'+addComma(totalPrice));
+	
+	$("#cart_" + book_id).remove();
+	$.ajax({
+			type: "GET",
+			url: "/deleteCart",
+			data:{"book_id":book_id},
 			error:function(request,status,error) {
 				console.dir(request);
 				console.dir(status);
