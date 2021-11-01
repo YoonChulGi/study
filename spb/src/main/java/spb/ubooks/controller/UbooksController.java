@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
 import spb.ubooks.dto.MemberDto;
+import spb.ubooks.entity.CombookEntity;
 import spb.ubooks.mapper.CombookMapper;
 import spb.ubooks.service.CartService;
 import spb.ubooks.service.MemberService;
@@ -270,11 +271,27 @@ public class UbooksController {
 		return mv;
 	}
 
-	@RequestMapping("/complete-works/{bookId}")
+	@RequestMapping("/complete-works/{bookId}") // 상세보기
 	public ModelAndView ubooksCompleteWorksDetail(@PathVariable("bookId") int bookId) throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/buy/complete-works-detail");
 		mv.addObject("res", searchService.searchOneAsMap("combook_*", bookId));
 		return mv;
+	}
+	
+	@RequestMapping(value="/sell-usedbook", method=RequestMethod.GET)
+	public ModelAndView sellUsedbook(HttpServletRequest request) throws Exception {
+		if(request.getSession().getAttribute("memberId")==null) {
+			return new ModelAndView("/ubooks/common/gotoLogin");
+		} else {
+			ModelAndView mv = new ModelAndView("/ubooks/sell/sell-usedbook");
+			return mv;
+		}
+	}
+	
+	@RequestMapping(value="/sell-usedbook", method=RequestMethod.POST)
+	public String sellUsedbook(CombookEntity combook) throws Exception {
+		log.debug(combook.toString());
+		return "redirect:/complete-works";
 	}
 
 	/********* E:전집 ***********************************************/
@@ -283,12 +300,6 @@ public class UbooksController {
 	@RequestMapping("/usedBooks")
 	public ModelAndView ubooks() throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/shop/usedBooks");
-//		HashMap<String, Object> resultMap = new HashMap();
-//		resultMap.put("key", "data");
-//		ObjectMapper mapper = new ObjectMapper();
-//		String json = mapper.writeValueAsString(resultMap);
-//		String msgMap = sendREST("127.0.0.1", json);
-//		System.out.println("msgMap: " + msgMap);
 		return mv;
 	}
 	/********* E:중고단행본 ***********************************************/
