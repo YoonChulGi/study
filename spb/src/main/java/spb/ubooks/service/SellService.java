@@ -1,9 +1,9 @@
 package spb.ubooks.service;
 
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spb.ubooks.entity.CombookEntity;
 
 public interface SellService {
-	public String RegistProduct(HttpServletRequest request, CombookEntity book) throws Exception;
+	public void registProduct(CombookEntity combook, MultipartHttpServletRequest multipartHttpServletRequest ) throws Exception;
 }

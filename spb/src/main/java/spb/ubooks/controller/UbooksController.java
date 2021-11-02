@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import spb.ubooks.mapper.CombookMapper;
 import spb.ubooks.service.CartService;
 import spb.ubooks.service.MemberService;
 import spb.ubooks.service.SearchService;
+import spb.ubooks.service.SellService;
 
 @Slf4j
 @Controller
@@ -34,6 +36,9 @@ public class UbooksController {
 	
 	@Autowired
 	CartService cartService;
+	
+	@Autowired
+	SellService sellService;
 
 	@Autowired
 	CombookMapper combookMapper;
@@ -289,8 +294,8 @@ public class UbooksController {
 	}
 	
 	@RequestMapping(value="/sell-usedbook", method=RequestMethod.POST)
-	public String sellUsedbook(CombookEntity combook) throws Exception {
-		log.debug(combook.toString());
+	public String sellUsedbook(CombookEntity combook, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
+		sellService.registProduct(combook, multipartHttpServletRequest);
 		return "redirect:/complete-works";
 	}
 

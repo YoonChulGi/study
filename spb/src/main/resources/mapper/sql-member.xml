@@ -38,4 +38,10 @@
 		]]>
 	</select>
 	
+	<select id="selectMemberContactByMemberId" parameterType="string" resultType="string">
+		<![CDATA[
+			select member_contact from spb_member where member_id=#{memberId} and deleted_yn = 'N'
+		]]>
+	</select>
+	
 </mapper>

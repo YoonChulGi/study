@@ -62,6 +62,6 @@ public class CombookEntity {
 	private String sellerContact;
 	
 	@Column(nullable=true)
-	private char deleteYn;
+	private char deleteYn='n';
 	
 }
