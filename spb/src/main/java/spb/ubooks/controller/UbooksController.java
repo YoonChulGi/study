@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
+import spb.ubooks.dto.ComBookIndexDto;
 import spb.ubooks.dto.MemberDto;
 import spb.ubooks.entity.CombookEntity;
 import spb.ubooks.mapper.CombookMapper;
@@ -295,7 +296,8 @@ public class UbooksController {
 	
 	@RequestMapping(value="/sell-usedbook", method=RequestMethod.POST)
 	public String sellUsedbook(CombookEntity combook, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
-		sellService.registProduct(combook, multipartHttpServletRequest);
+		ComBookIndexDto combookIndexDto = sellService.registProduct(combook, multipartHttpServletRequest);
+		sellService.indexProduct(combookIndexDto);
 		return "redirect:/complete-works";
 	}
 

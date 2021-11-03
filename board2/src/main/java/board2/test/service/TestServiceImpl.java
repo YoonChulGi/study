@@ -1,23 +1,13 @@
 package board2.test.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.ActionListener;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.core.TimeValue;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.search.sort.FieldSortBuilder;
-import org.elasticsearch.search.sort.ScoreSortBuilder;
-import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,75 +19,60 @@ public class TestServiceImpl implements TestService{
 	
 	@Autowired
 	RestHighLevelClient client;
-	
+
 	@Override
-	public List<Map<String, Object>> sendHighLevelApi(String indexName, String sort, String department, String publisher,
-			String age) throws Exception {
-		ArrayList<Map<String,Object>> list = null;
-		if("".equals(sort)) sort = "date";
-		log.debug("sort: "+sort);
-		log.debug("publisher: " + publisher);
-		log.debug("department: " + department);
-		log.debug("age: " + age);
-		
-		try {
-			SearchRequest searchRequest = new SearchRequest(indexName);
-			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-			searchSourceBuilder.size(10000);
-			searchSourceBuilder.timeout(new TimeValue(60,TimeUnit.SECONDS));
-			
-			BoolQueryBuilder query = new BoolQueryBuilder();
-			
-			if(!"".equals(publisher)) {
-				query.must(QueryBuilders.matchQuery("publisher.keyword",publisher));
+	public void addIndex() throws Exception {
+		log.debug("addIndex");
+		LocalDateTime now = LocalDateTime.now();
+		String indexName = "combook_";
+		indexName += now.getYear();
+		indexName += ".";
+		indexName += addZero(now.getMonthValue());
+		indexName += ".";
+		indexName += addZero(now.getDayOfMonth());
+		IndexRequest request = new IndexRequest(indexName);
+		request.id();
+		LinkedHashMap<String, Object> doc = new LinkedHashMap<String, Object>();
+		doc.put("book_id", 1000);
+		doc.put("min_age", 5);
+		doc.put("title", "피노키오");
+		doc.put("pub_year", null);
+		doc.put("seller_name", "철철");
+		doc.put("reg_date", "20211102221313");
+		doc.put("shipping_fee", "0");
+		doc.put("images", "/images/73.jpg|/images/74.jpg|/images/75.jpg");
+		doc.put("seller_contact", "010-1313-1313");
+		doc.put("state", "S급입니다");
+		doc.put("max_age", 10);
+		doc.put("department", "예체능");
+		doc.put("new_or_used", "u");
+		doc.put("publisher", "도서출판 아람");
+		doc.put("list_price", 100000);
+		doc.put("price", 50000);
+		request.source(doc);
+		client.indexAsync(request, RequestOptions.DEFAULT, new ActionListener<IndexResponse>() {
+
+			@Override
+			public void onResponse(IndexResponse response) {
+				log.debug("index Success");
+			}
+
+			@Override
+			public void onFailure(Exception e) {
+				e.printStackTrace();
 			}
 			
-			if(!"".equals(department)) {
-				query.must(QueryBuilders.matchQuery("department.keyword", department));
-			}
-			
-			if(!"".equals(age)) {
-				if("초등3학년이상".equals(age) || "초등전학년".equals(age)) {
-					age = age.concat("-"+age);
-				}
-				String minAge = age.split("-")[0];
-				String maxAge = age.split("-")[1].replaceAll("세", "");
-				query.must(QueryBuilders.matchQuery("min_age.keyword", minAge));
-				query.must(QueryBuilders.matchQuery("max_age.keyword", maxAge));
-			}
-			
-			if("".equals(publisher) && "".equals(department) && "".equals(age) ) {
-				searchSourceBuilder.query(QueryBuilders.matchAllQuery());
-			} else {
-				searchSourceBuilder.query(query);
-			}
-			
-			// sort
-			if("date".equals(sort)) {
-				searchSourceBuilder.sort(new FieldSortBuilder("reg_date.keyword").order(SortOrder.ASC)); // 등록일순 정렬
-			} else if("cheap".equals(sort) ) {
-				searchSourceBuilder.sort(new FieldSortBuilder("price").order(SortOrder.ASC)); // 등록일순 정렬
-			} else if("expensive".equals(sort) ) {
-				searchSourceBuilder.sort(new FieldSortBuilder("price").order(SortOrder.DESC)); // 등록일순 정렬
-			}
-			searchSourceBuilder.sort(new ScoreSortBuilder().order(SortOrder.DESC));  // score 높은순 (default)
-			searchRequest.source(searchSourceBuilder);
-			
-			SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-			
-			
-			SearchHits hits = searchResponse.getHits();
-			SearchHit[] searchHits = hits.getHits();
-			list = new ArrayList<Map<String,Object>>();
-			for (SearchHit hit : searchHits) {
-				Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-				// log.debug("sourceAsMap: " + sourceAsMap);
-				list.add(sourceAsMap);
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return list;
+		});
 	}
+	
+	String addZero(int time) {
+		String res = "";
+		if(time<10) {
+			res += "0"+time;
+		} else {
+			res += time;
+		}
+		return res;
+	}
+	
 }

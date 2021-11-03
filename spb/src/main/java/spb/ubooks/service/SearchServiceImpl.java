@@ -189,7 +189,7 @@ public class SearchServiceImpl implements SearchService{
 			
 			// sort
 			if("date".equals(sort)) {
-				searchSourceBuilder.sort(new FieldSortBuilder("reg_date.keyword").order(SortOrder.ASC)); // 등록일순 정렬
+				searchSourceBuilder.sort(new FieldSortBuilder("reg_date.keyword").order(SortOrder.DESC)); // 등록일순 정렬
 			} else if("cheap".equals(sort) ) {
 				searchSourceBuilder.sort(new FieldSortBuilder("price").order(SortOrder.ASC)); // 등록일순 정렬
 			} else if("expensive".equals(sort) ) {
@@ -229,6 +229,7 @@ public class SearchServiceImpl implements SearchService{
 			for (SearchHit hit : searchHits) {
 				Map<String, Object> sourceAsMap = hit.getSourceAsMap();
 				// log.debug("sourceAsMap: " + sourceAsMap);
+				sourceAsMap.put("images", sourceAsMap.get("images").toString().replaceAll("/dev/workspace/spb/src/main/resources/static", ""));
 				list.add(sourceAsMap);
 			}
 			
