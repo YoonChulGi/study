@@ -9,4 +9,5 @@ public interface CombookMapper {
 	List<String> selectDepartments() throws Exception;
 	List<String> selectPublishers() throws Exception;
 	List<String> selectAges() throws Exception;
+	List<Integer> selectNextPrevBookIds(int bookId) throws Exception;
 }

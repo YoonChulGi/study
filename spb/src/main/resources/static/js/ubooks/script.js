@@ -314,7 +314,7 @@ function prevAjax(book_id) {
 			$("#modal-title").text(text.title);
 			$("#modal-price").text('₩'+addComma(text.price));
 			$("#modal-state").text(text.state);
-			let image = text.images.split('|')[0];
+			let image = text.images.split('|')[0].replaceAll("/dev/workspace/spb/src/main/resources/static", "");
 			$("#cardPreviewImage").attr('src',image);
 			$('#cardPreviewImage').css("display", "block");   
 			$('#modal-cart').css("display", "inline-block");

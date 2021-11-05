@@ -1,6 +1,5 @@
 package spb.ubooks.controller;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
-import spb.ubooks.entity.CartEntity;
 import spb.ubooks.service.CartService;
 import spb.ubooks.service.MemberService;
 import spb.ubooks.service.SearchService;
@@ -37,7 +35,7 @@ public class RestUbooksController {
 		log.debug("/searchOne/" + bookId);
 		response.setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");
-		return searchService.searchOneAsJson("combook_*", bookId);
+		return searchService.searchOneAsJson("combook*", bookId);
 	}
 	
 	@RequestMapping(value="/checkId/{memberId}", method=RequestMethod.GET) 

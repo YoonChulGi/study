@@ -141,7 +141,7 @@ public class CartServiceImpl implements CartService{
 		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
 		if(cartList!=null) {
 			for(CartEntity c : cartList) {
-				Map<String,Object> m = searchService.searchOneAsMap("combook_*", c.getBookId());
+				Map<String,Object> m = searchService.searchOneAsMap("combook*", c.getBookId());
 				if(m!=null) {
 					m.put("qty", c.getQty());
 					resultList.add(m);

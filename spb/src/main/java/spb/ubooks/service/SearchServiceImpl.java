@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -30,6 +31,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
+import spb.ubooks.mapper.CombookMapper;
+import spb.ubooks.repository.CombookRepository;
 
 @Slf4j
 @Transactional
@@ -38,6 +41,12 @@ public class SearchServiceImpl implements SearchService{
 	
 	@Autowired
 	RestHighLevelClient client;
+	
+	@Autowired
+	CombookRepository comBookRepository;
+	
+	@Autowired
+	CombookMapper combookMapper;
 
 	@Override
 	public String sendREST(String sendUrl, String jsonValue) throws IllegalStateException {
@@ -260,7 +269,6 @@ public class SearchServiceImpl implements SearchService{
 		SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 		SearchHits hits = searchResponse.getHits();
 		SearchHit[] searchHits = hits.getHits();
-		
 		return searchHits[0].getSourceAsString();
 	}
 
@@ -277,8 +285,21 @@ public class SearchServiceImpl implements SearchService{
 		SearchHits hits = searchResponse.getHits();
 		SearchHit[] searchHits = hits.getHits();
 		TotalHits totalHits = hits.getTotalHits();
+		
 		if(totalHits.value > 0) {
-			return searchHits[0].getSourceAsMap();
+			Map<String, Object> m = searchHits[0].getSourceAsMap();
+			m.put("images",  m.get("images").toString().replaceAll("/dev/workspace/spb/src/main/resources/static", ""));
+			m.put("nextBid", 0);
+			m.put("prevBid", 0);
+			List<Integer> nextPrevBids = combookMapper.selectNextPrevBookIds(bookId);
+			for(Integer i : nextPrevBids) {
+				if(i > bookId) {
+					m.put("nextBid", i);
+				} else {
+					m.put("prevBid", i);
+				}
+			}
+			return m;
 		} else {
 			return null;
 		}

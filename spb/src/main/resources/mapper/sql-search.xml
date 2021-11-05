@@ -24,5 +24,22 @@
 			order by age
 		]]>
 	</select>
+	<select id="selectNextPrevBookIds" parameterType="int" resultType="int">
+		<![CDATA[
+			(SELECT 
+				BOOK_ID
+			FROM
+				combook c 
+			WHERE BOOK_ID >#{book_id} limit 1)
+			union
+			(SELECT
+				BOOK_ID
+			FROM
+				combook c 
+			WHERE BOOK_ID <#{book_id} order by BOOK_ID desc limit 1)
+		]]>
+	</select>
+	
+	
 	
 </mapper>

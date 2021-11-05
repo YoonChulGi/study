@@ -53,18 +53,18 @@ public class SellServiceImpl implements SellService{
 		String memberId = session.getAttribute("memberId").toString();
 		String sellerName = session.getAttribute("memberName").toString();
 		String sellerContact = memberMapper.selectMemberContactByMemberId(memberId);
-		combook.setSellerName(sellerName);
-		combook.setSellerContact(sellerContact);
-		String minAge = combook.getMinAge();
+		combook.setSeller_name(sellerName);
+		combook.setSeller_contact(sellerContact);
+		String minAge = combook.getMin_age();
 		
 		ComBookIndexDto combookIndexDto = null;
 		
 		if("초등전학년".equals(minAge) || "초등3학년이상".equals(minAge)) {
-			combook.setMaxAge(combook.getMinAge());
+			combook.setMax_age(combook.getMin_age());
 		} else {
-			String[] minMaxAges = combook.getMinAge().split("-");
-			combook.setMinAge(minMaxAges[0]);
-			combook.setMaxAge(minMaxAges[1]);
+			String[] minMaxAges = combook.getMin_age().split("-");
+			combook.setMin_age(minMaxAges[0]);
+			combook.setMax_age(minMaxAges[1]);
 		}
 		LocalDateTime now = LocalDateTime.now();
 		String regDate = ""; 
@@ -75,10 +75,10 @@ public class SellServiceImpl implements SellService{
 		regDate += addZero(now.getHour());
 		regDate += addZero(now.getMinute());
 		regDate += addZero(now.getSecond());
-		combook.setRegDate(regDate);
+		combook.setReg_date(regDate);
 		
 		CombookEntity ce = combookRepository.save(combook);
-		int bookId = ce.getBookId();
+		int bookId = ce.getBook_id();
 		
 		Iterable<FileEntity> it = null;
 		List<FileEntity> list = fileUtils.parseFileInfo(multipartHttpServletRequest,bookId);
@@ -101,7 +101,7 @@ public class SellServiceImpl implements SellService{
 	public void indexProduct(ComBookIndexDto combookIndexDto) throws Exception {
 		log.debug("addIndex");
 		LocalDateTime now = LocalDateTime.now();
-		String indexName = "combook_";
+		String indexName = "combook";
 		indexName += now.getYear();
 		indexName += ".";
 		indexName += addZero(now.getMonthValue());

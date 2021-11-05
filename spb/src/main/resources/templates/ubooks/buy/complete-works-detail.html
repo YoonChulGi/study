@@ -19,7 +19,6 @@ FACEBOOK: https://www.facebook.com/themefisher
 <th:block th:replace="/ubooks/common/header :: headFragment"></th:block>
 
 <body id="body">
-<p th:text="${res}"></p>
 <!-- Start Top Header Bar -->
 <th:block th:replace="/ubooks/common/top :: headTop"></th:block>
 <section class="single-product">
@@ -28,14 +27,14 @@ FACEBOOK: https://www.facebook.com/themefisher
 			<div class="col-md-6">
 				<ol class="breadcrumb">
 					<li><a href="/index">Home</a></li>
-					<li><a href="/shop">Shop</a></li>
-					<li class="active">Single Product</li>
+					<li><a href="/complete-works">중고책 구매</a></li>
+					<li class="active">제품 상세</li>
 				</ol>
 			</div>
 			<div class="col-md-6">
 				<ol class="product-pagination text-right">
-					<li><a href="/blog-left-sidebar"><i class="tf-ion-ios-arrow-left"></i> Next </a></li>
-					<li><a href="/blog-left-sidebar">Preview <i class="tf-ion-ios-arrow-right"></i></a></li>
+					<li th:if="${res.nextBid} > 0"><a th:href="|/complete-works/${res.nextBid}|"><i class="tf-ion-ios-arrow-left"></i> Next </a></li>
+					<li th:if="${res.prevBid} > 0"><a th:href="|/complete-works/${res.prevBid}|">Preview <i class="tf-ion-ios-arrow-right"></i></a></li>
 				</ol>
 			</div>
 		</div>

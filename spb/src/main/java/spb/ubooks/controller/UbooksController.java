@@ -73,7 +73,7 @@ public class UbooksController {
 	
 	@RequestMapping("/addCart/{bookId}/{qty}")
 	public String ubooksAddCart(HttpServletRequest request,HttpServletResponse response, @PathVariable("bookId")int bookId, @PathVariable("qty")int qty) throws Exception {
-		cartService.addCart(searchService.searchOneAsMap("combook_*",bookId), qty, request, response);
+		cartService.addCart(searchService.searchOneAsMap("combook*",bookId), qty, request, response);
 		return "redirect:/cart";
 	}
 	
@@ -263,7 +263,7 @@ public class UbooksController {
 
 		log.debug("complete-works");
 		ModelAndView mv = new ModelAndView("/ubooks/buy/complete-works");
-		mv.addObject("res", searchService.sendHighLevelApi("combook_*", sort, department, publisher, age)); // elasticsearch
+		mv.addObject("res", searchService.sendHighLevelApi("combook*", sort, department, publisher, age)); // elasticsearch
 		mv.addObject("departmentsList", combookMapper.selectDepartments()); // departments - mariadb
 		mv.addObject("publishersList", combookMapper.selectPublishers()); // publishers - mariadb
 		mv.addObject("agesList", combookMapper.selectAges()); // ages - mariadb
@@ -280,7 +280,7 @@ public class UbooksController {
 	@RequestMapping("/complete-works/{bookId}") // 상세보기
 	public ModelAndView ubooksCompleteWorksDetail(@PathVariable("bookId") int bookId) throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/buy/complete-works-detail");
-		mv.addObject("res", searchService.searchOneAsMap("combook_*", bookId));
+		mv.addObject("res", searchService.searchOneAsMap("combook*", bookId));
 		return mv;
 	}
 	

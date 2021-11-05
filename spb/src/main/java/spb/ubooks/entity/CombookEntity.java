@@ -17,16 +17,16 @@ import lombok.NoArgsConstructor;
 public class CombookEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int bookId;
+	private int book_id;
 	
 	@Column(nullable=false)
 	private String title;
 	
 	@Column(nullable=false)
-	private String minAge;
+	private String min_age;
 	
 	@Column(nullable=false)
-	private String maxAge;
+	private String max_age;
 	
 	@Column(nullable=false)
 	private String publisher;
@@ -38,30 +38,30 @@ public class CombookEntity {
 	private String state;
 	
 	@Column(nullable=false)
-	private String shippingFee;
+	private String shipping_fee;
 	
 	@Column(nullable=true)
-	private String regDate;
+	private String reg_date;
 	
 	@Column(nullable=true)
-	private String newOrUsed;
+	private String new_or_used;
 	
 	@Column(nullable=true)
-	private int listPrice;
+	private int list_price;
 	
 	@Column(nullable=false)
 	private int price;
 	
 	@Column(nullable=true)
-	private int pubYear;
+	private int pub_year;
 	
 	@Column(nullable=true)
-	private String sellerName;
+	private String seller_name;
 	
 	@Column(nullable=true)
-	private String sellerContact;
+	private String seller_contact;
 	
 	@Column(nullable=true)
-	private char deleteYn='n';
+	private char delete_yn='n';
 	
 }
