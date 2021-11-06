@@ -277,9 +277,6 @@
 		}
 	});
 	
-	
-	
-	
 	for(let i=0;i<$(".cateAge").length;i++) {
 		if($("#age").val() == $(".cateAge")[i].innerText) {
 			$($(".cateAge")[i].children[0]).css("font-weight","bold");
@@ -399,5 +396,13 @@ function removeCartOne(book_id){
 				console.error(error);
 			}
 		});
+}
+
+function updateProduct(bookId) {
+	location.href='/update-usedbook/' + bookId;
+}
+
+function deleteProduct(bookId) {
+	alert(bookId);
 }
 

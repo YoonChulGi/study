@@ -5,15 +5,18 @@
 <body id="body">
 <!-- Start Top Header Bar -->
 <th:block th:replace="/ubooks/common/top :: headTop"></th:block>
+<th:block th:if="${res}" th:text="${res}" />
 <section class="page-header">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="content">
-					<h1 class="page-name">내책 판매</h1>
+					<h1 th:if="${res}" class="page-name">상품 수정</h1>
+					<h1 th:unless="${res}" class="page-name">중고책 판매</h1>
 					<ol class="breadcrumb">
 						<li><a href="/index">Home</a></li>
-						<li class="active">내책 판매</li>
+						<li th:if="${res}" class="active">상품 수정</li>
+						<li th:unless="${res}" class="active">중고책 판매</li>
 					</ol>
 				</div>
 			</div>
@@ -27,44 +30,99 @@
 				<div class="col-md-7 col-md-offset-3">
 					<form id="sellForm" name="sellForm" method="post" enctype="multipart/form-data">
 						<div class="form-group form-inline">
-							책 제목&nbsp;&nbsp;&nbsp;<input class="form-control" id="title" name="title">
+							<th:block th:if="${res}">
+								책 제목&nbsp;&nbsp;&nbsp;<input class="form-control" id="title" name="title" th:value="${res.title}"> 
+							</th:block>
+							<th:block th:unless="${res}">
+								책 제목&nbsp;&nbsp;&nbsp;<input class="form-control" id="title" name="title">
+							</th:block>
 						</div>
 						<div class="form-group form-inline">
-							판매가&nbsp;&nbsp;&nbsp;<input class="form-control" id="price" name="price">
+							<th:block th:if="${res}">
+								판매가&nbsp;&nbsp;&nbsp;<input class="form-control" id="price" name="price" th:value="${res.price}">
+							</th:block>
+							<th:block th:unless="${res}">
+								판매가&nbsp;&nbsp;&nbsp;<input class="form-control" id="price" name="price">
+							</th:block>
 						</div>
 						<div class="form-group form-inline">
-							원가&nbsp;&nbsp;&nbsp;<input class="form-control" id="listPrice" name="list_price">
+							<th:block th:if="${res}">
+								원가&nbsp;&nbsp;&nbsp;<input class="form-control" id="listPrice" name="list_price" th:value="${res.list_price}">
+							</th:block>
+							<th:block th:unless="${res}">
+								원가&nbsp;&nbsp;&nbsp;<input class="form-control" id="listPrice" name="list_price">
+							</th:block>
 						</div>
 						<div class="form-group form-inline">
-							출판사&nbsp;&nbsp;&nbsp;<input class="form-control" id="publisher" name="publisher">
+							<th:block th:if="${res}">
+								출판사&nbsp;&nbsp;&nbsp;<input class="form-control" id="publisher" name="publisher" th:value="${res.publisher}">
+							</th:block>
+							<th:block th:unless="${res}">
+								출판사&nbsp;&nbsp;&nbsp;<input class="form-control" id="publisher" name="publisher">
+							</th:block>
 						</div>
 						<div class="form-group form-inline">
-							출판연도&nbsp;&nbsp;&nbsp;<input class="form-control" id="pubYear" name="pub_year">
+							<th:block th:if="${res}">
+								출판연도&nbsp;&nbsp;&nbsp;<input class="form-control" id="pubYear" name="pub_year" th:value="${res.pub_year}">
+							</th:block>
+							<th:block th:unless="${res}">
+								출판연도&nbsp;&nbsp;&nbsp;<input class="form-control" id="pubYear" name="pub_year">
+							</th:block>
 						</div>
 						<div class="form-group form-inline">
-							분야&nbsp;&nbsp;&nbsp;<input class="form-control" id="department" name="department">
+							<th:block th:if="${res}">
+								분야&nbsp;&nbsp;&nbsp;<input class="form-control" id="department" name="department" th:value="${res.department}">
+							</th:block>
+							<th:block th:unless="${res}">
+								분야&nbsp;&nbsp;&nbsp;<input class="form-control" id="department" name="department">
+							</th:block>
 						</div>
 						<div class="form-group form-inline">
-							적정연령&nbsp;&nbsp;&nbsp;<input class="form-control" id="minAge" name="min_age">
+							<th:block th:if="${res}">
+								적정연령&nbsp;&nbsp;&nbsp;<input class="form-control" id="minAge" name="min_age" th:value="${res.min_age}">
+							</th:block>
+							<th:block th:unless="${res}">
+								적정연령&nbsp;&nbsp;&nbsp;<input class="form-control" id="minAge" name="min_age">
+							</th:block>
 						</div>
 						<div class="form-group form-inline">
 							새책/중고&nbsp;&nbsp;&nbsp;
 							<select class="form-select" aria-label="Default select example" id="newOrUsed" name="new_or_used">
-								<option value="n">새책</option>
-								<option value="u" selected>중고</option>
+								<th:block th:if="${res}">
+									<option th:if="${#strings.equals(res.new_or_used,'n')}" value="n" selected>새책</option>
+									<option th:unless="${#strings.equals(res.new_or_used,'n')}" value="n">새책</option>
+									<option th:if="${#strings.equals(res.new_or_used,'u')}" value="u" selected>중고</option>
+									<option th:unless="${#strings.equals(res.new_or_used,'u')}" value="u">중고</option>
+								</th:block>
+								<th:block th:unless="${res}">
+									<option value="n">새책</option>
+									<option value="u" selected>중고</option>
+								</th:block>
 							</select>
 						</div>
 						<div class="form-group form-inline">
-							배송비&nbsp;&nbsp;&nbsp;<input class="form-control" id="shippingFee" name="shipping_fee">
+							<th:block th:if="${res}">
+								배송비&nbsp;&nbsp;&nbsp;<input class="form-control" id="shippingFee" name="shipping_fee" th:value="${res.shipping_fee}">
+							</th:block>
+							<th:block th:unless="${res}">
+								배송비&nbsp;&nbsp;&nbsp;<input class="form-control" id="shippingFee" name="shipping_fee">
+							</th:block>
 						</div>
 						<div class="form-group form-inline">
-							책 상태&nbsp;&nbsp;&nbsp;<input class="form-control" id="state" name="state">
+							<th:block th:if="${res}">
+								책 상태&nbsp;&nbsp;&nbsp;<input class="form-control" id="state" name="state" th:value="${res.state}">
+							</th:block>
+							<th:block th:unless="${res}">
+								책 상태&nbsp;&nbsp;&nbsp;<input class="form-control" id="state" name="state">
+							</th:block>
 						</div>
 						<div class="form-group form-inline">
 							사진 첨부&nbsp;&nbsp;&nbsp;<input class="form-control" type="file" id="files" name="files" multiple="multiple">
+							<input type="hidden" id="_method" name="_method" value="put" />
 						</div>
 						<div class="form-group form-inline">
-							<input type="submit" class="btn btn-main text-center" value="판매 등록">
+							<input th:if="${res}" type="submit" class="btn btn-main text-center" value="상품 수정">
+							<input th:unless="${res}" type="submit" class="btn btn-main text-center" value="판매 등록">
 						</div>
 					</form>
 				</div>

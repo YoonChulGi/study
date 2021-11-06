@@ -44,6 +44,9 @@ public class CombookEntity {
 	private String reg_date;
 	
 	@Column(nullable=true)
+	private String updated_date;
+	
+	@Column(nullable=true)
 	private String new_or_used;
 	
 	@Column(nullable=true)
@@ -55,10 +58,13 @@ public class CombookEntity {
 	@Column(nullable=true)
 	private int pub_year;
 	
-	@Column(nullable=true)
+	@Column(nullable=false)
+	private String seller_id;
+	
+	@Column(nullable=false)
 	private String seller_name;
 	
-	@Column(nullable=true)
+	@Column(nullable=false)
 	private String seller_contact;
 	
 	@Column(nullable=true)

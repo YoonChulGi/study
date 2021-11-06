@@ -277,11 +277,34 @@ public class UbooksController {
 		return mv;
 	}
 
-	@RequestMapping("/complete-works/{bookId}") // 상세보기
+	@RequestMapping(value="/complete-works/{bookId}", method=RequestMethod.GET) // 상세보기
 	public ModelAndView ubooksCompleteWorksDetail(@PathVariable("bookId") int bookId) throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/buy/complete-works-detail");
 		mv.addObject("res", searchService.searchOneAsMap("combook*", bookId));
 		return mv;
+	}
+	
+	@RequestMapping(value="/update-usedbook/{bookId}", method=RequestMethod.GET)
+	public ModelAndView ubooksUpdateCompleteWorks(@PathVariable("bookId") int bookId,HttpServletRequest request) throws Exception {
+		Map<String,Object> res = searchService.searchOneAsMap("combook*", bookId);
+		if(request.getSession().getAttribute("memberId")==null) {
+			return new ModelAndView("/ubooks/common/gotoLogin");
+		} else if(!request.getSession().getAttribute("memberId").equals(res.get("seller_id").toString())) {
+			return new ModelAndView("/ubooks/common/invalidApproach");
+		} else {
+			ModelAndView mv = new ModelAndView("/ubooks/sell/sell-usedbook");
+			res = sellService.dataSettingForUpdateProduct(res);
+			mv.addObject("res", res);
+			
+			return mv;
+		}
+	}
+	
+	@RequestMapping(value="/update-usedbook/{bookId}", method=RequestMethod.PUT)
+	public String ubooksUpdateUsedbook(@PathVariable("bookId") int bookId,CombookEntity combook, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
+		ComBookIndexDto combookIndexDto = sellService.registProduct(combook, multipartHttpServletRequest,bookId);
+		log.debug(combookIndexDto.toString());
+		return "redirect:/complete-works/"+bookId;
 	}
 	
 	@RequestMapping(value="/sell-usedbook", method=RequestMethod.GET)
@@ -296,7 +319,7 @@ public class UbooksController {
 	
 	@RequestMapping(value="/sell-usedbook", method=RequestMethod.POST)
 	public String sellUsedbook(CombookEntity combook, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
-		ComBookIndexDto combookIndexDto = sellService.registProduct(combook, multipartHttpServletRequest);
+		ComBookIndexDto combookIndexDto = sellService.registProduct(combook, multipartHttpServletRequest,0);
 		sellService.indexProduct(combookIndexDto);
 		return "redirect:/complete-works";
 	}

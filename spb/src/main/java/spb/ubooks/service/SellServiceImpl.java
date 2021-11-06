@@ -48,11 +48,16 @@ public class SellServiceImpl implements SellService{
 	RestHighLevelClient client;
 	
 	@Override
-	public ComBookIndexDto registProduct(CombookEntity combook, MultipartHttpServletRequest multipartHttpServletRequest ) throws Exception {
+	public ComBookIndexDto registProduct(CombookEntity combook, MultipartHttpServletRequest multipartHttpServletRequest,int bid ) throws Exception {
 		HttpSession session = multipartHttpServletRequest.getSession();
 		String memberId = session.getAttribute("memberId").toString();
 		String sellerName = session.getAttribute("memberName").toString();
 		String sellerContact = memberMapper.selectMemberContactByMemberId(memberId);
+		String yyyymmddmiss = "";
+		if(bid!=0) {
+			combook.setBook_id(bid);
+		}
+		combook.setSeller_id(memberId);
 		combook.setSeller_name(sellerName);
 		combook.setSeller_contact(sellerContact);
 		String minAge = combook.getMin_age();
@@ -67,15 +72,21 @@ public class SellServiceImpl implements SellService{
 			combook.setMax_age(minMaxAges[1]);
 		}
 		LocalDateTime now = LocalDateTime.now();
-		String regDate = ""; 
 		
-		regDate += now.getYear();
-		regDate += addZero(now.getMonthValue());
-		regDate += addZero(now.getDayOfMonth());
-		regDate += addZero(now.getHour());
-		regDate += addZero(now.getMinute());
-		regDate += addZero(now.getSecond());
-		combook.setReg_date(regDate);
+		
+		yyyymmddmiss += now.getYear();
+		yyyymmddmiss += addZero(now.getMonthValue());
+		yyyymmddmiss += addZero(now.getDayOfMonth());
+		yyyymmddmiss += addZero(now.getHour());
+		yyyymmddmiss += addZero(now.getMinute());
+		yyyymmddmiss += addZero(now.getSecond());
+		if(bid==0) {
+			combook.setReg_date(yyyymmddmiss);
+		} else {
+			String regDate = combookRepository.findRegDateById(bid);
+			combook.setReg_date(regDate);
+			combook.setUpdated_date(yyyymmddmiss);
+		}
 		
 		CombookEntity ce = combookRepository.save(combook);
 		int bookId = ce.getBook_id();
@@ -152,6 +163,29 @@ public class SellServiceImpl implements SellService{
 			res += time;
 		}
 		return res;
+	}
+
+	@Override
+	public Map<String, Object> dataSettingForUpdateProduct(Map<String, Object> combookMap) throws Exception {
+		
+		String minAge = combookMap.get("min_age").toString();
+		String maxAge = combookMap.get("max_age").toString();
+		if(!("초등3학년이상".equals(minAge) || "초등전학년".equals(minAge))) {
+			combookMap.put("min_age", minAge + "-" + maxAge);
+		}
+		
+		String[] images =  combookMap.get("images").toString().split("|");
+		String imagesRes = "";
+		for(int i=0;i<images.length;i++) {
+			if(i != images.length-1) {
+				imagesRes += "/dev/workspace/spb/src/main/resources/static" + images[i] + "|";
+			} else {
+				imagesRes += "/dev/workspace/spb/src/main/resources/static" + images[i];
+			}
+		}
+		combookMap.put("images", imagesRes);
+		
+		return combookMap;
 	}
 
 
