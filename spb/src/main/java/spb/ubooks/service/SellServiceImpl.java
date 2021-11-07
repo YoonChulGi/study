@@ -47,6 +47,9 @@ public class SellServiceImpl implements SellService{
 	@Autowired
 	RestHighLevelClient client;
 	
+	@Autowired
+	SearchService searchService;
+	
 	@Override
 	public ComBookIndexDto registProduct(CombookEntity combook, MultipartHttpServletRequest multipartHttpServletRequest,int bid ) throws Exception {
 		HttpSession session = multipartHttpServletRequest.getSession();
@@ -155,15 +158,7 @@ public class SellServiceImpl implements SellService{
 		
 	}
 	
-	String addZero(int time) {
-		String res = "";
-		if(time<10) {
-			res += "0"+time;
-		} else {
-			res += time;
-		}
-		return res;
-	}
+	
 
 	@Override
 	public Map<String, Object> dataSettingForUpdateProduct(Map<String, Object> combookMap) throws Exception {
@@ -186,6 +181,31 @@ public class SellServiceImpl implements SellService{
 		combookMap.put("images", imagesRes);
 		
 		return combookMap;
+	}
+
+	@Override
+	public void updateIndexProduct(ComBookIndexDto combookIndexDto) throws Exception {
+		log.debug("updateIndexProduct");
+		int bid = combookIndexDto.getCombook().getBook_id();
+		searchService.searchOneAsMap("combook*", bid);
+//		LocalDateTime now = LocalDateTime.now();
+//		String indexName = "combook";
+//		indexName += now.getYear();
+//		indexName += ".";
+//		indexName += addZero(now.getMonthValue());
+//		indexName += ".";
+//		indexName += addZero(now.getDayOfMonth());
+		
+	}
+	
+	String addZero(int time) {
+		String res = "";
+		if(time<10) {
+			res += "0"+time;
+		} else {
+			res += time;
+		}
+		return res;
 	}
 
 

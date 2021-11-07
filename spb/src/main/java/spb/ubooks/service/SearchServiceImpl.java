@@ -305,4 +305,20 @@ public class SearchServiceImpl implements SearchService{
 		}
 		
 	}
+
+	@Override
+	public String getIndexNameByBookId(String indexNameWithWildCard, int bookId) throws Exception {
+		SearchRequest searchRequest = new SearchRequest(indexNameWithWildCard);
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		searchSourceBuilder.size(1);
+		searchSourceBuilder.timeout(new TimeValue(60,TimeUnit.SECONDS));
+		searchSourceBuilder.query(QueryBuilders.matchQuery("book_id", bookId));
+		searchRequest.source(searchSourceBuilder);
+		
+		SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+		SearchHits hits = searchResponse.getHits();
+		SearchHit[] searchHits = hits.getHits();
+		TotalHits totalHits = hits.getTotalHits();
+		return null;
+	}
 }

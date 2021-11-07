@@ -12,4 +12,6 @@ public interface SearchService {
 	public String searchOneAsJson(String indexName, int bookId) throws Exception;
 	
 	public Map<String,Object> searchOneAsMap(String indexName, int bookId) throws Exception;
+	
+	public String getIndexNameByBookId(String indexNameWithWildCard, int bookId) throws Exception;
 }

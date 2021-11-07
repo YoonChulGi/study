@@ -303,7 +303,7 @@ public class UbooksController {
 	@RequestMapping(value="/update-usedbook/{bookId}", method=RequestMethod.PUT)
 	public String ubooksUpdateUsedbook(@PathVariable("bookId") int bookId,CombookEntity combook, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
 		ComBookIndexDto combookIndexDto = sellService.registProduct(combook, multipartHttpServletRequest,bookId);
-		log.debug(combookIndexDto.toString());
+		sellService.updateIndexProduct(combookIndexDto);
 		return "redirect:/complete-works/"+bookId;
 	}
 	
