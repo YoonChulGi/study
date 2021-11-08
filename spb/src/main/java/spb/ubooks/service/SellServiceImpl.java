@@ -7,9 +7,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -187,15 +190,20 @@ public class SellServiceImpl implements SellService{
 	public void updateIndexProduct(ComBookIndexDto combookIndexDto) throws Exception {
 		log.debug("updateIndexProduct");
 		int bid = combookIndexDto.getCombook().getBook_id();
-		searchService.searchOneAsMap("combook*", bid);
-//		LocalDateTime now = LocalDateTime.now();
-//		String indexName = "combook";
-//		indexName += now.getYear();
-//		indexName += ".";
-//		indexName += addZero(now.getMonthValue());
-//		indexName += ".";
-//		indexName += addZero(now.getDayOfMonth());
+		Map<String,String> indexNameAndId = searchService.getIndexNameAndIdByBookId("combook*",bid); 
+		String indexName = indexNameAndId.get("indexName");
+		String _id = indexNameAndId.get("_id");
 		
+		ObjectMapper objectMapper = new ObjectMapper();
+		Map doc = objectMapper.convertValue(combookIndexDto.getCombook(), Map.class);
+		
+		
+		UpdateRequest request = new UpdateRequest(indexName,_id).doc(doc);
+		try {
+			client.update(request, RequestOptions.DEFAULT);
+		}catch (ElasticsearchException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	String addZero(int time) {

@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -307,7 +308,7 @@ public class SearchServiceImpl implements SearchService{
 	}
 
 	@Override
-	public String getIndexNameByBookId(String indexNameWithWildCard, int bookId) throws Exception {
+	public Map<String,String> getIndexNameAndIdByBookId(String indexNameWithWildCard, int bookId) throws Exception {
 		SearchRequest searchRequest = new SearchRequest(indexNameWithWildCard);
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.size(1);
@@ -318,7 +319,14 @@ public class SearchServiceImpl implements SearchService{
 		SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 		SearchHits hits = searchResponse.getHits();
 		SearchHit[] searchHits = hits.getHits();
-		TotalHits totalHits = hits.getTotalHits();
-		return null;
+		
+		String indexName = searchHits[0].getIndex();
+		String _id = searchHits[0].getId();
+		
+		Map<String,String> result = new LinkedHashMap<String,String>();
+		result.put("indexName", indexName);
+		result.put("_id", _id);
+		
+		return result;
 	}
 }
