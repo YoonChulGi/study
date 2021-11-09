@@ -13,5 +13,5 @@ public interface SearchService {
 	
 	public Map<String,Object> searchOneAsMap(String indexName, int bookId) throws Exception;
 	
-	public Map<String,String> getIndexNameAndIdByBookId(String indexNameWithWildCard, int bookId) throws Exception;
+	public Map<String,String> getIndexNameAndIdAndImagesByBookId(String indexNameWithWildCard, int bookId) throws Exception;
 }

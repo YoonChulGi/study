@@ -308,7 +308,7 @@ public class SearchServiceImpl implements SearchService{
 	}
 
 	@Override
-	public Map<String,String> getIndexNameAndIdByBookId(String indexNameWithWildCard, int bookId) throws Exception {
+	public Map<String,String> getIndexNameAndIdAndImagesByBookId(String indexNameWithWildCard, int bookId) throws Exception {
 		SearchRequest searchRequest = new SearchRequest(indexNameWithWildCard);
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.size(1);
@@ -322,11 +322,11 @@ public class SearchServiceImpl implements SearchService{
 		
 		String indexName = searchHits[0].getIndex();
 		String _id = searchHits[0].getId();
-		
+		String images = searchHits[0].getSourceAsMap().get("images").toString();
 		Map<String,String> result = new LinkedHashMap<String,String>();
 		result.put("indexName", indexName);
 		result.put("_id", _id);
-		
+		result.put("images", images);
 		return result;
 	}
 }

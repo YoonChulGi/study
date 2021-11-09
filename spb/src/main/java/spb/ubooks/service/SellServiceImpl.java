@@ -1,5 +1,6 @@
 package spb.ubooks.service;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
@@ -86,9 +87,10 @@ public class SellServiceImpl implements SellService{
 		yyyymmddmiss += addZero(now.getHour());
 		yyyymmddmiss += addZero(now.getMinute());
 		yyyymmddmiss += addZero(now.getSecond());
-		if(bid==0) {
+		
+		if(bid==0) { // create
 			combook.setReg_date(yyyymmddmiss);
-		} else {
+		} else { // update
 			String regDate = combookRepository.findRegDateById(bid);
 			combook.setReg_date(regDate);
 			combook.setUpdated_date(yyyymmddmiss);
@@ -99,13 +101,16 @@ public class SellServiceImpl implements SellService{
 		
 		Iterable<FileEntity> it = null;
 		List<FileEntity> list = fileUtils.parseFileInfo(multipartHttpServletRequest,bookId);
-		if(CollectionUtils.isEmpty(list)== false) {
+		if(CollectionUtils.isEmpty(list)== false) { // 파일 존재할 시
 			it = new Iterable<FileEntity>() {
 				@Override
 				public Iterator<FileEntity> iterator() {
 					return list.iterator();
 				}
 			};
+			if(bid!=0) {
+				fileRepository.deleteByBookId(bid);
+			}
 			fileRepository.saveAll(it);
 		}
 		combookIndexDto = new ComBookIndexDto();
@@ -190,17 +195,54 @@ public class SellServiceImpl implements SellService{
 	public void updateIndexProduct(ComBookIndexDto combookIndexDto) throws Exception {
 		log.debug("updateIndexProduct");
 		int bid = combookIndexDto.getCombook().getBook_id();
-		Map<String,String> indexNameAndId = searchService.getIndexNameAndIdByBookId("combook*",bid); 
-		String indexName = indexNameAndId.get("indexName");
-		String _id = indexNameAndId.get("_id");
+		Map<String,String> indexNameAndIdAndImages = searchService.getIndexNameAndIdAndImagesByBookId("combook*",bid); 
+		String indexName = indexNameAndIdAndImages.get("indexName");
+		String _id = indexNameAndIdAndImages.get("_id");
+		String oldImages = indexNameAndIdAndImages.get("images"); 
 		
 		ObjectMapper objectMapper = new ObjectMapper();
-		Map doc = objectMapper.convertValue(combookIndexDto.getCombook(), Map.class);
-		
+		Map<String,Object> doc = objectMapper.convertValue(combookIndexDto.getCombook(), Map.class);
+		List<FileEntity> images = combookIndexDto.getImages();
+		String imagesRes = "";
+		for(int i=0; i<images.size();i++) {
+			if(i != images.size()-1) {
+				imagesRes += images.get(i).getStoredFilePath() + "|";
+			} else {
+				imagesRes += images.get(i).getStoredFilePath();
+			}
+		}
+		if(!"".equals(imagesRes)) {
+			doc.put("images", imagesRes );
+		}
 		
 		UpdateRequest request = new UpdateRequest(indexName,_id).doc(doc);
 		try {
-			client.update(request, RequestOptions.DEFAULT);
+			client.updateAsync(request, RequestOptions.DEFAULT, new ActionListener<UpdateResponse>() {
+
+				@Override
+				public void onResponse(UpdateResponse response) { // 기존 파일 삭제 로직.
+					log.debug("Update Success");
+					String[] filePaths = oldImages.split("\\|");
+					for(String filePath : filePaths) {
+						File file = new File(filePath);
+						if(file.exists()) {
+							if(file.delete()) {
+								log.debug("["+filePath+"] file deleted successfully");
+							} else {
+								log.debug("["+filePath+"] file delete fail");
+							}
+						} else {
+							log.debug("["+filePath+"] file dosen't exist");
+						}
+					}
+				}
+
+				@Override
+				public void onFailure(Exception e) {
+					e.printStackTrace();
+				}
+				
+			});
 		}catch (ElasticsearchException e) {
 			e.printStackTrace();
 		}
