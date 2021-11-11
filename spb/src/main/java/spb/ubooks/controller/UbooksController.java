@@ -307,6 +307,21 @@ public class UbooksController {
 		return "redirect:/complete-works/"+bookId;
 	}
 	
+	@RequestMapping(value="/delete-usedbook/{bookId}", method=RequestMethod.DELETE)
+	public String ubooksDeleteUsedbook(@PathVariable("bookId") int bookId,HttpServletRequest request) throws Exception {
+		if(request.getSession().getAttribute("memberId")==null) {
+			return "redirect:/gotoLogin";
+		} else {
+			if(sellService.deleteProduct(request,bookId)) {
+				sellService.deleteIndexProduct(bookId);
+				return "redirect:/complete-works";
+			} else {
+				return "redirect:/invalidApproach";
+			}
+			
+		}
+	}
+	
 	@RequestMapping(value="/sell-usedbook", method=RequestMethod.GET)
 	public ModelAndView sellUsedbook(HttpServletRequest request) throws Exception {
 		if(request.getSession().getAttribute("memberId")==null) {
@@ -333,5 +348,15 @@ public class UbooksController {
 		return mv;
 	}
 	/********* E:중고단행본 ***********************************************/
+	
+	@RequestMapping("/invalidApproach")
+	public ModelAndView invalidApproach() throws Exception {
+		return new ModelAndView("/ubooks/common/invalidApproach");
+	}
+	
+	@RequestMapping("/gotoLogin")
+	public ModelAndView gotoLogin() throws Exception {
+		return new ModelAndView("/ubooks/common/gotoLogin");
+	}
 
 }

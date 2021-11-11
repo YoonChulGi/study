@@ -5,11 +5,15 @@ import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.ActionListener;
+import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.update.UpdateRequest;
@@ -246,6 +250,52 @@ public class SellServiceImpl implements SellService{
 		}catch (ElasticsearchException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+
+	@Override
+	public boolean deleteProduct(HttpServletRequest request, int bookId) throws Exception {
+		
+		Optional<CombookEntity> optional = combookRepository.findById(bookId);
+		
+		if(optional.isPresent()) {
+			HttpSession session= request.getSession();
+			String memberId = session.getAttribute("memberId").toString();
+			CombookEntity ce = optional.get();
+			if(ce.getSeller_id().toString().equals(memberId)) {
+				ce.setDelete_yn('y');
+				combookRepository.save(ce);
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false; 
+		}
+		
+	}
+
+	@Override
+	public void deleteIndexProduct(int bookId) throws Exception {
+		Map<String, String> doc = searchService.getIndexNameAndIdAndImagesByBookId("combook*", bookId);
+		String indexName = doc.get("indexName");
+		String _id = doc.get("_id");
+				
+		DeleteRequest request = new DeleteRequest(indexName, _id);
+		client.deleteAsync(request,RequestOptions.DEFAULT,new ActionListener<DeleteResponse>() {
+
+			@Override
+			public void onResponse(DeleteResponse response) {
+				log.debug("deleted Successfully");
+			}
+
+			@Override
+			public void onFailure(Exception e) {
+				e.printStackTrace();
+			}
+			
+		});
 	}
 	
 	String addZero(int time) {

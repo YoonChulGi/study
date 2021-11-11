@@ -2,6 +2,8 @@ package spb.ubooks.service;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spb.ubooks.dto.ComBookIndexDto;
@@ -12,4 +14,6 @@ public interface SellService {
 	public void indexProduct(ComBookIndexDto combookIndexDto) throws Exception;
 	public Map<String,Object> dataSettingForUpdateProduct(Map<String,Object> combookMap) throws Exception;
 	public void updateIndexProduct(ComBookIndexDto combookIndexDto) throws Exception;
+	public boolean deleteProduct(HttpServletRequest request, int bookId)throws Exception;
+	public void deleteIndexProduct(int bookId) throws Exception;;
 }

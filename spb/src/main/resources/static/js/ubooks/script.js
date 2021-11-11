@@ -403,6 +403,20 @@ function updateProduct(bookId) {
 }
 
 function deleteProduct(bookId) {
-	alert(bookId);
+	if (!confirm("상품을 삭제하시겠습니까?")) {
+        // 취소(아니오) 버튼 클릭 시 이벤트
+    } else {
+		let newForm = $('<form></form>'); //set attribute (form) 
+		newForm.attr("name","deleteProductForm"); 
+		newForm.attr("method","post"); 
+		newForm.attr("action","/delete-usedbook/"+bookId);
+		// newForm.attr("target","_blank"); 
+		// create element & set attribute (input) 
+		newForm.append($('<input/>', {type: 'hidden',id:'_method', name: '_method', value:"delete" })); 
+		// append form (to body) 
+		newForm.appendTo('body'); 
+		// submit form 
+		newForm.submit();
+    }
 }
 
