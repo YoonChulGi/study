@@ -16,7 +16,7 @@ public class TestController {
 	@RequestMapping("/test/test.do")
 	ModelAndView test() throws Exception{
 		ModelAndView mv = new ModelAndView("/test/test");
-		testService.addIndex();
+		testService.updateDocument();
 		return mv;
 	}
 }
