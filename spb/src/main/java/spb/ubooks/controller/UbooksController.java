@@ -259,11 +259,11 @@ public class UbooksController {
 	public ModelAndView ubooksCompleteWorks(@RequestParam(value = "sort", defaultValue = "") String sort,
 			@RequestParam(value = "department", defaultValue = "") String department,
 			@RequestParam(value = "publisher", defaultValue = "") String publisher,
-			@RequestParam(value = "age", defaultValue = "") String age) throws Exception {
-
-		log.debug("complete-works");
+			@RequestParam(value = "age", defaultValue = "") String age,
+			@RequestParam(value = "query", defaultValue = "")String query,
+			@RequestParam(value = "searchField", defaultValue="")String searchField) throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/buy/complete-works");
-		mv.addObject("res", searchService.sendHighLevelApi("combook*", sort, department, publisher, age)); // elasticsearch
+		mv.addObject("res", searchService.sendHighLevelApi("combook*", query,searchField, sort, department, publisher, age)); // elasticsearch
 		mv.addObject("departmentsList", combookMapper.selectDepartments()); // departments - mariadb
 		mv.addObject("publishersList", combookMapper.selectPublishers()); // publishers - mariadb
 		mv.addObject("agesList", combookMapper.selectAges()); // ages - mariadb
@@ -273,6 +273,8 @@ public class UbooksController {
 		searchParam.put("department", department);
 		searchParam.put("publisher", publisher);
 		searchParam.put("age", age);
+		searchParam.put("query", query);
+		searchParam.put("searchField", searchField);
 		mv.addObject("searchParam", searchParam);
 		return mv;
 	}

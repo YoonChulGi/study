@@ -15,12 +15,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @PropertySource("classpath:/application.properties")
+@EnableTransactionManagement // 스프링에서 제공하는 어노테이션 기반 트랜잭션을 활성화
 public class DatabaseConfiguration {
    
    
@@ -37,8 +39,6 @@ public class DatabaseConfiguration {
    @Bean
    public DataSource dataSource() throws Exception{ 
       DataSource dataSource = new HikariDataSource(hikariConfig());
-      System.out.println("dataSourceTostice : "+dataSource.toString());
-      
       return dataSource;
    }
    

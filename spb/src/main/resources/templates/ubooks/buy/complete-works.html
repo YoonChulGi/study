@@ -119,14 +119,24 @@ FACEBOOK: https://www.facebook.com/themefisher
 				</div>
 				
 				<form method="post" action="/complete-works" id="searchForm" name="searchForm">
-					<input type="text" class="form-control" placeholder="Search..." value="">
+					<div class="form-group form-inline">
+						<select name="searchField" id="searchField" class="form-control" style="width:15%">
+							<option value="_all" th:if="${#strings.equals(searchParam.searchField,'_all') or #strings.equals(searchParam.searchField,'')}" selected>전체</option>
+							<option value="_all" th:unless="${#strings.equals(searchParam.searchField,'_all') or #strings.equals(searchParam.searchField,'')}">전체</option>
+							<option value="title" th:if="${#strings.equals(searchParam.searchField,'title') }" selected>제목</option>
+							<option value="title" th:unless="${#strings.equals(searchParam.searchField,'title') }">제목</option>
+							<option value="seller_name" th:if="${#strings.equals(searchParam.searchField,'seller_name')}" selected>판매자명</option>
+							<option value="seller_name" th:unless="${#strings.equals(searchParam.searchField,'seller_name')}">판매자명</option>
+						</select>
+						<input type="text" name="query" class="form-control" placeholder="Search..." th:value="${searchParam.query}" style="width:84%">
+					</div>
 					<input type="hidden" name="sort" id="sort" th:value="${searchParam.sort}"/> 
 					<input type="hidden" name="department" id="department" th:value="${searchParam.department}"/> 
 					<input type="hidden" name="publisher" id="publisher" th:value="${searchParam.publisher}"/> 
 					<input type="hidden" name="age" id="age" th:value="${searchParam.age}"/> 
 				</form>
 				<div th:with="totalHits=${#strings.replace(res.get('totalHits'),' hits','')}">
-					검색결과는 총 <span id="totalHits" th:text="${totalHits}"></span> 건 입니다.
+					'<span class="highlight" th:text="${searchParam.query}"></span>'검색결과는 총 <span id="totalHits" th:text="${totalHits}"></span> 건 입니다.
 				</div>
 				
 				<div class="row">

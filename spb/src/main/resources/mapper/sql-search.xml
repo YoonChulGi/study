@@ -7,13 +7,13 @@
 	
 	<select id="selectDepartments" resultType="string">
 		<![CDATA[
-			select DISTINCT department from combook
+			select DISTINCT department from combook where delete_yn = 'n'
 		]]>
 	</select>
 	
 	<select id="selectPublishers" resultType="string">
 		<![CDATA[
-			select DISTINCT publisher from combook
+			select DISTINCT publisher from combook where delete_yn = 'n'
 		]]>
 	</select>
 	
@@ -21,6 +21,7 @@
 		<![CDATA[
 			select DISTINCT IF(STRCMP(min_age,'초등전학년')=0 OR STRCMP(min_age,'초등3학년이상')=0 ,min_age,CONCAT(min_age,'-',max_age,'세')) as age 
 			from combook 
+			where delete_yn = 'n'
 			order by age
 		]]>
 	</select>
@@ -30,13 +31,15 @@
 				BOOK_ID
 			FROM
 				combook c 
-			WHERE BOOK_ID >#{book_id} limit 1)
+			WHERE BOOK_ID >#{book_id} AND DELETE_YN='n' limit 1)
 			union
 			(SELECT
 				BOOK_ID
 			FROM
 				combook c 
-			WHERE BOOK_ID <#{book_id} order by BOOK_ID desc limit 1)
+			WHERE BOOK_ID <#{book_id}
+			AND DELETE_YN='n' 
+			ORDER BY BOOK_ID desc limit 1)
 		]]>
 	</select>
 	

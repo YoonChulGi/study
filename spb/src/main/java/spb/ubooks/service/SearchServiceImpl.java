@@ -153,13 +153,15 @@ public class SearchServiceImpl implements SearchService{
 
 	@Override
 	public Map<String,Object> sendHighLevelApi(
-			String indexName, String sort, 
+			String indexName, String query,String searchField, String sort, 
 			String department, String publisher, String age) throws Exception {
 		
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		ArrayList<Map<String,Object>> list = null;
 		ArrayList <String> departmentList = null;
 		if("".equals(sort)) sort = "date";
+		log.debug("query: "+query);
+		log.debug("searchField: "+searchField);
 		log.debug("sort: "+sort);
 		log.debug("publisher: " + publisher);
 		log.debug("department: " + department);
@@ -171,14 +173,22 @@ public class SearchServiceImpl implements SearchService{
 			searchSourceBuilder.size(10000);
 			searchSourceBuilder.timeout(new TimeValue(60,TimeUnit.SECONDS));
 			
-			BoolQueryBuilder query = new BoolQueryBuilder();
+			BoolQueryBuilder boolQuery = new BoolQueryBuilder();
+			
+			if(!"".equals(query)) {
+				if("".equals(searchField) || "_all".equals(searchField)) { // searchField : _all , ''
+					boolQuery.must(QueryBuilders.queryStringQuery(query));
+				} else { 
+					boolQuery.must(QueryBuilders.prefixQuery(searchField, query ));
+				}
+			}
 			
 			if(!"".equals(publisher)) {
-				query.must(QueryBuilders.matchQuery("publisher.keyword",publisher));
+				boolQuery.must(QueryBuilders.matchQuery("publisher.keyword",publisher));
 			}
 			
 			if(!"".equals(department)) {
-				query.must(QueryBuilders.matchQuery("department.keyword", department));
+				boolQuery.must(QueryBuilders.matchQuery("department.keyword", department));
 			}
 			
 			if(!"".equals(age)) {
@@ -187,14 +197,14 @@ public class SearchServiceImpl implements SearchService{
 				}
 				String minAge = age.split("-")[0];
 				String maxAge = age.split("-")[1].replaceAll("세", "");
-				query.must(QueryBuilders.matchQuery("min_age.keyword", minAge));
-				query.must(QueryBuilders.matchQuery("max_age.keyword", maxAge));
+				boolQuery.must(QueryBuilders.matchQuery("min_age.keyword", minAge));
+				boolQuery.must(QueryBuilders.matchQuery("max_age.keyword", maxAge));
 			}
 			
-			if("".equals(publisher) && "".equals(department) && "".equals(age) ) {
+			if("".equals(publisher) && "".equals(department) && "".equals(age) && "".equals(query) ) {
 				searchSourceBuilder.query(QueryBuilders.matchAllQuery());
 			} else {
-				searchSourceBuilder.query(query);
+				searchSourceBuilder.query(boolQuery);
 			}
 			
 			// sort
