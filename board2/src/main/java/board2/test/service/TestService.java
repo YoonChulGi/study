@@ -1,10 +1,7 @@
 package board2.test.service;
 
+import java.util.Map;
+
 public interface TestService {
-	void createIndex() throws Exception;
-	void deleteIndex() throws Exception;
-	void insertDocument() throws Exception;
-	void getDocument() throws Exception;
-	void deleteDocument() throws Exception;
-	void updateDocument() throws Exception;
+	Map<String,Object> doSearch() throws Exception;
 }

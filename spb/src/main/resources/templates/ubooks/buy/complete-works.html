@@ -120,7 +120,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 				
 				<form method="post" action="/complete-works" id="searchForm" name="searchForm">
 					<div class="form-group form-inline">
-						<select name="searchField" id="searchField" class="form-control" style="width:15%">
+						<select name="searchField" id="searchField" class="form-control" style="width:15%;height:45px;">
 							<option value="_all" th:if="${#strings.equals(searchParam.searchField,'_all') or #strings.equals(searchParam.searchField,'')}" selected>전체</option>
 							<option value="_all" th:unless="${#strings.equals(searchParam.searchField,'_all') or #strings.equals(searchParam.searchField,'')}">전체</option>
 							<option value="title" th:if="${#strings.equals(searchParam.searchField,'title') }" selected>제목</option>

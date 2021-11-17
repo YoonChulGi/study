@@ -160,6 +160,7 @@ public class SearchServiceImpl implements SearchService{
 		ArrayList<Map<String,Object>> list = null;
 		ArrayList <String> departmentList = null;
 		if("".equals(sort)) sort = "date";
+		if(!"".equals(query)) query = "*" + query + "*";
 		log.debug("query: "+query);
 		log.debug("searchField: "+searchField);
 		log.debug("sort: "+sort);
@@ -179,7 +180,9 @@ public class SearchServiceImpl implements SearchService{
 				if("".equals(searchField) || "_all".equals(searchField)) { // searchField : _all , ''
 					boolQuery.must(QueryBuilders.queryStringQuery(query));
 				} else { 
-					boolQuery.must(QueryBuilders.prefixQuery(searchField, query ));
+					Map<String,Float> searchFieldsMap = new HashMap<String,Float>();
+					searchFieldsMap.put(searchField,(float) 1);
+					boolQuery.must(QueryBuilders.queryStringQuery(query).fields(searchFieldsMap));
 				}
 			}
 			

@@ -1,22 +1,21 @@
 package board2.test.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
 
 import board2.test.service.TestService;
 
-@Controller
+@RestController
 public class TestController {
 	
 	@Autowired
 	TestService testService;
 	
 	@RequestMapping("/test/test.do")
-	ModelAndView test() throws Exception{
-		ModelAndView mv = new ModelAndView("/test/test");
-		testService.updateDocument();
-		return mv;
+	Map<String, Object> test() throws Exception{
+		return testService.doSearch();
 	}
 }
