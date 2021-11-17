@@ -15,5 +15,6 @@ public interface SellService {
 	public Map<String,Object> dataSettingForUpdateProduct(Map<String,Object> combookMap) throws Exception;
 	public void updateIndexProduct(ComBookIndexDto combookIndexDto) throws Exception;
 	public boolean deleteProduct(HttpServletRequest request, int bookId)throws Exception;
-	public void deleteIndexProduct(int bookId) throws Exception;;
+	public void deleteIndexProduct(int bookId) throws Exception;
+	public void checkoutProduct(String checkoutValues) throws Exception;
 }

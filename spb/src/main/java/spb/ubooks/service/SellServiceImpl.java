@@ -298,6 +298,13 @@ public class SellServiceImpl implements SellService{
 		});
 	}
 	
+
+	@Override
+	public void checkoutProduct(String checkoutValues) throws Exception {
+		log.debug("checkoutValues: "+checkoutValues);
+		
+	}
+
 	String addZero(int time) {
 		String res = "";
 		if(time<10) {
@@ -307,6 +314,5 @@ public class SellServiceImpl implements SellService{
 		}
 		return res;
 	}
-
 
 }

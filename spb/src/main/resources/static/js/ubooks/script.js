@@ -277,6 +277,72 @@
 		}
 	});
 	
+	$("#checkOutCart").on("click",()=>{
+		let checkBoxes = $("input:checkbox[name='cartCheck']"); /*.is(":checked")*/
+		let values = '';
+		let cnt = 0;
+		for(let i=0;i<checkBoxes.length;i++) {
+			if($(checkBoxes[i]).is(":checked")) {
+				let bid = $(checkBoxes[i]).val();
+				values += $("#checkoutValue-" + bid).val() + ',';
+				cnt ++;
+			}
+		}
+		if(cnt > 0) {
+			var newForm = $('<form></form>');
+			newForm.attr("name","deleteCartForm"); 
+			newForm.attr("method","post"); 
+			newForm.attr("action","/checkout");
+			
+			// checkoutValues
+			newForm.append($('<input/>', {type: 'hidden', name: 'checkoutValues', value:values })); 
+			newForm.appendTo('body'); 
+			newForm.submit();
+		} else {
+			alert('선택된 상품이 없습니다.');
+		}
+	});
+	
+	$("#card-number").keydown((event)=>{
+		if(event.keyCode == '8') {
+			if(event.target.value.substr(event.target.value.length - 1, event.target.value.length - 1) == '-') {
+				event.target.value = event.target.value.substr(0,event.target.value.length - 1);
+			}
+		}
+	});
+	
+	$("#card-number").keyup((event)=>{
+		/*if(event.keyCode == '8'){
+			return;
+		} */
+		if(event.target.value.length == 19) return;
+		if(event.target.value.length % 5 == 4) {
+			event.target.value = event.target.value + '-'
+		}
+	});
+	
+	$("#card-expiry").keydown((event)=>{
+		if(event.keyCode == '8') {
+			if(event.target.value.substr(event.target.value.length - 1, event.target.value.length - 1) == '/') {
+				event.target.value = event.target.value.substr(0,event.target.value.length - 1);
+			}
+		}
+	});
+	
+	$("#card-expiry").keyup((event)=>{
+		if(event.target.value.length == 5) return;
+		if(event.target.value.length == 2) {
+			event.target.value = event.target.value + '/';
+		}
+	});
+	
+	/*
+}
+function expiryAddSlash(eliment) {
+	if(eliment.value.length == 2) {
+		eliment.value = eliment.value + '/';
+	}
+}*/
 	for(let i=0;i<$(".cateAge").length;i++) {
 		if($("#age").val() == $(".cateAge")[i].innerText) {
 			$($(".cateAge")[i].children[0]).css("font-weight","bold");
@@ -418,5 +484,9 @@ function deleteProduct(bookId) {
 		// submit form 
 		newForm.submit();
     }
+}
+
+function checkOut() {
+	
 }
 

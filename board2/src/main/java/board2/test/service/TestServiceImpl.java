@@ -40,7 +40,7 @@ public class TestServiceImpl implements TestService{
 			searchSourceBuilder.timeout(new TimeValue(60,TimeUnit.SECONDS));
 			
 			BoolQueryBuilder boolQuery = new BoolQueryBuilder();
-			boolQuery.must(QueryBuilders.queryStringQuery("*피노*").allowLeadingWildcard(true));
+			boolQuery.must(QueryBuilders.queryStringQuery("*피노*"));
 			searchSourceBuilder.query(boolQuery);
 			searchSourceBuilder.sort(new ScoreSortBuilder().order(SortOrder.DESC));  // score 높은순 (default)
 			searchSourceBuilder.sort(new FieldSortBuilder("_id").order(SortOrder.ASC)); // id오름차순 정

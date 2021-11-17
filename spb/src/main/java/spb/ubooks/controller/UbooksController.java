@@ -1,6 +1,7 @@
 package spb.ubooks.controller;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,9 +59,10 @@ public class UbooksController {
 		return mv;
 	}
 
-	@RequestMapping("/checkout")
-	public ModelAndView ubooksCheckout() throws Exception {
+	@RequestMapping(value="/checkout", method=RequestMethod.POST)
+	public ModelAndView ubooksCheckout(@RequestParam("checkoutValues")String checkoutValues) throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/shop/checkout");
+		sellService.checkoutProduct(checkoutValues);
 		return mv;
 	}
 
