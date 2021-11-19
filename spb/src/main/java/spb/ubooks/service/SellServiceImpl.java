@@ -2,6 +2,8 @@ package spb.ubooks.service;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -300,9 +302,27 @@ public class SellServiceImpl implements SellService{
 	
 
 	@Override
-	public void checkoutProduct(String checkoutValues) throws Exception {
+	public List<Map<String,Object>> checkoutProduct(String checkoutValues) throws Exception {
 		log.debug("checkoutValues: "+checkoutValues);
+		String[] bidQty = checkoutValues.split(",");
+		int[] bids = new int[bidQty.length];
+		int[] qtys = new int[bidQty.length];
+		for(int i=0;i<bidQty.length;i++) {
+			bids[i] = Integer.parseInt(bidQty[i].split("-")[0]);
+			qtys[i] = Integer.parseInt(bidQty[i].split("-")[1]);
+		}
 		
+		List<Map<String,Object>> searchResults = searchService.searchManyAsMapByIds("combook*", bids);
+		List<Map<String,Object>> res = new ArrayList<>();
+		for(Map<String,Object> doc : searchResults) {
+			for(int i=0;i<bidQty.length;i++) {
+				if(Integer.parseInt(bidQty[i].split("-")[0]) == Integer.parseInt(doc.get("book_id").toString())) {
+					doc.put("qty", bidQty[i].split("-")[1]);
+				}
+			}
+			res.add(doc);
+		}
+		return res;
 	}
 
 	String addZero(int time) {
@@ -313,6 +333,23 @@ public class SellServiceImpl implements SellService{
 			res += time;
 		}
 		return res;
+	}
+
+	@Override
+	public Map<String, Object> calcProductsPrice(List<Map<String, Object>> products) throws Exception {
+		Map<String,Object> result = new HashMap<>();
+		int subtotal = 0;
+		int shippingFee = 0;
+		int total;
+		for(Map<String,Object> item : products) {
+			subtotal += Integer.parseInt(item.get("price").toString()) * Integer.parseInt(item.get("qty").toString());
+			shippingFee += Integer.parseInt(item.get("shipping_fee").toString());
+		}
+		total = subtotal + shippingFee; 
+		result.put("subtotal", subtotal);
+		result.put("shippingFee", shippingFee);
+		result.put("total", total);
+		return result;
 	}
 
 }

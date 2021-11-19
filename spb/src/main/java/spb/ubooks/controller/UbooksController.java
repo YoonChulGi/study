@@ -62,7 +62,9 @@ public class UbooksController {
 	@RequestMapping(value="/checkout", method=RequestMethod.POST)
 	public ModelAndView ubooksCheckout(@RequestParam("checkoutValues")String checkoutValues) throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/shop/checkout");
-		sellService.checkoutProduct(checkoutValues);
+		List<Map<String,Object>> checkoutProducts = sellService.checkoutProduct(checkoutValues);
+		mv.addObject("checkoutProducts", checkoutProducts );
+		mv.addObject("totals", sellService.calcProductsPrice(checkoutProducts));
 		return mv;
 	}
 

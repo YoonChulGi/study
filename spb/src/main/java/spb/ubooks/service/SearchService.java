@@ -1,5 +1,6 @@
 package spb.ubooks.service;
 
+import java.util.List;
 import java.util.Map;
 
 public interface SearchService {
@@ -12,6 +13,8 @@ public interface SearchService {
 	public String searchOneAsJson(String indexName, int bookId) throws Exception;
 	
 	public Map<String,Object> searchOneAsMap(String indexName, int bookId) throws Exception;
+	
+	public List<Map<String,Object>> searchManyAsMapByIds(String indexName, int[] ids) throws Exception;
 	
 	public Map<String,String> getIndexNameAndIdAndImagesByBookId(String indexNameWithWildCard, int bookId) throws Exception;
 }

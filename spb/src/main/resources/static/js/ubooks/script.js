@@ -336,13 +336,12 @@
 		}
 	});
 	
-	/*
-}
-function expiryAddSlash(eliment) {
-	if(eliment.value.length == 2) {
-		eliment.value = eliment.value + '/';
-	}
-}*/
+	$(".removeProduct").on("click",(event)=>{
+		let bid = event.target.id.replace("remove_","");
+		console.dir(bid);
+		// console.dir($("#"+bid));
+	});
+	
 	for(let i=0;i<$(".cateAge").length;i++) {
 		if($("#age").val() == $(".cateAge")[i].innerText) {
 			$($(".cateAge")[i].children[0]).css("font-weight","bold");

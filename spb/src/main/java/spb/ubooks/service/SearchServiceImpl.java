@@ -317,7 +317,36 @@ public class SearchServiceImpl implements SearchService{
 		} else {
 			return null;
 		}
+	}
+	
+	@Override
+	public List<Map<String, Object>> searchManyAsMapByIds(String indexName, int[] ids) throws Exception {
+		List<Map<String,Object>> resultList = new ArrayList<>();
+		SearchRequest searchRequest = new SearchRequest(indexName);
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		searchSourceBuilder.size(ids.length);
+		searchSourceBuilder.timeout(new TimeValue(60,TimeUnit.SECONDS));
+		BoolQueryBuilder query = new BoolQueryBuilder();
 		
+		for(int id : ids) {
+			query.should(QueryBuilders.matchQuery("book_id", id));
+		}
+		searchSourceBuilder.query(query);
+		searchSourceBuilder.sort(new FieldSortBuilder("book_id").order(SortOrder.DESC));
+		searchRequest.source(searchSourceBuilder);
+		
+		SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+		SearchHits hits = searchResponse.getHits();
+		SearchHit[] searchHits = hits.getHits();
+		
+		for (SearchHit hit : searchHits) {
+			Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+			// log.debug("sourceAsMap: " + sourceAsMap);
+			sourceAsMap.put("images", sourceAsMap.get("images").toString().replaceAll("/dev/workspace/spb/src/main/resources/static", ""));
+			resultList.add(sourceAsMap);
+		}
+		
+		return resultList;
 	}
 
 	@Override
@@ -342,4 +371,6 @@ public class SearchServiceImpl implements SearchService{
 		result.put("images", images);
 		return result;
 	}
+
+	
 }

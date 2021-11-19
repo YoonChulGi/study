@@ -45,7 +45,7 @@ FACEBOOK: https://www.facebook.com/themefisher
          <div class="row">
             <div class="col-md-8">
                <div class="block billing-details">
-                  <h4 class="widget-title">주문 상세</h4>
+                  <h4 class="widget-title">배송 정보</h4>
                   <form class="checkout-form">
                      <div class="form-group">
                         <label for="full_name">이름</label>
@@ -103,15 +103,15 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="col-md-4">
                <div class="product-checkout-details">
                   <div class="block">
-                     <h4 class="widget-title">Order Summary</h4>
-                     <div class="media product-card">
-                        <a class="pull-left" href="/product-single">
-                           <img class="media-object" th:src="@{images/ubooks/shop/cart/cart-1.jpg}" alt="Image" />
+                     <h4 class="widget-title">주문 상세</h4>
+                     <div th:each="list : ${checkoutProducts}" class="media product-card" th:id="${list.book_id}">
+                        <a class="pull-left" th:href="|/complete-works/${list.book_id}|">
+                           <img class="media-object" th:src="|@{${#strings.arraySplit(list.images,'|')[0]}}|" alt="Image" />
                         </a>
                         <div class="media-body">
-                           <h4 class="media-heading"><a href="/product-single">Ambassador Heritage 1921</a></h4>
-                           <p class="price">1 x $249</p>
-                           <span class="remove" >Remove</span>
+                           <h4 class="media-heading"><a th:href="|/complete-works/${list.book_id}|" th:text="${list.title}">Ambassador Heritage 1921</a></h4>
+                           <p class="price"><th:block th:text="|${list.qty} x ₩${list.price}|"></th:block></p>
+                           <span class="remove removeProduct" th:id="|remove_${list.book_id}|" >Remove</span>
                         </div>
                      </div>
                      <div class="discount-code">
@@ -119,17 +119,17 @@ FACEBOOK: https://www.facebook.com/themefisher
                      </div>
                      <ul class="summary-prices">
                         <li>
-                           <span>Subtotal:</span>
-                           <span class="price">$190</span>
+                           <span>소계:</span>
+                           <span id="subtotal" class="price" th:text="|₩${totals.subtotal}|"></span>
                         </li>
                         <li>
-                           <span>Shipping:</span>
-                           <span>Free</span>
+                           <span>배송비:</span>
+                           <span id="shippingFee" th:text="|₩${totals.shippingFee}|"></span>
                         </li>
                      </ul>
                      <div class="summary-total">
                         <span>Total</span>
-                        <span>$250</span>
+                        <span id="total" th:text="|₩${totals.total}|"></span>
                      </div>
                      <div class="verified-icon">
                         <img th:src="@{images/ubooks/shop/verified.png}">

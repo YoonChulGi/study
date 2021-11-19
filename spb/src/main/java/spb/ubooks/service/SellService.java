@@ -1,5 +1,6 @@
 package spb.ubooks.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,5 +17,6 @@ public interface SellService {
 	public void updateIndexProduct(ComBookIndexDto combookIndexDto) throws Exception;
 	public boolean deleteProduct(HttpServletRequest request, int bookId)throws Exception;
 	public void deleteIndexProduct(int bookId) throws Exception;
-	public void checkoutProduct(String checkoutValues) throws Exception;
+	public List<Map<String, Object>> checkoutProduct(String checkoutValues) throws Exception;
+	public Map<String,Object> calcProductsPrice(List<Map<String,Object>> products) throws Exception;
 }
