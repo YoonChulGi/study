@@ -93,7 +93,7 @@ FACEBOOK: https://www.facebook.com/themefisher
                                  <label for="card-cvc">CVC코드 <span class="required">*</span></label>
                                  <input id="card-cvc" class="form-control"  type="tel" maxlength="3" placeholder="CVC">
                               </div>
-                              <a href="/confirmation" class="btn btn-main mt-20">주문하기</a >
+                              <a href="#!" id="orderProducts" class="btn btn-main mt-20">주문하기</a >
                            </form>
                         </div>
                      </div>
@@ -111,8 +111,12 @@ FACEBOOK: https://www.facebook.com/themefisher
                         <div class="media-body">
                            <h4 class="media-heading"><a th:href="|/complete-works/${list.book_id}|" th:text="${list.title}">Ambassador Heritage 1921</a></h4>
                            <p class="price"><th:block th:text="|${list.qty} x ₩${list.price}|"></th:block></p>
+                           <p class="price"><th:block th:text="|배송비: ₩${list.shipping_fee}"></th:block></p>
                            <span class="remove removeProduct" th:id="|remove_${list.book_id}|" >Remove</span>
                         </div>
+                        <input th:id="|price-${list.book_id}|" type="hidden" th:value="${list.price}" />
+                        <input th:id="|qty-${list.book_id}|" type="hidden" th:value="${list.qty}" />
+                        <input th:id="|shippingFee-${list.book_id}|" type="hidden" th:value="${list.shipping_fee}" />
                      </div>
                      <div class="discount-code">
                         <p>Have a discount ? <a data-toggle="modal" data-target="#coupon-modal" href="#!">enter it here</a></p>

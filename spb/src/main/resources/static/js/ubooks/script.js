@@ -338,8 +338,34 @@
 	
 	$(".removeProduct").on("click",(event)=>{
 		let bid = event.target.id.replace("remove_","");
-		console.dir(bid);
-		// console.dir($("#"+bid));
+		let subtotal = $("#subtotal").html().replace("₩","");
+		let shippingFee = $("#shippingFee").html().replace("₩","");
+		let total = $("#total").html().replace("₩","");
+		
+		let newSubtotal = subtotal - ($("#price-"+bid).val() * $("#qty-"+bid).val()  );
+		let newShippingFee = shippingFee - $("#shippingFee-"+bid).val();
+		let newTotal = newSubtotal + newShippingFee;
+		newSubtotal = "₩" + newSubtotal;
+		newShippingFee= "₩" +newShippingFee;
+		newTotal= "₩" +newTotal;
+		
+		$("#subtotal").html(newSubtotal);
+		$("#shippingFee").html(newShippingFee);
+		$("#total").html(newTotal);
+		$("#"+bid).remove();
+	});
+	
+	$("#orderProducts").on("click",(event)=>{
+		console.log($("#full_name").val());
+		console.log($("#postcode").val());
+		console.log($("#address").val());
+		console.log($("#extraAddress").val());
+		console.log($("#detailAddress").val());
+		console.log($("#card-number").val());
+		console.log($("#card-expiry").val());
+		console.log($("#card-cvc").val());
+		
+		
 	});
 	
 	for(let i=0;i<$(".cateAge").length;i++) {
