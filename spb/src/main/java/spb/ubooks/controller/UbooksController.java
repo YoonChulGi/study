@@ -72,7 +72,7 @@ public class UbooksController {
 	@RequestMapping(value="/orderProducts", method=RequestMethod.POST)
 	public ModelAndView ubooksOrderProducts(CheckoutEntity orderInfo) throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/shop/confirmation");
-		sellService.orderProducts(orderInfo);
+		sellService.indexOrderedProducts(sellService.orderProducts(orderInfo));
 		return mv;
 	}
 

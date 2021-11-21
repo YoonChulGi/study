@@ -20,5 +20,6 @@ public interface SellService {
 	public void deleteIndexProduct(int bookId) throws Exception;
 	public List<Map<String, Object>> checkoutProduct(String checkoutValues) throws Exception;
 	public Map<String,Object> calcProductsPrice(List<Map<String,Object>> products) throws Exception;
-	public void orderProducts(CheckoutEntity orderInfo) throws Exception;
+	public List<CheckoutEntity> orderProducts(CheckoutEntity orderInfo) throws Exception;
+	public void indexOrderedProducts(List<CheckoutEntity> products) throws Exception;
 }

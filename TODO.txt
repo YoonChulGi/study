@@ -1,8 +1,6 @@
 TODO) 
-0. queryStringBuilder 포스팅하기 queryStringBuilder 말고 query 다른거 써서 AND 되나 테스트 먼저 해보자 - 완료
-1. 검색기능 개발하기 - 완료
-2. 상품구매 개발하기 - checkout 페이지 bid-qty값으로 order summary 완성하기부터 시작하면됨. - 주문상세 remove 버튼 스크립트 작업중 - 완료
-그거 완성하면 주문하기 버튼 누르고 다음 로직 생각하기 - 해야함
+1. 정렬조건 DATE 잘만든건지 의심하기, 한달판매순 고민하기   
+2. 상품구매 개발하기 - db로 개발완료, db에 정상적으로 insert 되었을 시 장바구니에 해당데이터 없애는 로직도 해야함 elasticsearch에도 데이터 insert 하는거 개발해야함
 3. 한달판매순 어떻게 개발할지?????? 
 4. 다음 우편번호 api 포스팅하기
 5. 한국어 형태소분석기 적용하기

@@ -1,13 +1,16 @@
 package spb.ubooks.service;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -348,7 +351,7 @@ public class SellServiceImpl implements SellService{
 	}
 
 	@Override
-	public void orderProducts(CheckoutEntity orderInfo) throws Exception {
+	public List<CheckoutEntity> orderProducts(CheckoutEntity orderInfo) throws Exception {
 		log.debug(orderInfo.toString());
 		String prdIds = orderInfo.getPrdIds();
 		String qtys = orderInfo.getQtys();
@@ -384,6 +387,32 @@ public class SellServiceImpl implements SellService{
 		};
 		
 		checkoutRepository.saveAll(it);
+		return list;
+	}
+	
+
+	@Override
+	public void indexOrderedProducts(List<CheckoutEntity> products) throws Exception {
+		String indexName = "checked_out_products";
+		for(CheckoutEntity ce : products) {
+			IndexRequest request = new IndexRequest(indexName);
+			request.id(ce.getIdx());
+			ObjectMapper objectMapper = new ObjectMapper();
+			Map<String,Object> doc = objectMapper.convertValue(ce, Map.class);
+			Date date = new Date(System.currentTimeMillis());
+			SimpleDateFormat sdf;
+		    sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+		    sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+		    String stamp = sdf.format(date);
+			doc.put("@timestamp", stamp);
+			request.source(doc);
+			try {
+				client.index(request, RequestOptions.DEFAULT);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 	
 	String addZero(int time) {
