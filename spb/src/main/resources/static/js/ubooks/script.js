@@ -356,15 +356,55 @@
 	});
 	
 	$("#orderProducts").on("click",(event)=>{
-		console.log($("#full_name").val());
-		console.log($("#postcode").val());
-		console.log($("#address").val());
-		console.log($("#extraAddress").val());
-		console.log($("#detailAddress").val());
-		console.log($("#card-number").val());
-		console.log($("#card-expiry").val());
-		console.log($("#card-cvc").val());
+		let fullName = $("#full_name").val();
+		let postcode = $("#postcode").val();
+		let address = $("#address").val();
+		let extraAddress = $("#extraAddress").val();
+		let detailAddress = $("#detailAddress").val();
+		let cardNumber = $("#card-number").val();
+		let cardExpiry = $("#card-expiry").val();
+		let cardCvc = $("#card-cvc").val();
 		
+		let prdCards = $(".product-card");
+		let prdIds = '';
+		let qtys = '';
+		for(let i=0;i<prdCards.length;i++) {
+			if(i == prdCards.length-1) {
+				prdIds += prdCards[i].id;
+				qtys += $("#qty-"+prdCards[i].id).val();
+			} else {
+				prdIds += prdCards[i].id + '-';
+				qtys += $("#qty-"+prdCards[i].id).val() + '-';
+			}
+		}
+		
+		console.log(prdIds);
+		console.log(qtys);
+		
+		
+		if(fullName == '' || postcode == '' || address == '' || detailAddress == '' || cardNumber == '' || cardExpiry == '' || cardCvc == '') {
+			alert('빈칸을 모두 작성해주세요');
+			return;
+		} else {
+			var newForm = $('<form></form>');
+			newForm.attr("name","checkoutForm"); 
+			newForm.attr("method","post"); 
+			newForm.attr("action","/orderProducts");
+			newForm.append($('<input/>', {type: 'hidden', name: 'fullName', value:fullName })); 
+			newForm.append($('<input/>', {type: 'hidden', name: 'postcode', value:postcode })); 
+			newForm.append($('<input/>', {type: 'hidden', name: 'address', value:address })); 
+			newForm.append($('<input/>', {type: 'hidden', name: 'extraAddress', value:extraAddress })); 
+			newForm.append($('<input/>', {type: 'hidden', name: 'detailAddress', value:detailAddress })); 
+			newForm.append($('<input/>', {type: 'hidden', name: 'cardNumber', value:cardNumber })); 
+			newForm.append($('<input/>', {type: 'hidden', name: 'cardExpiry', value:cardExpiry })); 
+			newForm.append($('<input/>', {type: 'hidden', name: 'cardCvc', value:cardCvc })); 
+			newForm.append($('<input/>', {type: 'hidden', name: 'prdIds', value:prdIds })); 
+			newForm.append($('<input/>', {type: 'hidden', name: 'qtys', value:qtys })); 
+			// append form (to body) 
+			newForm.appendTo('body'); 
+			// submit form 
+			newForm.submit();
+		}
 		
 	});
 	
@@ -434,7 +474,6 @@ function getCartList(){
 				let str = '';
 				let totalPrice = 0;
 				for(let i=0;i<data.length;i++) {
-					console.dir(data[i].title);
 					str += '<div class="media" id="cart_'+data[i].book_id+'">';
 					str += '	<a class="pull-left" href="#!">';
 					str += '		<img class="media-object" src="'+ data[i].images.split('|')[0] +'" alt="image" />';

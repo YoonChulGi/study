@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import lombok.extern.slf4j.Slf4j;
 import spb.ubooks.dto.ComBookIndexDto;
 import spb.ubooks.dto.MemberDto;
+import spb.ubooks.entity.CheckoutEntity;
 import spb.ubooks.entity.CombookEntity;
 import spb.ubooks.mapper.CombookMapper;
 import spb.ubooks.service.CartService;
@@ -65,6 +66,13 @@ public class UbooksController {
 		List<Map<String,Object>> checkoutProducts = sellService.checkoutProduct(checkoutValues);
 		mv.addObject("checkoutProducts", checkoutProducts );
 		mv.addObject("totals", sellService.calcProductsPrice(checkoutProducts));
+		return mv;
+	}
+	
+	@RequestMapping(value="/orderProducts", method=RequestMethod.POST)
+	public ModelAndView ubooksOrderProducts(CheckoutEntity orderInfo) throws Exception {
+		ModelAndView mv = new ModelAndView("/ubooks/shop/confirmation");
+		sellService.orderProducts(orderInfo);
 		return mv;
 	}
 

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spb.ubooks.dto.ComBookIndexDto;
+import spb.ubooks.entity.CheckoutEntity;
 import spb.ubooks.entity.CombookEntity;
 
 public interface SellService {
@@ -19,4 +20,5 @@ public interface SellService {
 	public void deleteIndexProduct(int bookId) throws Exception;
 	public List<Map<String, Object>> checkoutProduct(String checkoutValues) throws Exception;
 	public Map<String,Object> calcProductsPrice(List<Map<String,Object>> products) throws Exception;
+	public void orderProducts(CheckoutEntity orderInfo) throws Exception;
 }

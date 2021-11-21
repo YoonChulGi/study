@@ -32,9 +32,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import spb.common.FileUtils;
 import spb.ubooks.dto.ComBookIndexDto;
+import spb.ubooks.entity.CheckoutEntity;
 import spb.ubooks.entity.CombookEntity;
 import spb.ubooks.entity.FileEntity;
 import spb.ubooks.mapper.MemberMapper;
+import spb.ubooks.repository.CheckoutRepository;
 import spb.ubooks.repository.CombookRepository;
 import spb.ubooks.repository.FileRepository;
 
@@ -47,6 +49,9 @@ public class SellServiceImpl implements SellService{
 	
 	@Autowired
 	FileRepository fileRepository;
+	
+	@Autowired
+	CheckoutRepository checkoutRepository;
 	
 	@Autowired
 	MemberMapper memberMapper;
@@ -325,16 +330,6 @@ public class SellServiceImpl implements SellService{
 		return res;
 	}
 
-	String addZero(int time) {
-		String res = "";
-		if(time<10) {
-			res += "0"+time;
-		} else {
-			res += time;
-		}
-		return res;
-	}
-
 	@Override
 	public Map<String, Object> calcProductsPrice(List<Map<String, Object>> products) throws Exception {
 		Map<String,Object> result = new HashMap<>();
@@ -350,6 +345,55 @@ public class SellServiceImpl implements SellService{
 		result.put("shippingFee", shippingFee);
 		result.put("total", total);
 		return result;
+	}
+
+	@Override
+	public void orderProducts(CheckoutEntity orderInfo) throws Exception {
+		log.debug(orderInfo.toString());
+		String prdIds = orderInfo.getPrdIds();
+		String qtys = orderInfo.getQtys();
+		int len = prdIds.split("-").length;
+		List<CheckoutEntity> list = new ArrayList<>();
+		for(int i=0;i<len;i++) {
+			orderInfo.setIdx(Long.toString(System.nanoTime())+"-" + i);
+			orderInfo.setPrdIds(prdIds.split("-")[i]);
+			orderInfo.setQtys(qtys.split("-")[i]);
+			CheckoutEntity ce = new CheckoutEntity();
+			ce.setAddress(orderInfo.getAddress());
+			ce.setCardCvc(orderInfo.getCardCvc());
+			ce.setCardExpiry(orderInfo.getCardExpiry());
+			ce.setCardNumber(orderInfo.getCardNumber());
+			ce.setCheckoutTime(orderInfo.getCheckoutTime());
+			ce.setDetailAddress(orderInfo.getDetailAddress());
+			ce.setExtraAddress(orderInfo.getExtraAddress());
+			ce.setFullName(orderInfo.getFullName());
+			ce.setIdx(orderInfo.getIdx());
+			ce.setPostcode(orderInfo.getPostcode());
+			ce.setPrdIds(orderInfo.getPrdIds());
+			ce.setQtys(orderInfo.getQtys());
+			list.add(ce);
+		}
+		Iterable<CheckoutEntity> it = new Iterable<CheckoutEntity>() {
+
+			@Override
+			public Iterator<CheckoutEntity> iterator() {
+				// TODO Auto-generated method stub
+				return list.iterator();
+			}
+			
+		};
+		
+		checkoutRepository.saveAll(it);
+	}
+	
+	String addZero(int time) {
+		String res = "";
+		if(time<10) {
+			res += "0"+time;
+		} else {
+			res += time;
+		}
+		return res;
 	}
 
 }
