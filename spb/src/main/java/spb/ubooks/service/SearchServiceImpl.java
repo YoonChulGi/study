@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,6 +32,7 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import spb.ubooks.mapper.CombookMapper;
@@ -157,7 +160,7 @@ public class SearchServiceImpl implements SearchService{
 			String department, String publisher, String age) throws Exception {
 		
 		Map<String,Object> resultMap = new HashMap<String,Object>();
-		ArrayList<Map<String,Object>> list = null;
+		List<Map<String,Object>> list = null;
 		ArrayList <String> departmentList = null;
 		if("".equals(sort)) sort = "date";
 		if(!"".equals(query)) query = "*" + query + "*";
@@ -214,9 +217,9 @@ public class SearchServiceImpl implements SearchService{
 			if("date".equals(sort)) {
 				searchSourceBuilder.sort(new FieldSortBuilder("reg_date.keyword").order(SortOrder.DESC)); // 등록일순 정렬
 			} else if("cheap".equals(sort) ) {
-				searchSourceBuilder.sort(new FieldSortBuilder("price").order(SortOrder.ASC)); // 등록일순 정렬
+				searchSourceBuilder.sort(new FieldSortBuilder("price").order(SortOrder.ASC)); 
 			} else if("expensive".equals(sort) ) {
-				searchSourceBuilder.sort(new FieldSortBuilder("price").order(SortOrder.DESC)); // 등록일순 정렬
+				searchSourceBuilder.sort(new FieldSortBuilder("price").order(SortOrder.DESC)); 
 			}
 			
 			searchSourceBuilder.sort(new ScoreSortBuilder().order(SortOrder.DESC));  // score 높은순 (default)
@@ -253,6 +256,7 @@ public class SearchServiceImpl implements SearchService{
 				Map<String, Object> sourceAsMap = hit.getSourceAsMap();
 				// log.debug("sourceAsMap: " + sourceAsMap);
 				sourceAsMap.put("images", sourceAsMap.get("images").toString().replaceAll("/dev/workspace/spb/src/main/resources/static", ""));
+				sourceAsMap.put("selled_qty", 0); 
 				list.add(sourceAsMap);
 			}
 			
@@ -261,6 +265,27 @@ public class SearchServiceImpl implements SearchService{
 				departmentList.add(m.get("department").toString());
 			}
 			
+			if("best".equals(sort)) {
+				List<Map<String,Object>> selledQty = getSelledQty();
+				for(Map<String,Object> doc : list) {
+					for(Map<String,Object> qtyDoc : selledQty) {
+						if(qtyDoc.get("prdIds").toString().equals(doc.get("book_id").toString())) {
+							doc.put("selled_qty", Integer.parseInt(doc.get("selled_qty").toString()) + Integer.parseInt(qtyDoc.get("qtys").toString()));
+						}
+					}
+				}
+				Collections.sort(list, new Comparator<Map<String,Object>>() {
+
+					@Override
+					public int compare(Map<String,Object> o1, Map<String,Object> o2) {
+						int cnt1 =Integer.parseInt(o1.get("selled_qty").toString());
+					    int cnt2 =Integer.parseInt(o2.get("selled_qty").toString());
+						return cnt1 > cnt2 ? -1 : cnt1< cnt2 ? 1 : 0; // 내림차순 정렬
+					}
+				
+				});
+			}
+			log.debug("list.toString(): "+list.toString());
 			resultMap.put("totalHits", totalHits);
 			resultMap.put("searchResult", list);
 			
@@ -371,6 +396,42 @@ public class SearchServiceImpl implements SearchService{
 		result.put("images", images);
 		return result;
 	}
+	
+	public List<Map<String,Object>> getSelledQty() throws Exception {
+		List<Map<String,Object>> resultList = new ArrayList<>();
+		SearchRequest searchRequest = new SearchRequest("checked_out_products");
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		searchSourceBuilder.timeout(new TimeValue(60,TimeUnit.SECONDS));
+		searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+		searchRequest.source(searchSourceBuilder);
+		
+		SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+		SearchHits hits = searchResponse.getHits();
+		SearchHit[] searchHits = hits.getHits();
+		
+		for (SearchHit hit : searchHits) {
+			Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+			// log.debug("sourceAsMap: " + sourceAsMap);
+			resultList.add(sourceAsMap);
+		}
+		
+		return resultList;
+	}
 
 	
+}
+
+class MapComparator implements Comparator<Map<String, String>> {
+	 
+    private final String key;
+    
+    public MapComparator(String key) {
+        this.key = key;
+    }
+    
+    @Override
+    public int compare(Map<String, String> first, Map<String, String> second) {
+        int result = first.get(key).compareTo(second.get(key));
+        return result;
+    }
 }
