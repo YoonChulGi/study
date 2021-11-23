@@ -17,4 +17,6 @@ public interface SearchService {
 	public List<Map<String,Object>> searchManyAsMapByIds(String indexName, int[] ids) throws Exception;
 	
 	public Map<String,String> getIndexNameAndIdAndImagesByBookId(String indexNameWithWildCard, int bookId) throws Exception;
+	
+	public List<Map<String,Object>> getSelledQty() throws Exception;
 }

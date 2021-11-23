@@ -6,13 +6,17 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.lucene.search.TotalHits;
@@ -32,7 +36,6 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import spb.ubooks.mapper.CombookMapper;
@@ -397,12 +400,25 @@ public class SearchServiceImpl implements SearchService{
 		return result;
 	}
 	
+	@Override
 	public List<Map<String,Object>> getSelledQty() throws Exception {
 		List<Map<String,Object>> resultList = new ArrayList<>();
 		SearchRequest searchRequest = new SearchRequest("checked_out_products");
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.timeout(new TimeValue(60,TimeUnit.SECONDS));
-		searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+		
+		Date date = new Date(System.currentTimeMillis());
+		SimpleDateFormat sdf;
+	    sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+	    sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+	    String stamp = sdf.format(date);
+	    
+	    Calendar mon = Calendar.getInstance();
+	    mon.add(Calendar.MONTH , -1);
+	    String monthDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX").format(mon.getTime());
+	    
+		
+		searchSourceBuilder.query(QueryBuilders.rangeQuery("@timestamp").gte(monthDate).lte(stamp));
 		searchRequest.source(searchSourceBuilder);
 		
 		SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);

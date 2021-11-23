@@ -110,8 +110,8 @@ FACEBOOK: https://www.facebook.com/themefisher
                         </a>
                         <div class="media-body">
                            <h4 class="media-heading"><a th:href="|/complete-works/${list.book_id}|" th:text="${list.title}">Ambassador Heritage 1921</a></h4>
-                           <p class="price"><th:block th:text="|${list.qty} x ₩${list.price}|"></th:block></p>
-                           <p class="price"><th:block th:text="|배송비: ₩${list.shipping_fee}"></th:block></p>
+                           <p class="price"><th:block th:text="|${list.qty} x ₩${#numbers.formatInteger(list.price, 0, 'DEFAULT')}|"></th:block></p>
+                           <p class="price"><th:block th:text="|배송비: ₩${#numbers.formatInteger(list.shipping_fee, 0, 'DEFAULT')}"></th:block></p>
                            <span class="remove removeProduct" th:id="|remove_${list.book_id}|" >Remove</span>
                         </div>
                         <input th:id="|price-${list.book_id}|" type="hidden" th:value="${list.price}" />
@@ -124,16 +124,16 @@ FACEBOOK: https://www.facebook.com/themefisher
                      <ul class="summary-prices">
                         <li>
                            <span>소계:</span>
-                           <span id="subtotal" class="price" th:text="|₩${totals.subtotal}|"></span>
+                           <span id="subtotal" class="price" th:text="|₩${#numbers.formatInteger(totals.subtotal, 0, 'DEFAULT')}|"></span>
                         </li>
                         <li>
                            <span>배송비:</span>
-                           <span id="shippingFee" th:text="|₩${totals.shippingFee}|"></span>
+                           <span id="shippingFee" th:text="|₩${#numbers.formatInteger(totals.shippingFee, 0, 'DEFAULT')}|"></span>
                         </li>
                      </ul>
                      <div class="summary-total">
                         <span>Total</span>
-                        <span id="total" th:text="|₩${totals.total}|"></span>
+                        <span id="total" th:text="|₩${#numbers.formatInteger(totals.total, 0, 'DEFAULT')}|"></span>
                      </div>
                      <div class="verified-icon">
                         <img th:src="@{images/ubooks/shop/verified.png}">

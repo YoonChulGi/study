@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.elasticsearch.ElasticsearchException;
@@ -67,6 +68,9 @@ public class SellServiceImpl implements SellService{
 	
 	@Autowired
 	SearchService searchService;
+	
+	@Autowired
+	CartService cartService;
 	
 	@Override
 	public ComBookIndexDto registProduct(CombookEntity combook, MultipartHttpServletRequest multipartHttpServletRequest,int bid ) throws Exception {
@@ -351,7 +355,7 @@ public class SellServiceImpl implements SellService{
 	}
 
 	@Override
-	public List<CheckoutEntity> orderProducts(CheckoutEntity orderInfo) throws Exception {
+	public List<CheckoutEntity> orderProducts(CheckoutEntity orderInfo, HttpServletRequest request, HttpServletResponse response) throws Exception { 
 		log.debug(orderInfo.toString());
 		String prdIds = orderInfo.getPrdIds();
 		String qtys = orderInfo.getQtys();
@@ -386,7 +390,15 @@ public class SellServiceImpl implements SellService{
 			
 		};
 		
-		checkoutRepository.saveAll(it);
+		try {
+			checkoutRepository.saveAll(it);
+			String[] prdIdsArr = prdIds.split("-");
+			for(String id : prdIdsArr) {
+				cartService.deleteCart(id, request, response);
+			}
+		}catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		}
 		return list;
 	}
 	

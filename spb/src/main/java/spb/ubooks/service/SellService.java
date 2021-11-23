@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -20,6 +21,6 @@ public interface SellService {
 	public void deleteIndexProduct(int bookId) throws Exception;
 	public List<Map<String, Object>> checkoutProduct(String checkoutValues) throws Exception;
 	public Map<String,Object> calcProductsPrice(List<Map<String,Object>> products) throws Exception;
-	public List<CheckoutEntity> orderProducts(CheckoutEntity orderInfo) throws Exception;
+	public List<CheckoutEntity> orderProducts(CheckoutEntity orderInfo, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public void indexOrderedProducts(List<CheckoutEntity> products) throws Exception;
 }
