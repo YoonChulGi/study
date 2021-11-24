@@ -34,16 +34,15 @@ public class TestServiceImpl implements TestService{
 	public Map<String,Object> doSearch() throws Exception {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		try {
-			SearchRequest searchRequest = new SearchRequest("combook*");
+			SearchRequest searchRequest = new SearchRequest("combook*"); // 인덱스명
 			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 			searchSourceBuilder.size(10000);
 			searchSourceBuilder.timeout(new TimeValue(60,TimeUnit.SECONDS));
 			
-			BoolQueryBuilder boolQuery = new BoolQueryBuilder();
-			boolQuery.must(QueryBuilders.queryStringQuery("*피노*"));
-			searchSourceBuilder.query(boolQuery);
+			
+			searchSourceBuilder.query(QueryBuilders.rangeQuery("book_id").gt(40).lt(50)); // book_id가 40초과 50미만
 			searchSourceBuilder.sort(new ScoreSortBuilder().order(SortOrder.DESC));  // score 높은순 (default)
-			searchSourceBuilder.sort(new FieldSortBuilder("_id").order(SortOrder.ASC)); // id오름차순 정
+			searchSourceBuilder.sort(new FieldSortBuilder("book_id").order(SortOrder.ASC)); // id오름차순 정렬
 			
 			searchRequest.source(searchSourceBuilder);
 			SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT); // 검색 요청
