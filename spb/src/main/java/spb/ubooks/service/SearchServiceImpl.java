@@ -166,7 +166,11 @@ public class SearchServiceImpl implements SearchService{
 		List<Map<String,Object>> list = null;
 		ArrayList <String> departmentList = null;
 		if("".equals(sort)) sort = "date";
-		if(!"".equals(query)) query = "*" + query + "*";
+		if(!"".equals(query)) {
+			query = query.replaceAll("\\(", "");
+			query = query.replaceAll("\\)", "");
+			query = "*" + query + "*";
+		}
 		log.debug("query: "+query);
 		log.debug("searchField: "+searchField);
 		log.debug("sort: "+sort);
@@ -418,6 +422,29 @@ public class SearchServiceImpl implements SearchService{
 	    
 		
 		searchSourceBuilder.query(QueryBuilders.rangeQuery("@timestamp").gte(monthDate).lte(stamp));
+		searchRequest.source(searchSourceBuilder);
+		
+		SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+		SearchHits hits = searchResponse.getHits();
+		SearchHit[] searchHits = hits.getHits();
+		
+		for (SearchHit hit : searchHits) {
+			Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+			// log.debug("sourceAsMap: " + sourceAsMap);
+			resultList.add(sourceAsMap);
+		}
+		
+		return resultList;
+	}
+
+	@Override
+	public List<Map<String, Object>> getAutoCompleteList(String query) throws Exception {
+		List<Map<String, Object>> resultList = new ArrayList<>();
+		SearchRequest searchRequest = new SearchRequest("auto_complete");
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		searchSourceBuilder.timeout(new TimeValue(60,TimeUnit.SECONDS));
+		searchSourceBuilder.query(QueryBuilders.matchQuery("auto_complete", query));
+		searchSourceBuilder.sort(new ScoreSortBuilder().order(SortOrder.DESC));
 		searchRequest.source(searchSourceBuilder);
 		
 		SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);

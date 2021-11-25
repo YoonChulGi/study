@@ -128,7 +128,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 							<option value="seller_name" th:if="${#strings.equals(searchParam.searchField,'seller_name')}" selected>판매자명</option>
 							<option value="seller_name" th:unless="${#strings.equals(searchParam.searchField,'seller_name')}">판매자명</option>
 						</select>
-						<input type="text" name="query" class="form-control" placeholder="Search..." th:value="${searchParam.query}" style="width:84%">
+						<input type="text" name="query" class="form-control" placeholder="Search..." th:value="${searchParam.query}" style="width:84%" onkeyup="getAutoComplete(this);">
 					</div>
 					<input type="hidden" name="sort" id="sort" th:value="${searchParam.sort}"/> 
 					<input type="hidden" name="department" id="department" th:value="${searchParam.department}"/> 

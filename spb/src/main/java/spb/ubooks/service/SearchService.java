@@ -19,4 +19,6 @@ public interface SearchService {
 	public Map<String,String> getIndexNameAndIdAndImagesByBookId(String indexNameWithWildCard, int bookId) throws Exception;
 	
 	public List<Map<String,Object>> getSelledQty() throws Exception;
+	
+	public List<Map<String,Object>> getAutoCompleteList(String query) throws Exception;
 }

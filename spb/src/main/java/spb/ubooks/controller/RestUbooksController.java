@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,5 +47,10 @@ public class RestUbooksController {
 	@RequestMapping(value="/getCartList", method=RequestMethod.GET)
 	public List<Map<String, Object>> getCartList(HttpServletRequest request) throws Exception {
 		return cartService.getCartList(request);
+	}
+	
+	@RequestMapping(value="/autoComplete", method=RequestMethod.GET) 
+	public List<Map<String,Object>> searchOne(@RequestParam("query")String query) throws Exception {
+		return searchService.getAutoCompleteList(query);
 	}
 }

@@ -274,18 +274,19 @@ public class UbooksController {
 			@RequestParam(value = "age", defaultValue = "") String age,
 			@RequestParam(value = "query", defaultValue = "")String query,
 			@RequestParam(value = "searchField", defaultValue="")String searchField) throws Exception {
+		Map<String, Object> searchParam = new LinkedHashMap<String, Object>();
+		searchParam.put("query", query);
+
 		ModelAndView mv = new ModelAndView("/ubooks/buy/complete-works");
 		mv.addObject("res", searchService.sendHighLevelApi("combook*", query,searchField, sort, department, publisher, age)); // elasticsearch
 		mv.addObject("departmentsList", combookMapper.selectDepartments()); // departments - mariadb
 		mv.addObject("publishersList", combookMapper.selectPublishers()); // publishers - mariadb
 		mv.addObject("agesList", combookMapper.selectAges()); // ages - mariadb
 
-		Map<String, Object> searchParam = new LinkedHashMap<String, Object>();
 		searchParam.put("sort", sort);
 		searchParam.put("department", department);
 		searchParam.put("publisher", publisher);
 		searchParam.put("age", age);
-		searchParam.put("query", query);
 		searchParam.put("searchField", searchField);
 		mv.addObject("searchParam", searchParam);
 		return mv;

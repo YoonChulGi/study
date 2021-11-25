@@ -550,7 +550,23 @@ function deleteProduct(bookId) {
     }
 }
 
-function checkOut() {
-	
+function getAutoComplete(el){
+	let query = el.value;
+	$.ajax({
+		type: "GET",
+		url: "/autoComplete",
+		dataType: 'json',
+		data: {"query" : query},
+		success: function(data) {
+			for(let i=0;i<data.length;i++) {
+				console.log(data[i]);
+			}
+		},
+		error:function(request,status,error) {
+			console.dir(request);
+			console.dir(status);
+			console.error(error);
+		}
+	});
 }
 
