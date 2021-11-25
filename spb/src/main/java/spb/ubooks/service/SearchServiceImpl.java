@@ -291,7 +291,6 @@ public class SearchServiceImpl implements SearchService{
 			log.debug("list.toString(): "+list.toString());
 			resultMap.put("totalHits", totalHits);
 			resultMap.put("searchResult", list);
-			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
