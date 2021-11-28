@@ -30,6 +30,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.ScoreSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
@@ -444,6 +445,13 @@ public class SearchServiceImpl implements SearchService{
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.timeout(new TimeValue(60,TimeUnit.SECONDS));
 		searchSourceBuilder.query(QueryBuilders.matchQuery("auto_complete", query));
+//		HighlightBuilder highlightBuilder = new HighlightBuilder(); 
+//		HighlightBuilder.Field highlightTitle = new HighlightBuilder.Field("auto_complete"); 
+//		highlightTitle.highlighterType("unified");  
+//		highlightBuilder.field(highlightTitle);  
+//		HighlightBuilder.Field highlightUser = new HighlightBuilder.Field("user");
+//		highlightBuilder.field(highlightUser);
+//		searchSourceBuilder.highlighter(highlightBuilder);
 		searchSourceBuilder.sort(new ScoreSortBuilder().order(SortOrder.DESC));
 		searchRequest.source(searchSourceBuilder);
 		
@@ -453,7 +461,6 @@ public class SearchServiceImpl implements SearchService{
 		
 		for (SearchHit hit : searchHits) {
 			Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-			// log.debug("sourceAsMap: " + sourceAsMap);
 			resultList.add(sourceAsMap);
 		}
 		

@@ -50,7 +50,10 @@ public class RestUbooksController {
 	}
 	
 	@RequestMapping(value="/autoComplete", method=RequestMethod.GET) 
-	public List<Map<String,Object>> searchOne(@RequestParam("query")String query) throws Exception {
+	public List<Map<String,Object>> autoComplete(@RequestParam("query")String query, HttpServletResponse response) throws Exception {
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Methods", "POST, GET");
+		response.addHeader("Access-Control-Allow-Headers", "origin, x-requested-with");
 		return searchService.getAutoCompleteList(query);
 	}
 }

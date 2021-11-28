@@ -18,6 +18,8 @@ FACEBOOK: https://www.facebook.com/themefisher
 <!-- 공통 헤드-->
 <th:block th:replace="/ubooks/common/header :: headFragment"></th:block>
 
+<link rel="stylesheet" th:href="@{/css/ubooks/auto-complete.css}"/>
+
 <body id="body">
 <!-- Start Top Header Bar -->
 <th:block th:replace="/ubooks/common/top :: headTop"></th:block>
@@ -128,8 +130,11 @@ FACEBOOK: https://www.facebook.com/themefisher
 							<option value="seller_name" th:if="${#strings.equals(searchParam.searchField,'seller_name')}" selected>판매자명</option>
 							<option value="seller_name" th:unless="${#strings.equals(searchParam.searchField,'seller_name')}">판매자명</option>
 						</select>
-						<input type="text" id="query" name="query" class="form-control" placeholder="Search..." th:value="${searchParam.query}" style="width:84%" onkeyup="getAutoComplete(this);"> 
-						<div id="ark"></div>
+						<input type="text" id="query" name="query" class="form-control search_input" placeholder="Search..." th:value="${searchParam.query}" style="width:84%" onkeyup="getAutoComplete(this);" autocomplete='off'> 
+						<div class = "rel_search">
+						    <ul class="pop_rel_keywords">
+						    </ul>
+						</div>
 					</div>
 					<input type="hidden" name="sort" id="sort" th:value="${searchParam.sort}"/> 
 					<input type="hidden" name="department" id="department" th:value="${searchParam.department}"/> 
@@ -214,7 +219,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 <!-- 공통 스크립트-->
 <th:block th:replace="/ubooks/common/script :: scriptFragment"></th:block>
 
-
+<script th:src="@{/js/ubooks/autoComplete/auto-complete.js}"></script>
 
   </body>
   </html>
