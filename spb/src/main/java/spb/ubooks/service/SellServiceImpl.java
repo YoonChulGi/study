@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.connector.Response;
 import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.delete.DeleteRequest;
@@ -137,6 +138,7 @@ public class SellServiceImpl implements SellService{
 		return combookIndexDto;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void indexProduct(ComBookIndexDto combookIndexDto) throws Exception {
 		log.debug("addIndex");
@@ -163,16 +165,38 @@ public class SellServiceImpl implements SellService{
 		}
 		
 		ObjectMapper objectMapper = new ObjectMapper();
+		@SuppressWarnings("rawtypes")
 		Map doc = objectMapper.convertValue(combook, Map.class);
 		doc.put("images", imagesValue);
 		
 		request.source(doc);
 		
 		client.indexAsync(request, RequestOptions.DEFAULT, new ActionListener<IndexResponse>() {
-
+			
 			@Override
 			public void onResponse(IndexResponse response) {
-				log.debug("index Success");
+				log.debug("###index Success###");
+				IndexRequest req = new IndexRequest("auto_complete");
+				log.debug(response.toString());
+				req.id((combook.getBook_id()+""));
+				Map<String,Object> doc = new HashMap<>();
+				doc.put("auto_complete", combook.getTitle());
+				req.source(doc);
+				client.indexAsync(req, RequestOptions.DEFAULT, new ActionListener<IndexResponse>() {
+
+					@Override
+					public void onResponse(IndexResponse response) {
+						log.debug("###auto_complete index Success###");
+						log.debug(response.toString());
+					}
+
+					@Override
+					public void onFailure(Exception e) {
+						log.debug("###auto_complete index failed###");
+						e.printStackTrace();
+					}
+					
+				});
 			}
 
 			@Override
@@ -219,6 +243,7 @@ public class SellServiceImpl implements SellService{
 		String oldImages = indexNameAndIdAndImages.get("images"); 
 		
 		ObjectMapper objectMapper = new ObjectMapper();
+		@SuppressWarnings("unchecked")
 		Map<String,Object> doc = objectMapper.convertValue(combookIndexDto.getCombook(), Map.class);
 		List<FileEntity> images = combookIndexDto.getImages();
 		String imagesRes = "";
@@ -252,6 +277,30 @@ public class SellServiceImpl implements SellService{
 						} else {
 							log.debug("["+filePath+"] file dosen't exist");
 						}
+					}
+					
+					// 자동완성 update
+					Map<String,Object> map = new HashMap<>();
+					map.put("auto_complete",doc.get("title").toString());
+					UpdateRequest req = new UpdateRequest("auto_complete",bid+"").doc(map);
+					try {
+						client.updateAsync(req, RequestOptions.DEFAULT, new ActionListener<UpdateResponse>() {
+
+							@Override
+							public void onResponse(UpdateResponse response) {
+								log.debug("update auto-complete success");
+								log.debug(response.toString());
+							}
+
+							@Override
+							public void onFailure(Exception e) {
+								log.debug("update auto-complete failed");
+								e.printStackTrace();
+							}
+							
+						});
+					}catch (Exception e) {
+						e.printStackTrace();
 					}
 				}
 
@@ -295,13 +344,28 @@ public class SellServiceImpl implements SellService{
 		Map<String, String> doc = searchService.getIndexNameAndIdAndImagesByBookId("combook*", bookId);
 		String indexName = doc.get("indexName");
 		String _id = doc.get("_id");
-				
+		
 		DeleteRequest request = new DeleteRequest(indexName, _id);
 		client.deleteAsync(request,RequestOptions.DEFAULT,new ActionListener<DeleteResponse>() {
 
 			@Override
 			public void onResponse(DeleteResponse response) {
 				log.debug("deleted Successfully");
+				DeleteRequest req = new DeleteRequest("auto_complete",bookId+"");
+				client.deleteAsync(req, RequestOptions.DEFAULT, new ActionListener<DeleteResponse>() {
+
+					@Override
+					public void onResponse(DeleteResponse response) {
+						log.debug("delete auto-complete success");
+						log.debug(response.toString());
+					}
+
+					@Override
+					public void onFailure(Exception e) {
+						e.printStackTrace();
+					}
+					
+				});
 			}
 
 			@Override
@@ -410,6 +474,7 @@ public class SellServiceImpl implements SellService{
 			IndexRequest request = new IndexRequest(indexName);
 			request.id(ce.getIdx());
 			ObjectMapper objectMapper = new ObjectMapper();
+			@SuppressWarnings("unchecked")
 			Map<String,Object> doc = objectMapper.convertValue(ce, Map.class);
 			Date date = new Date(System.currentTimeMillis());
 			SimpleDateFormat sdf;

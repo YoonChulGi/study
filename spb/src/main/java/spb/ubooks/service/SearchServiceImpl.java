@@ -170,6 +170,9 @@ public class SearchServiceImpl implements SearchService{
 		if(!"".equals(query)) {
 			query = query.replaceAll("\\(", "");
 			query = query.replaceAll("\\)", "");
+			query = query.replaceAll("/", "");
+			query = query.replaceAll("\\[", "");
+			query = query.replaceAll("\\]", "");
 			query = "*" + query + "*";
 		}
 		log.debug("query: "+query);
