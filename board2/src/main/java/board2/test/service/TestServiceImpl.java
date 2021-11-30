@@ -11,6 +11,7 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.text.Text;
 import org.elasticsearch.core.TimeValue;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
@@ -62,7 +63,10 @@ public class TestServiceImpl implements TestService{
 			for (SearchHit hit : searchHits) {
 				Map<String, Object> sourceAsMap = hit.getSourceAsMap(); // 검색 결과를 Map으로 한건 한건 받아서 list에 추가
 				HighlightField field = hit.getHighlightFields().get("title");
-				sourceAsMap.put("highlight", field);
+				sourceAsMap.put("hl_name", field.getName());
+				Text[] t = field.getFragments();
+				sourceAsMap.put("hl_fragments", t[0]);
+				sourceAsMap.put("hl_toString", t[0].toString());
 				
 				list.add(sourceAsMap);
 			}

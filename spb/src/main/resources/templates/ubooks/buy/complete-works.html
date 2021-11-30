@@ -44,7 +44,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 <section class="products section">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-md-2">
 				<div class="widget">
 					<h4 class="widget-title">정렬 기준</h4>
                     <select id="selectSort" class="form-control" >
@@ -113,7 +113,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 					
 				</div>
 			</div>
-			<div class="col-md-9">
+			<div class="col-md-7">
 				<div class="searchBtnGroup">
 					<a id="ageBtn" th:if="${!#strings.equals(searchParam.age,'')}" th:text="|${searchParam.age} [x]|" href="#!" class="btn btn-main btn-small btn-round"></a>
 					<a id="publisherBtn" th:if="${!#strings.equals(searchParam.publisher,'')}" th:text="|${searchParam.publisher} [x]|" href="#!" class="btn btn-main btn-small btn-round"></a>
@@ -209,7 +209,52 @@ FACEBOOK: https://www.facebook.com/themefisher
 
 				</div>				
 			</div>
-		
+			<div class="col-md-3">
+				<div class="widget product-category">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<span>인기검색어</span>
+						</div>
+						<div id="pop-day" class="btn btn-light col-md-4 pop-btn pop-selected" style="margin-top: 5px;background-color: grey;color: white;">일간</div>
+						<div id="pop-week" class="btn btn-light col-md-4 pop-btn" style="margin-top: 5px;">주간</div>
+						<div id="pop-month" class="btn btn-light col-md-4 pop-btn" style="margin-top: 5px;">월간</div>
+						
+						<hr>
+						
+						<div class="panel-collapse collapse in">
+							<div class="panel-body">
+								<ul id="popword">
+									<li>
+										<a href="#!">3-6세</a>
+									</li>
+									<li>
+										<a href="#!">4-6세</a>
+									</li>
+									<li>
+										<a href="#!">4-7세</a>
+									</li>
+									<li>
+										<a href="#!">5-10세</a>
+									</li>
+									<li>
+										<a href="#!">초등3학년이상</a>
+									</li>
+									<li>
+										<a href="#!">초등전학년</a>
+									</li>
+								</ul>
+							</div>
+					    </div>
+					</div>
+					
+					<!-- <ol>
+						<li>111</li>
+						<li>222</li>
+						<li>333</li>
+						<li>444</li>
+					</ol> -->
+				</div>
+			</div>
 		</div>
 	</div>
 </section>

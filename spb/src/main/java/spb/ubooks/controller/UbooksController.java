@@ -48,7 +48,6 @@ public class UbooksController {
 	
 	@RequestMapping(value = { "/", "/index" })
 	public ModelAndView ubooksHome() throws Exception {
-		log.debug("ubooksHome");
 		ModelAndView mv = new ModelAndView("/ubooks/index");
 		return mv;
 	}
@@ -273,12 +272,12 @@ public class UbooksController {
 			@RequestParam(value = "publisher", defaultValue = "") String publisher,
 			@RequestParam(value = "age", defaultValue = "") String age,
 			@RequestParam(value = "query", defaultValue = "")String query,
-			@RequestParam(value = "searchField", defaultValue="")String searchField) throws Exception {
+			@RequestParam(value = "searchField", defaultValue="")String searchField, HttpServletRequest request) throws Exception {
 		Map<String, Object> searchParam = new LinkedHashMap<String, Object>();
 		searchParam.put("query", query);
 
 		ModelAndView mv = new ModelAndView("/ubooks/buy/complete-works");
-		mv.addObject("res", searchService.sendHighLevelApi("combook*", query,searchField, sort, department, publisher, age)); // elasticsearch
+		mv.addObject("res", searchService.sendHighLevelApi("combook*", query,searchField, sort, department, publisher, age, request)); // elasticsearch
 		mv.addObject("departmentsList", combookMapper.selectDepartments()); // departments - mariadb
 		mv.addObject("publishersList", combookMapper.selectPublishers()); // publishers - mariadb
 		mv.addObject("agesList", combookMapper.selectAges()); // ages - mariadb

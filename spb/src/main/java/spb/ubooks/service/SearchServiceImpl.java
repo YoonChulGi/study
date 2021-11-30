@@ -19,7 +19,13 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.lucene.search.TotalHits;
+import org.elasticsearch.action.ActionListener;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -30,7 +36,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.ScoreSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
@@ -161,13 +166,16 @@ public class SearchServiceImpl implements SearchService{
 	@Override
 	public Map<String,Object> sendHighLevelApi(
 			String indexName, String query,String searchField, String sort, 
-			String department, String publisher, String age) throws Exception {
+			String department, String publisher, String age, HttpServletRequest request) throws Exception {
+		
+		String originalQuery = "";
 		
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		List<Map<String,Object>> list = null;
 		ArrayList <String> departmentList = null;
 		if("".equals(sort)) sort = "date";
 		if(!"".equals(query)) {
+			originalQuery = query;
 			query = query.replaceAll("\\(", "");
 			query = query.replaceAll("\\)", "");
 			query = query.replaceAll("/", "");
@@ -299,6 +307,20 @@ public class SearchServiceImpl implements SearchService{
 			log.debug("list.toString(): "+list.toString());
 			resultMap.put("totalHits", totalHits);
 			resultMap.put("searchResult", list);
+			
+			if(totalHits.value > 0 && !"".equals(originalQuery)) { // 검색결과 있을 시 검색 로깅
+				HttpSession session = request.getSession();
+				String memberId = null;
+				if(session.getAttribute("memberId") != null) {
+					memberId = session.getAttribute("memberId").toString();
+				}
+				if(memberId != null) {
+					putSearchLog(originalQuery, memberId);
+				} else {
+					putSearchLog(originalQuery, null);
+				}
+			}
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -468,6 +490,45 @@ public class SearchServiceImpl implements SearchService{
 		}
 		
 		return resultList;
+	}
+
+	@Override
+	public void putSearchLog(String query,String memberId) throws Exception {
+		String indexName = "query-log";
+		IndexRequest request = new IndexRequest(indexName);
+		request.id();
+		
+		Map<String,Object> doc = new HashMap<>();
+		doc.put("query", query);
+		doc.put("memberId", memberId);
+		
+		Date date = new Date(System.currentTimeMillis());
+		SimpleDateFormat sdf;
+	    sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+	    sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+	    String stamp = sdf.format(date);
+		doc.put("@timestamp", stamp);
+		
+		request.source(doc);
+		try {
+			client.indexAsync(request, RequestOptions.DEFAULT, new ActionListener<IndexResponse>() {
+
+				@Override
+				public void onResponse(IndexResponse response) {
+					log.debug("logging success");
+					log.debug(response.toString());
+				}
+
+				@Override
+				public void onFailure(Exception e) {
+					log.debug("logging failed");
+					e.printStackTrace();
+				}
+				
+			});
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	
