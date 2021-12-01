@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.Aggregations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,5 +57,14 @@ public class RestUbooksController {
 		response.addHeader("Access-Control-Allow-Methods", "POST, GET");
 		response.addHeader("Access-Control-Allow-Headers", "origin, x-requested-with");
 		return searchService.getAutoCompleteList(query);
+	}
+	
+	@RequestMapping(value="/popword", method=RequestMethod.GET)
+	public List<Map<String,Object>> getPopword(@RequestParam("range")String range, HttpServletResponse response) throws Exception {
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Methods", "POST, GET");
+		response.addHeader("Access-Control-Allow-Headers", "origin, x-requested-with");
+		
+		return searchService.getPopwordList(range);
 	}
 }

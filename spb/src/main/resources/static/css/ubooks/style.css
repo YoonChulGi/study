@@ -2723,3 +2723,65 @@ input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focu
 .searchBtnGroup {
 	margin-bottom: 1%;
 }
+
+.sr_numbox {
+	border: solid 1px #214f8a;
+    background: #214f8a;
+    color: #fff;
+    vertical-align: middle;
+}
+
+/* .sr_rank_ls */ .sr_rank {
+    float: right;
+}
+
+.sr_rank_ls li {
+    margin-top: 5px;
+    color: #555;
+}
+
+.sr_rankup {
+    background: url(../../images/ubooks/popword/rankup.gif);
+    width: 12px;
+    height: 10px;
+    display: inline-block;
+}
+
+.sr_rankdown {
+    background: url(../../images/ubooks/popword/rankdown.gif);
+    width: 12px;
+    height: 10px;
+    display: inline-block;
+}
+
+.sr_numbox3 {
+    border: 1px solid #bfbfbf;
+}
+
+.sr_numbox, .sr_numbox2, .sr_numbox3 {
+    /*color: #444444;*/
+    font-size: 12px;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    display: inline-block;
+    text-align: center;
+    letter-spacing: -2px;
+    vertical-align: top;
+    padding-right : 1px;
+    margin-right : 5px;
+}
+
+.sr_numbox, .sr_numbox2 {
+    border: solid 1px #214f8a;
+    background: #214f8a;
+    color: #fff;
+}
+
+#popword {
+	padding-right : 5px;
+}
+
+#popword li {
+	padding-bottom : 4px;
+}

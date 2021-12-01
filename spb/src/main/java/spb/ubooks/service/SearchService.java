@@ -5,6 +5,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.Aggregations;
+
 public interface SearchService {
 	public String sendREST(String sendUrl, String jsonValue) throws IllegalStateException;
 
@@ -26,5 +29,5 @@ public interface SearchService {
 	
 	public void putSearchLog(String query, String memberId) throws Exception;
 	
-	public List<Map<String,Object>> getPopwordList(String range) throws Exception;
+	public List<Map<String, Object>> getPopwordList(String range) throws Exception;
 }

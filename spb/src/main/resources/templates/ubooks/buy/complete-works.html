@@ -130,7 +130,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 							<option value="seller_name" th:if="${#strings.equals(searchParam.searchField,'seller_name')}" selected>판매자명</option>
 							<option value="seller_name" th:unless="${#strings.equals(searchParam.searchField,'seller_name')}">판매자명</option>
 						</select>
-						<input type="text" id="query" name="query" class="form-control search_input" placeholder="Search..." th:value="${searchParam.query}" style="width:84%" onkeyup="getAutoComplete(this);" autocomplete='off'> 
+						<input type="text" id="query" name="query" class="form-control search_input" placeholder="Search..." th:value="${searchParam.query}" style="width:84%" autocomplete='off'> 
 						<div class = "rel_search">
 						    <ul class="pop_rel_keywords">
 						    </ul>
@@ -210,7 +210,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 				</div>				
 			</div>
 			<div class="col-md-3">
-				<div class="widget product-category">
+				<div class="widget ">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<span>인기검색어</span>
@@ -223,36 +223,10 @@ FACEBOOK: https://www.facebook.com/themefisher
 						
 						<div class="panel-collapse collapse in">
 							<div class="panel-body">
-								<ul id="popword">
-									<li>
-										<a href="#!">3-6세</a>
-									</li>
-									<li>
-										<a href="#!">4-6세</a>
-									</li>
-									<li>
-										<a href="#!">4-7세</a>
-									</li>
-									<li>
-										<a href="#!">5-10세</a>
-									</li>
-									<li>
-										<a href="#!">초등3학년이상</a>
-									</li>
-									<li>
-										<a href="#!">초등전학년</a>
-									</li>
-								</ul>
+								<ul id="popword"></ul>
 							</div>
 					    </div>
 					</div>
-					
-					<!-- <ol>
-						<li>111</li>
-						<li>222</li>
-						<li>333</li>
-						<li>444</li>
-					</ol> -->
 				</div>
 			</div>
 		</div>
@@ -265,6 +239,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 <th:block th:replace="/ubooks/common/script :: scriptFragment"></th:block>
 
 <script th:src="@{/js/ubooks/autoComplete/auto-complete.js}"></script>
+<script th:src="@{/js/ubooks/popWord/pop-word.js}"></script>
 
   </body>
   </html>

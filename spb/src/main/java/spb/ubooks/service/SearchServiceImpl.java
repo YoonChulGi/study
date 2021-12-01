@@ -35,6 +35,9 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.ScoreSortBuilder;
@@ -529,6 +532,133 @@ public class SearchServiceImpl implements SearchService{
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	
+	@Override
+	public List<Map<String,Object>> getPopwordList(String range) throws Exception {
+		List<Map<String,Object>> resultList = new ArrayList<>();
+		String indexName = "query-log";
+		// start popword - 현재 시점
+		SearchRequest searchRequest = new SearchRequest(indexName);
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		searchSourceBuilder.size(0); // 인기검색어 1~10위 
+		searchSourceBuilder.timeout(new TimeValue(60,TimeUnit.SECONDS));
+		
+		Date date = new Date(System.currentTimeMillis());
+		SimpleDateFormat sdf;
+	    sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+	    sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+	    String stamp = sdf.format(date);
+	    
+	    Calendar cal = Calendar.getInstance();
+	    
+	    if("d".equals(range)) { // 일간
+	    	cal.add(Calendar.DAY_OF_MONTH , -1);
+	    } else if ("w".equals(range)) { // 주간
+	    	cal.add(Calendar.WEEK_OF_MONTH, -1);
+	    } else if ("m".equals(range)) { // 월간
+	    	cal.add(Calendar.MONTH, -1);
+	    }
+	    
+	    String rangeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX").format(cal.getTime());
+		
+		searchSourceBuilder.query(QueryBuilders.rangeQuery("@timestamp").gte(rangeFormat).lte(stamp));
+		
+		searchRequest.source(searchSourceBuilder);
+		TermsAggregationBuilder aggregation = AggregationBuilders.terms("by_query").field("query.keyword");
+		// aggregation.subAggregation(AggregationBuilders.sum("sum_query").field("query.keyword"));
+		searchSourceBuilder.aggregation(aggregation);
+		try {
+			SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+			
+			Terms byQuery = searchResponse.getAggregations().get("by_query");
+			int i=0;
+			for(Terms.Bucket entry : byQuery.getBuckets()) {
+				Map<String,Object> popwordEntry = new HashMap<>();
+				popwordEntry.put("key", entry.getKeyAsString());
+				popwordEntry.put("count", entry.getDocCount());
+				popwordEntry.put("status", "new");
+				popwordEntry.put("value", 0);
+				resultList.add(popwordEntry);
+				if(i==9) break; // 10개만
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			Map<String,Object> errorInfo = new HashMap<>();
+			errorInfo.put("error", e);
+			resultList.add(errorInfo);
+			return resultList;
+		}
+		
+		// end popword - 현재시점
+		
+		// start popword - 과거시점
+		SearchRequest searchRequestOld = new SearchRequest(indexName);
+		SearchSourceBuilder searchSourceBuilder2 = new SearchSourceBuilder();
+		searchSourceBuilder2.size(0); // 인기검색어 1~10위 
+		searchSourceBuilder2.timeout(new TimeValue(60,TimeUnit.SECONDS));
+		
+		Calendar cal2 = cal;
+		if("d".equals(range)) { // 일간
+	    	cal2.add(Calendar.DAY_OF_MONTH , -1);
+	    } else if ("w".equals(range)) { // 주간
+	    	cal2.add(Calendar.WEEK_OF_MONTH, -1);
+	    } else if ("m".equals(range)) { // 월간
+	    	cal2.add(Calendar.MONTH, -1);
+	    }
+		
+		String rangeFormat2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX").format(cal2.getTime());
+		
+		searchSourceBuilder2.query(QueryBuilders.rangeQuery("@timestamp").gte(rangeFormat2).lte(rangeFormat));
+		searchRequestOld.source(searchSourceBuilder2);
+		searchSourceBuilder2.aggregation(aggregation);
+		List<Map<String,Object>> resultList2 = new ArrayList<>();
+		try {
+			SearchResponse searchResponse2 = client.search(searchRequestOld, RequestOptions.DEFAULT);
+			Terms byQuery = searchResponse2.getAggregations().get("by_query");
+			int i=0;
+			for(Terms.Bucket entry : byQuery.getBuckets()) {
+				Map<String,Object> popwordEntry = new HashMap<>();
+				popwordEntry.put("key", entry.getKeyAsString());
+				popwordEntry.put("count", entry.getDocCount());
+
+				resultList2.add(popwordEntry);
+				if(i==9) break; // 10개만
+			}
+			log.debug("resultList2.toString()");
+			log.debug(resultList2.toString());
+			for(int idx=0;idx<resultList.size();idx++) {
+				for(int j=0;j<resultList2.size();j++) {
+					if(resultList.get(idx).get("key").equals(resultList2.get(j).get("key"))) {
+						Map<String,Object> m = resultList.get(idx);
+						String status;
+						if(idx < j) {
+							status = "up";
+							m.put("status", status);
+						} else if (idx == j) {
+							status = "-";
+							m.put("status", status);
+						} else {
+							status = "down";
+							m.put("status", status);
+						}
+						m.put("value", j-idx);
+					}
+				}
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			Map<String,Object> errorInfo = new HashMap<>();
+			errorInfo.put("error", e);
+			resultList.add(errorInfo);
+			return resultList;
+		}
+		// end popword - 과거시점
+		
+		
+		return resultList;
 	}
 
 	

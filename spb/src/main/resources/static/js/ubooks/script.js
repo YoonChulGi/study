@@ -517,15 +517,15 @@ function removeCartOne(book_id){
 	
 	$("#cart_" + book_id).remove();
 	$.ajax({
-			type: "GET",
-			url: "/deleteCart",
-			data:{"book_id":book_id},
-			error:function(request,status,error) {
-				console.dir(request);
-				console.dir(status);
-				console.error(error);
-			}
-		});
+		type: "GET",
+		url: "/deleteCart",
+		data:{"book_id":book_id},
+		error:function(request,status,error) {
+			console.dir(request);
+			console.dir(status);
+			console.error(error);
+		}
+	});
 }
 
 function updateProduct(bookId) {
