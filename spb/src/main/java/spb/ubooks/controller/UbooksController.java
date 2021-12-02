@@ -288,6 +288,11 @@ public class UbooksController {
 		searchParam.put("age", age);
 		searchParam.put("searchField", searchField);
 		mv.addObject("searchParam", searchParam);
+		mv.addObject("popd",searchService.getPopwordList("d"));
+		mv.addObject("popw",searchService.getPopwordList("w"));
+		mv.addObject("popm",searchService.getPopwordList("m"));
+		
+		
 		return mv;
 	}
 

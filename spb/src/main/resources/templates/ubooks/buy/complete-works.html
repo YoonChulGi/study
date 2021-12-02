@@ -223,7 +223,94 @@ FACEBOOK: https://www.facebook.com/themefisher
 						
 						<div class="panel-collapse collapse in">
 							<div class="panel-body">
-								<ul id="popword"></ul>
+								<ul th:if="${#lists.size(popd)}" id="popd" style="display:block;">
+									<th:block th:each="i : ${#numbers.sequence(0,#lists.size(popd)-1)}">
+										<li>
+											<th:block th:if="${i == 0}">
+												<span class="sr_numbox" th:text="${i+1}"></span>
+											</th:block>
+											<th:block th:if="${i == 1 || i == 2}">
+												<span class="sr_numbox2" th:text="${i+1}"></span>
+											</th:block>
+											<th:block th:if="${i > 2}">
+												<span class="sr_numbox3" th:text="${i+1}"></span>
+											</th:block>
+											<a href="#!" onclick="javascript:searchPopword(this.innerText)" th:text="${popd.get(i).key}"></a>
+											<span class="sr_rank">
+												<th:block th:if="${#strings.equals(popd.get(i).status,'up')}">
+													<i class="sr_rankup"></i>
+													<span th:text="${popd.get(i).value}"></span>
+												</th:block>
+												<th:block th:if="${#strings.equals(popd.get(i).status,'down')}">
+													<i class="sr_rankdown"></i>
+													<span th:text="${-popd.get(i).value}"></span>
+												</th:block>
+												<th:block th:if="${#strings.equals(popd.get(i).status,'new') or #strings.equals(popd.get(i).status,'-')}">
+													<span th:text="${popd.get(i).status}"></span>
+												</th:block>
+											</span>
+										</li>
+									</th:block>
+								</ul>
+								<ul th:if="${#lists.size(popw)}" id="popw" style="display:none;">
+									<th:block th:each="i : ${#numbers.sequence(0,#lists.size(popw)-1)}">
+										<li>
+											<th:block th:if="${i == 0}">
+												<span class="sr_numbox" th:text="${i+1}"></span>
+											</th:block>
+											<th:block th:if="${i == 1 || i == 2}">
+												<span class="sr_numbox2" th:text="${i+1}"></span>
+											</th:block>
+											<th:block th:if="${i > 2}">
+												<span class="sr_numbox3" th:text="${i+1}"></span>
+											</th:block>
+											<a href="#!" onclick="javascript:searchPopword(this.innerText)" th:text="${popw.get(i).key}"></a>
+											<span class="sr_rank">
+												<th:block th:if="${#strings.equals(popw.get(i).status,'up')}">
+													<i class="sr_rankup"></i>
+													<span th:text="${popw.get(i).value}"></span>
+												</th:block>
+												<th:block th:if="${#strings.equals(popw.get(i).status,'down')}">
+													<i class="sr_rankdown"></i>
+													<span th:text="${-popw.get(i).value}"></span>
+												</th:block>
+												<th:block th:if="${#strings.equals(popw.get(i).status,'new') or #strings.equals(popw.get(i).status,'-')}">
+													<span th:text="${popw.get(i).status}"></span>
+												</th:block>
+											</span>
+										</li>
+									</th:block>
+								</ul>
+								<ul th:if="${#lists.size(popm)}" id="popm" style="display:none;">
+									<th:block th:each="i : ${#numbers.sequence(0,#lists.size(popm)-1)}">
+										<li>
+											<th:block th:if="${i == 0}">
+												<span class="sr_numbox" th:text="${i+1}"></span>
+											</th:block>
+											<th:block th:if="${i == 1 || i == 2}">
+												<span class="sr_numbox2" th:text="${i+1}"></span>
+											</th:block>
+											<th:block th:if="${i > 2}">
+												<span class="sr_numbox3" th:text="${i+1}"></span>
+											</th:block>
+											<a href="#!" onclick="javascript:searchPopword(this.innerText)" th:text="${popm.get(i).key}"></a>
+											<span class="sr_rank">
+												<th:block th:if="${#strings.equals(popm.get(i).status,'up')}">
+													<i class="sr_rankup"></i>
+													<span th:text="${popm.get(i).value}"></span>
+												</th:block>
+												<th:block th:if="${#strings.equals(popm.get(i).status,'down')}">
+													<i class="sr_rankdown"></i>
+													<span th:text="${-popm.get(i).value}"></span>
+												</th:block>
+												<th:block th:if="${#strings.equals(popm.get(i).status,'new') or #strings.equals(popm.get(i).status,'-')}">
+													<span th:text="${popm.get(i).status}"></span>
+												</th:block>
+											</span>
+										</li>
+									</th:block>
+								</ul>
+								
 							</div>
 					    </div>
 					</div>

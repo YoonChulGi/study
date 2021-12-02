@@ -1,51 +1,56 @@
-
-
-getPopword('d');
-
-function getPopword(range) {
-	$.ajax({
-		type: "GET",
-		url: "/popword",
-		dataType: 'json',
-		data:{"range":range},
-		success: function(data) {
-			console.dir(data);
-			let str = "";
-			for(let i=0; i<data.length; i++) {
-				str += "<li>";
-				str += "	<span class='"
-				if(i==0) {
-					str += "sr_numbox'>"+(i+1);
-				} else if (i == 1 || i == 2) {
-					str += "sr_numbox2'>"+(i+1);
-				} else {
-					str += "sr_numbox3'>"+(i+1);
-				}
-				str +="</span>";
-				
-				str +="<a href='#!' >" + data[i].key + "</a>";
-				str +="<span class='sr_rank'>";
-				
-				if(data[i].status == 'up') {
-					str += "<i class='sr_rankup'></i>";
-					str += "<span>" + data[i].value + "</span>";
-				} else if (data[i].status == 'down') {
-					str += "<i class='sr_rankdown'></i>";
-					str += "<span>" + (data[i].value * -1) + "</span>";
-				} else if (data[i].status == 'new') {
-					str += "<span>new</span>";
-				} else if (data[i].status == '-') {
-					str += "<span>-</span>";
-				} 
-				str += "</span>";
-				str += "</li>";
-			}
-			$("#popword").html(str);
-		}, 
-		error: function(request,status,error){
-			console.dir(request);
-			console.dir(status);
-			console.error(error);
-		}
+$( document ).ready(function() {
+	$("#pop-day").on('click',()=>{
+		$("#pop-day").css('background-color','grey');
+		$("#pop-day").css('color','white');
+		
+		$("#pop-week").css('background-color','');
+		$("#pop-week").css('color','');
+		$("#pop-month").css('background-color','');
+		$("#pop-month").css('color','');
+		
+		$("#popd").css('display','block');
+		$("#popw").css('display','none');
+		$("#popm").css('display','none');
 	});
+	
+	$("#pop-week").on('click',()=>{
+		$("#pop-week").css('background-color','grey');
+		$("#pop-week").css('color','white');
+		
+		$("#pop-day").css('background-color','');
+		$("#pop-day").css('color','');
+		$("#pop-month").css('background-color','');
+		$("#pop-month").css('color','');
+		
+		$("#popd").css('display','none');
+		$("#popw").css('display','block');
+		$("#popm").css('display','none');
+	});
+	
+	$("#pop-month").on('click',()=>{
+		$("#pop-month").css('background-color','grey');
+		$("#pop-month").css('color','white');
+		
+		$("#pop-day").css('background-color','');
+		$("#pop-day").css('color','');
+		$("#pop-week").css('background-color','');
+		$("#pop-week").css('color','');
+		
+		$("#popd").css('display','none');
+		$("#popm").css('display','none');
+		$("#popw").css('display','block');
+	});
+});
+
+function searchPopword(query) {
+	let newForm = $('<form></form>'); //set attribute (form) 
+		newForm.attr("name","searchForm"); 
+		newForm.attr("method","post"); 
+		newForm.attr("action","/complete-works");
+		// create element & set attribute (input) 
+		newForm.append($('<input/>', {type: 'hidden',id:'query', name: 'query', value:query })); 
+		// append form (to body) 
+		newForm.appendTo('body'); 
+		// submit form 
+		newForm.submit();
 }
