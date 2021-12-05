@@ -47,31 +47,10 @@ public class SpbApplicationTests {
 		list.add(map2);
 		list.add(map3);
 		
-//		Collections.sort(list, new Comparator<Map<String,Object>>() {
-//
-//			@Override
-//			public int compare(Map<String,Object> o1, Map<String,Object> o2) {
-//				int first = Integer.parseInt(o1.get("price").toString());
-//				int second = Integer.parseInt(o2.get("price").toString());
-//				return first > second ? -1 : first< second ? 1 : 0; // 내림차순 정렬
-//				//return second > first ? -1 : second< first ? 1 : 0; // 오름차순 정렬
-//			}
-//			
-//		});
-		
-		Collections.sort(list, new Comparator<Map<String,Object>>() {
-
-			@Override
-			public int compare(Map<String,Object> o1, Map<String,Object> o2) {
-				String first = o1.get("name").toString();
-				String second = o2.get("name").toString();
-				
-				return second.compareTo(first); // 내림차순
-//				return first.compareTo(second); // 오름차순
-			}
-			
-		});
+		Map<String,Object> m = list.get(0);
+		m.put("name", "zzz");
 		
 		System.out.println(list);
+
 	}
 }
