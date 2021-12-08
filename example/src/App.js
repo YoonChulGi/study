@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import './App.css';
+import React from 'react';
 
-class App extends Component{
+class App extends React.Component{
   render(){
     return(
-      <div className="App">
-        <h1 className="title">hello react!!!</h1>
+      <div>
+        <img src="https://cdn-icons-png.flaticon.com/128/919/919851.png" />
+        <div>hello react!!</div>
       </div>
     );
   }
