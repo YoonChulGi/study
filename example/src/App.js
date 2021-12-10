@@ -1,11 +1,14 @@
 import React from 'react';
+import ChildProperty from './03/ChildProperty';
 
 class App extends React.Component{
   render(){
+    
     return(
       <div>
-        <img src="https://cdn-icons-png.flaticon.com/128/919/919851.png" />
-        <div>hello react!!</div>
+        <ChildProperty>
+          <div><span>child node</span></div>
+        </ChildProperty>
       </div>
     );
   }
