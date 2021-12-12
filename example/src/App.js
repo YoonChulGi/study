@@ -1,14 +1,12 @@
 import React from 'react';
-import ChildProperty from './03/ChildProperty';
+import LifecycleExample from './03/LifecycleExample';
 
 class App extends React.Component{
   render(){
     
     return(
       <div>
-        <ChildProperty>
-          <div><span>child node</span></div>
-        </ChildProperty>
+        <LifecycleExample />
       </div>
     );
   }
