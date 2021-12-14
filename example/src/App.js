@@ -1,24 +1,30 @@
 import React from 'react';
-import Counter from './03/Counter3';
+import Input from './03/Input'
 class App extends React.Component{
   constructor(props) {
     super(props);
-    this.increaseCount = this.increaseCount.bind(this);
-    this.state= {
-      count: 1,
-    };
+    this.myInputFocused = this.myInputFocused.bind(this);
+    this.myInputChanged = this.myInputChanged.bind(this);
   }
-  
-  increaseCount() {
-    this.setState(({ count }) =>({
-      count: count +1 ,
-    }));
+  myInputFocused(e) {
+    console.dir(e.target);
   }
-  render(){
-    
+  myInputChanged(e) {
+    console.dir(e.target);
+  }
+  render(){  
     return(
       <div>
-        <Counter />
+        <Input 
+          name="myInput" 
+          label="이이이인풋!: " 
+          value="zzzzz" 
+          errorMessage="에러메세지 없음" 
+          type="text"
+          onFocus={this.myInputFocused}
+          onChange={this.myInputChanged}
+          autoFocus={true}
+        />
       </div>
     );
   }
