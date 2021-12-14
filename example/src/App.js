@@ -1,11 +1,11 @@
 import React from 'react';
-import TodaysPlanApp from './03/TodaysPalnApp'
+import Todolist from './03/Todolist';
 class App extends React.Component{
   render(){
     
     return(
       <div>
-        <TodaysPlanApp />
+        <Todolist />
       </div>
     );
   }
