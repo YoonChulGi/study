@@ -36,6 +36,7 @@ class Input extends PureComponent {
           ref={this.setRef}
           onChange={this.handleChange}
           onFocus={onFocus}
+          value={value}
           type={type}
         />
         {errorMessage && <span className="error">{errorMessage}</span>}
@@ -55,9 +56,10 @@ Input.propTypes = {
   autoFocus: PropTypes.bool,
 };
 Input.defaultProps = {
-  onchange: () => {},
+  onChange: () => {},
   onFocus: () => {},
   autoFocus: false,
   type: 'text',
 };
+
 export default Input;
