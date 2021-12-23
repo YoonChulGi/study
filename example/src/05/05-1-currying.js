@@ -35,3 +35,27 @@ const formula = x => addFour(multiplyThree(multiplyTwo(x)));
 // => ((x +4) * 3 ) * 2
 const formulaB = x => multiplyTwo(multiplyThree(addFour(x)));
 
+[multiplyTwo, multiplyThree, addFour].reduce(function(prevFunc, nextFunc) {
+    return function(value){  
+        return nextFunc(prevFunc(value));
+    }
+},function(k) {return k;}
+);
+
+const fnc = function(value) {
+    return multiplyTwo((k => k)(value));
+} 
+
+function(value) {
+    return addFour(
+        function(value) {
+            return multiplyThree(
+                function(value) {
+                    return multiplyTwo(
+                        (k => k)(value)
+                    );
+                }(value)
+            );
+        }(value)
+    );
+}
