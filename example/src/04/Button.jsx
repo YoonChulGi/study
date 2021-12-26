@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import withStyles, { css } from './withStyles'; //css()함수와 withStyles() 함수를 입포트하여 엘리먼트에 스타일 적용
+import withStyles, { css } from './withStyles';
 
 class Button extends PureComponent {
   render() {
@@ -19,7 +19,7 @@ class Button extends PureComponent {
     return (
       <button
         {...css(
-          styles.default, // default 스타일을 기본으로 적용
+          styles.default,
           xsmall && styles.xsmall,
           small && styles.small,
           large && styles.large,
@@ -56,7 +56,6 @@ Button.defaultProps = {
 };
 export default withStyles(({ color, size, unit, responsive }) => ({
   default: {
-    // 버튼의 기본 모양을 구성합니다. 전체 테두리 두께는 1px이고 2px의 둥근 테두리 모양 패딩크기는 unit *2
     border: 1,
     borderStyle: 'solid',
     borderColor: color.default,
@@ -65,7 +64,6 @@ export default withStyles(({ color, size, unit, responsive }) => ({
     fontSize: size.md,
     padding: unit * 2,
     cursor: 'pointer',
-    // 미디어 스타일값 responsive.small을 키로 사용하여 추가 스타일 항목을 하위 객체로 할당
     [responsive.small]: {
       width: '100%',
     },
@@ -76,7 +74,6 @@ export default withStyles(({ color, size, unit, responsive }) => ({
   large: {
     fontSize: size.lg,
   },
-  // small, xsmall 버튼의 경우 unit *1 크기의 패딩으로 조정
   small: {
     fontSize: size.sm,
     padding: unit,
