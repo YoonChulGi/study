@@ -16,7 +16,7 @@
     "react-scripts": "2.1.7",
     "react-test-renderer": "16.7.0",
     "react-with-styles": "3.2.1",
-    "recompose": "^0.30.0",
+    "recompose": "0.30.0",
     "redux": "^4.0.1",
     "redux-pack": "^0.1.5",
     "redux-thunk": "^2.3.0",
