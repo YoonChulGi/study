@@ -20,7 +20,7 @@ class Modal extends PureComponent {
   }
 }
 
-index.propTypes = {
+Modal.propTypes = {
   children: PropTypes.node,
 };
 

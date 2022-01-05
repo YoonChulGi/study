@@ -6,22 +6,42 @@ import Card from '../../../doit-ui/Card';
 import InlineList from '../../../doit-ui/InlineList';
 import Text from '../../../doit-ui/Text';
 
+import { Consumer as Modal } from '../../../doit-ui/Modal/context';
+import { TRADE_COIN_MODAL } from '../../constants/modals';
+
 class CoinDashlet extends PureComponent {
   render() {
     const { name, priceLabel } = this.props;
     return (
-      <Card vertical={4} horizontal={4}>
-        <Heading level={4}>
-          {name}
-          <Text>{priceLabel}</Text>
-        </Heading>
-        <InlineList spacingBetween={1}>
-          <Button primary small>
-            매도
-          </Button>
-          <Button small>매수</Button>
-        </InlineList>
-      </Card>
+      <Modal>
+        {({ openModal }) => (
+          <Card vertical={4} horizontal={4}>
+            <Heading level={4}>
+              {name}
+              <Text>{priceLabel}</Text>
+            </Heading>
+            <InlineList spacingBetween={1}>
+              <Button
+                primary
+                small
+                onPress={
+                  () => openModal(TRADE_COIN_MODAL, { type: 'buy', name, price: priceLabel }) // 모달 본문의 TradCoinPage 컴포넌트에 type, price 프로퍼티 값을 전달
+                }
+              >
+                매도
+              </Button>
+              <Button
+                small
+                onPress={
+                  () => openModal(TRADE_COIN_MODAL, { type: 'sell', name, price: priceLabel }) // 모달 본문의 TradCoinPage 컴포넌트에 type, price 프로퍼티 값을 전달
+                }
+              >
+                매수
+              </Button>
+            </InlineList>
+          </Card>
+        )}
+      </Modal>
     );
   }
 }

@@ -22,6 +22,7 @@ class TransactionTable extends PureComponent {
         <TableBody>
           {transactions.map(({ id, name, totalPrice, currentPrice, datetime }) => (
             <TableRow key={id}>
+              <TableCell>{name}</TableCell>
               <TableCell align="center">{totalPrice}</TableCell>
               <TableCell align="center">{currentPrice}</TableCell>
               <TableCell align="right">{datetime}</TableCell>
