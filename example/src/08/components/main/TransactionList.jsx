@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import Api from '../../Api';
+
 import Heading from '../../../doit-ui/Heading';
 import Card from '../../../doit-ui/Card';
 
@@ -8,7 +8,7 @@ import TransactionTable from './TransactionTable';
 
 class TransactionList extends PureComponent {
   componentDidMount() {
-    Api.get('/transactions').then(({ data }) => this.props.setTransactionList(data));
+    this.props.requestTransactionList();
   }
 
   render() {
