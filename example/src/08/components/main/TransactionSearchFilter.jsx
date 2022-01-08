@@ -8,8 +8,6 @@ import Input from '../../../doit-ui/Input';
 import Form from '../../../doit-ui/Form';
 import Select, { Option } from '../../../doit-ui/Select';
 
-import Api from '../../Api';
-
 class TransactionSearchFilter extends PureComponent {
   constructor(props) {
     super(props);
