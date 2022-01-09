@@ -3,8 +3,9 @@ import React, { PureComponent } from 'react';
 import Heading from '../../../doit-ui/Heading';
 import Card from '../../../doit-ui/Card';
 
-import TransactionSearchFilterContainer from './TransactionSearchFilterContainer';
+import TransactionSearchFilterContainer from '../../containers/main/TransactionSearchFilterContainer';
 import TransactionTable from './TransactionTable';
+import TransactionPaginationContainer from '../../containers/main/TransactionPaginationContainer';
 
 class TransactionList extends PureComponent {
   componentDidMount() {
@@ -22,6 +23,7 @@ class TransactionList extends PureComponent {
         <Card>
           <TransactionTable transactions={transactions} isLoading={loading} />
         </Card>
+        <TransactionPaginationContainer />
       </div>
     );
   }
