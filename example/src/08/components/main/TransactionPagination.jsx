@@ -10,12 +10,12 @@ class TransactionPagination extends PureComponent {
     this.handlePrevPress = this.handlePrevPress.bind(this);
   }
   handleNextPress() {
-    const { requestTransactionList, pageNumber } = this.props;
-    requestTransactionList(null, pageNumber + 1); // pageNumber 이전 번호의 페이지 목록을 요청
+    const { requestTransactionList, pageNumber, searchParams } = this.props;
+    requestTransactionList(searchParams, pageNumber + 1); // pageNumber 이전 번호의 페이지 목록을 요청
   }
   handlePrevPress() {
-    const { requestTransactionList, pageNumber } = this.props;
-    requestTransactionList(null, pageNumber - 1); // pageNumber 다음 번호의 페이지 목록을 요청
+    const { requestTransactionList, pageNumber, searchParams } = this.props;
+    requestTransactionList(searchParams, pageNumber - 1); // pageNumber 다음 번호의 페이지 목록을 요청
   }
   render() {
     const { loading, pageNumber, hasNext } = this.props;
