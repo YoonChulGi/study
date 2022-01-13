@@ -1,8 +1,8 @@
 const getRandomNumber = (min, max) => {
-    const range = max - min + 1;
-    return parseInt(Math.random() * range + min, 10);
+  const range = max - min + 1;
+  return parseInt(Math.random() * range + min, 10);
 }
-  
+
 const createData = (index) => {
   switch(getRandomNumber(0, 2)) {
     case 1: {
@@ -40,13 +40,6 @@ const createData = (index) => {
     }
   }
 }
-  
-module.exports = function() {
-  return {
-    users: [],
-    transactions: Array(100).fill('').map((_, index) => createData(index)),
-  };
-};
 
 module.exports = function() {
   return {
