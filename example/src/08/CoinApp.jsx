@@ -6,7 +6,7 @@ import AppLayout from './components/AppLayout';
 import configureStore from './store/configureStore';
 import ModalProvider from './ModalProvider';
 import NotificationContainer from './containers/NotificationContainer';
-import MainPage from './components/main/MainPage';
+import MainPage from '../13/AsyncMainPage';
 import NotFound from './components/NotFound';
 import RouterStateContainer from './containers/RouterStateContainer';
 
