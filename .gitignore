@@ -18,4 +18,4 @@ board2/images/
 application.properties
 spb/images/
 spb/src/main/resources/static/images/
-node.js/examples/07/learn-sequelize/config/config.json
+node.js/examples/07/learn-sequelize/config/*.json
