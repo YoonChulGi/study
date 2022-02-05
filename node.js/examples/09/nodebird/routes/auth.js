@@ -6,7 +6,6 @@ const User = require('../models/user');
 
 const router = express.Router();
 
-// 1
 router.post('/join', isNotLoggedIn, async(req, res, next) => {
     const { email, nick, password } = req.body;
     try {
@@ -27,7 +26,6 @@ router.post('/join', isNotLoggedIn, async(req, res, next) => {
     }
 });
 
-// 2 
 router.post('/login', isNotLoggedIn, (req, res, next) => {
     passport.authenticate('local', (authError, user, info) => {
         if (authError) {
@@ -47,10 +45,17 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
     })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다. 
 });
 
-// 3
 router.get('/logout', isLoggedIn, (req, res) => {
     req.logout();
     req.session.destroy();
+    res.redirect('/');
+});
+
+router.get('/kakao', passport.authenticate('kakao'));
+
+router.get('/kakao/callback', passport.authenticate('kakao', {
+    failureRedirect: '/',
+}), (req, res) => {
     res.redirect('/');
 });
 
