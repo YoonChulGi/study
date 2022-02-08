@@ -4,7 +4,9 @@
     "description": "익스프레스로 만드는 SNS 서비스",
     "main": "app.js",
     "scripts": {
-        "start": "nodemon app"
+        "start": "nodemon server",
+        "test": "jest",
+        "coverage": "jest --coverage"
     },
     "author": "Chul",
     "license": "MIT",
@@ -25,6 +27,9 @@
         "sequelize-cli": "^6.4.1"
     },
     "devDependencies": {
-        "nodemon": "^2.0.15"
+        "artillery": "^2.0.0-11",
+        "jest": "^27.5.0",
+        "nodemon": "^2.0.15",
+        "supertest": "^6.2.2"
     }
 }
