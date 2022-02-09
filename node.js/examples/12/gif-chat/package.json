@@ -1,0 +1,29 @@
+{
+    "name": "git-chat",
+    "version": "0.0.1",
+    "description": "GIT 웹소켓 채팅방",
+    "main": "app.js",
+    "scripts": {
+        "start": "nodemon app"
+    },
+    "author": "Chul",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.25.0",
+        "color-hash": "^2.0.1",
+        "cookie-parser": "^1.4.5",
+        "cookie-signature": "^1.1.0",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "express-session": "^1.17.1",
+        "mongoose": "^6.2.1",
+        "morgan": "^1.10.0",
+        "multer": "^1.4.4",
+        "nunjucks": "^3.2.1",
+        "socket.io": "^2.3.0",
+        "ws": "^8.5.0"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.3"
+    }
+}
