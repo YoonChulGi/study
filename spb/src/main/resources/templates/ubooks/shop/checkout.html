@@ -48,9 +48,9 @@ FACEBOOK: https://www.facebook.com/themefisher
                   <h4 class="widget-title">배송 정보</h4>
                   <form class="checkout-form">
                      <div class="form-group">
-                        <label for="full_name">이름</label>
+                        <label for="full_name">아이디</label>
                         <input th:if="${session.memberId == null}" type="text" class="form-control" id="full_name" placeholder="">
-                        <input th:unless="${session.memberId == null}" type="text" class="form-control" id="full_name" placeholder="" th:value="${session.memberName}" disabled>
+                        <input th:unless="${session.memberId == null}" type="text" class="form-control" id="full_name" placeholder="" th:value="${session.memberId}" disabled>
                      </div>
                      <div class="checkout-country-code clearfix">
                         <div class="form-group">
