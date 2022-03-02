@@ -14,7 +14,6 @@ class AddAdmin extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit(values, closeModal) {
-    console.log(this.props);
     const { createAdmin } = this.props;
     createAdmin(values, closeModal);
   }

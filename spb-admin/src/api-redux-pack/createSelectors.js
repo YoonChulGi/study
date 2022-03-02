@@ -2,11 +2,7 @@ import { createSelector } from "reselect";
 import { CREATE, /*UPDATE,*/ FETCH_LIST /*FETCH*/ } from "./actionTypes";
 
 export default function createSelectors(resourceName) {
-  // console.log(resourceName);
-  const resourceSelector = (state) => {
-    // console.log(state);
-    return state[resourceName];
-  };
+  const resourceSelector = (state) => state[resourceName];
 
   const entitiesSelector = (state) => resourceSelector(state).entities;
   const collectionSelector = createSelector(
@@ -14,10 +10,7 @@ export default function createSelectors(resourceName) {
     ({ indexes, entities }) => indexes.map((idx) => entities[idx])
     // ({ ids, entities }) => ids.map((id) => entities[id])
   );
-  const loadingStateSelector = (state) => {
-    console.log(resourceSelector(state).loadingState);
-    return resourceSelector(state).loadingState;
-  };
+  const loadingStateSelector = (state) => resourceSelector(state).loadingState;
   // const errorStateSelector = (state) => resourceSelector(state).errorState;
   const collectionLoadingStateSelector = (state) =>
     loadingStateSelector(state)[`${FETCH_LIST}/${resourceName}`];
