@@ -6,6 +6,7 @@ Spb Admin
   ★. 새 aws 계정으로 EC2 만들고 mysql 작업 환경 구성하기. 구성 다 하고 테스트까지 하기
     - mariadb 설치 및 테이블 이관. - 완료. spb, spb-admin 두 프로젝트 모두 동작 확인 완료
     - mongodb 설치 - 필요해지면 바로 설치하기 
+    - Github GUI 프로그램 설치하여 커밋 조심히 하기
   0. spbadmin 계정 생성하기 - sequelize User 책이랑 똑같이 만들고, 관리자계정을 DB에 강제로 추가.  - 완료
   1. api 키 받아서 인증해서 api 호출 구현.  - 완료
   9. 로그인 - redis 연동하여 로그인 구현... 
