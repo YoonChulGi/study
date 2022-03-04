@@ -19,13 +19,8 @@ class TransactionPagination extends PureComponent {
   }
   render() {
     const { loading, pageNumber, hasNext } = this.props;
-    let isloading = loading;
-    if (isloading) {
-      isloading = loading["transaction/FETCH_TRANSACTION_LIST"];
-    }
-
-    const prevDisabled = isloading || pageNumber <= 1; // loading
-    const nextDisabled = isloading || !hasNext; // loading
+    const prevDisabled = loading || pageNumber <= 1;
+    const nextDisabled = loading || !hasNext;
 
     return (
       <InlineList align="right">

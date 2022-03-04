@@ -23,10 +23,6 @@ export default (...reducerNames) => {
     apiReducers[name] = (state = initState, action) => {
       const { type, payload, meta } = action;
       const { resourceName, key } = meta || {};
-
-      // console.log(meta);
-      // console.log(action);
-
       if (resourceName !== name) {
         return state;
       }
@@ -74,6 +70,25 @@ export default (...reducerNames) => {
                     size: pageSize,
                   },
                 };
+                // } else if (type === CREATE) {
+                //   console.log(data);
+                //   const indexes = data.payload[key];
+                //   return {
+                //     ...prevState,
+                //     indexes,
+                //     entities: {
+                //       ...prevState.entities,
+                //       [indexes]: data.payload,
+                //     },
+                //     loadingState: {
+                //       ...prevState.loadingState,
+                //       [`${type}/${name}`]: false,
+                //     },
+                //     errorState: {
+                //       ...prevState.errorState,
+                //       [`${type}/${name}`]: false,
+                //     },
+                //   };
               } else {
                 //console.log(data);
                 const indexes = data.payload[key];

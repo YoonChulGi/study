@@ -5,7 +5,7 @@ import Toast from "../../ui/Toast";
 class Notification extends PureComponent {
   render() {
     const { showMessage, message, warning } = this.props;
-    return showMessage && <Toast message={message} warning={warning}></Toast>;
+    return showMessage && <Toast message={message} warning={warning} />;
   }
 }
 

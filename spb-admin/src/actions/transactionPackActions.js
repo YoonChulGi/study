@@ -13,6 +13,16 @@ export function requestTransactionList(params, _page = 1) {
       error: "구매 내역을 갱신하는 중에 문제가 발생했습니다.",
     },
   };
+  // console.log(
+  //   collection(
+  //     {
+  //       ...params,
+  //       _page,
+  //       _limit: PAGE_SIZE,
+  //     },
+  //     meta
+  //   )
+  // );
   return collection(
     {
       ...params,

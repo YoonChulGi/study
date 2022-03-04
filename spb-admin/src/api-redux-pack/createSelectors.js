@@ -34,6 +34,7 @@ export default function createSelectors(resourceName) {
   };
 
   return {
+    resourceSelector,
     entitiesSelector,
     collectionSelector,
     collectionLoadingStateSelector,

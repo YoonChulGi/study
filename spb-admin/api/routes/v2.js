@@ -136,9 +136,9 @@ router.post("/addAdmin", apiLimiter, verifyToken, async (req, res, next) => {
   try {
     const exUser = await User.findOne({ where: { email } });
     if (exUser) {
-      return res.status(201).json({
-        code: 201,
-        message: "이미 존재하는 이메일입니다.",
+      return res.status(499).json({
+        code: 499,
+        errorMessage: "이미 존재하는 이메일입니다.",
       });
     }
     const hash = await bcrypt.hash(password, 12);

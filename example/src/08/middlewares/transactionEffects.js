@@ -1,7 +1,7 @@
 import { TRADE_COMPLETE, requestTransactionList } from '../actions/transactionActions';
 import { showMessage } from '../actions/notificationActions';
 
-export default store => nextRunner => action => {
+export default (store) => (nextRunner) => (action) => {
   const { type } = action;
   const result = nextRunner(action);
   if (type === TRADE_COMPLETE) {

@@ -22,10 +22,7 @@ class TransactionList extends PureComponent {
           <TransactionSearchFilterContainer />
         </Card>
         <Card>
-          <TransactionTable
-            transactions={transactions}
-            isLoading={loading["transaction/FETCH_TRANSACTION_LIST"]}
-          />
+          <TransactionTable transactions={transactions} isLoading={loading} />
         </Card>
         <TransactionPaginationContainer />
       </div>

@@ -6,8 +6,12 @@ export function createAdmin(data, onComplete) {
     data,
     {},
     {
-      notification: { success: "관리자 추가가 성공적으로 완료되었습니다." },
+      notification: {
+        success: "관리자 추가가 성공적으로 완료되었습니다.",
+        error: "관리자 추가에 실패했습니다.",
+      },
       onSuccess: onComplete,
+      onFailure: onComplete,
     }
   );
 }
