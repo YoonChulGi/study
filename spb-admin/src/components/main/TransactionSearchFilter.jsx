@@ -6,8 +6,8 @@ import Button from "../../ui/Button";
 import Text from "../../ui/Text";
 import Input from "../../ui/Input";
 import Form from "../../ui/Form";
-
 import Select, { Option } from "../../ui/Select";
+import { withRouter } from "react-router-dom";
 
 class TransactionSearchFilter extends PureComponent {
   constructor(props) {
@@ -15,16 +15,19 @@ class TransactionSearchFilter extends PureComponent {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit(params) {
-    const { requestTransactionList, setFilter } = this.props;
+    const { /*setFilter,*/ history } = this.props;
     const cleanedParams = Object.entries(params)
       .filter(([key, value]) => value !== "")
       .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
-    requestTransactionList(cleanedParams);
-    setFilter(cleanedParams);
+    const queryString = Object.entries(cleanedParams)
+      .map(([key, value]) => `${key}=${value}`)
+      .join("&");
+    history.push(`/?${queryString}`);
   }
   render() {
+    const { initValues } = this.props;
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit} initValues={initValues}>
         <Form.Consumer>
           {({ onChange, values }) => (
             <InlineList spacingBetween={2} verticalAlign="bottom">
@@ -76,4 +79,4 @@ TransactionSearchFilter.propTypes = {
   setFilter: PropTypes.func,
 };
 
-export default TransactionSearchFilter;
+export default withRouter(TransactionSearchFilter);

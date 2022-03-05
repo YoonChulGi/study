@@ -5,6 +5,7 @@ import thunk from "redux-thunk";
 import notificationEffects from "../middlewares/notificationEffects";
 import { middleware as reduxPackMiddleware } from "redux-pack";
 import searchFilterEffects from "../middlewares/searchFilterEffects";
+import routerEffects from "../middlewares/routerEffects";
 
 export default (initStates) =>
   createStore(
@@ -14,8 +15,9 @@ export default (initStates) =>
       applyMiddleware(
         thunk,
         reduxPackMiddleware,
+        notificationEffects,
         searchFilterEffects,
-        notificationEffects
+        routerEffects
       )
     )
   );

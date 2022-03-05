@@ -8,9 +8,6 @@ import TransactionTable from "./TransactionTable";
 import TransactionPaginationContainer from "../../containers/main/TransactionPaginationContainer";
 
 class TransactionList extends PureComponent {
-  componentDidMount() {
-    this.props.requestTransactionList();
-  }
   render() {
     const { transactions, loading } = this.props;
     // console.dir(transactions);
