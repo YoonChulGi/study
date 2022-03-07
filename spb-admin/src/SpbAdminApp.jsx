@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import AppLayout from "./components/AppLayout";
-import MainPage from "./components/main/MainPage";
+import MainPage from "./AsyncMainPage";
 import configureStore from "./store/configureStore";
 import ModalProvider from "./ModalProvider";
 import NotificationContainer from "./containers/main/NotificationContainer";

@@ -15,12 +15,15 @@ class TransactionSearchFilter extends PureComponent {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit(params) {
+    //console.dir(params);
     const { /*setFilter,*/ history } = this.props;
     const cleanedParams = Object.entries(params)
-      .filter(([key, value]) => value !== "")
+      .filter(([key, value]) => !!value && !!key)
       .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
     const queryString = Object.entries(cleanedParams)
-      .map(([key, value]) => `${key}=${value}`)
+      .map(([key, value]) => {
+        return `${key}=${value}`;
+      })
       .join("&");
     history.push(`/?${queryString}`);
   }
