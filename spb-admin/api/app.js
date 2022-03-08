@@ -5,17 +5,20 @@ const path = require("path");
 const session = require("express-session");
 const nunjucks = require("nunjucks");
 const dotenv = require("dotenv");
+const passport = require("passport");
+
+dotenv.config();
+
 const v1 = require("./routes/v1");
 const v2 = require("./routes/v2");
-const passport = require("passport");
+const authRouter = require("./routes/auth");
+const indexRouter = require("./routes");
+const apiRouter = require("./routes/api");
+
 const { sequelize } = require("./models").db;
 const { sequelize: sequelize2 } = require("./models").db2;
 const passportConfig = require("./passport");
 
-dotenv.config();
-const authRouter = require("./routes/auth");
-const indexRouter = require("./routes");
-const apiRouter = require("./routes/api");
 const logger = require("./logger");
 const app = express();
 passportConfig();
@@ -40,6 +43,7 @@ sequelize2
     console.log("데이터베이스2 연결 성공");
   })
   .catch((err) => {
+    console.log("데이터베이스2 연결 실패");
     console.error(err);
   });
 
@@ -48,15 +52,16 @@ if (process.env.NODE_ENV === "production") {
 } else {
   app.use(morgan("dev"));
 }
-// let corsOption = {
-//   origin: "http://localhost:3000", // 허락하는 요청 주소
-//   credentials: true, // true로 하면 설정한 내용을 response 헤더에 추가 해줍니다.
-// };
-// app.use(cors(corsOption));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
+const redis = require("redis");
+const RedisStore = require("connect-redis")(session);
+const redisClient = redis.createClient({
+  url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+  password: process.env.REDIS_PASSWORD,
+});
 
 const sessionOption = {
   resave: false,
@@ -66,7 +71,7 @@ const sessionOption = {
     httpOnly: true,
     secure: false,
   },
-  // store: new RedisStore({ client: redisClient }),
+  store: new RedisStore({ client: redisClient }),
 };
 if (process.env.NODE_ENV === "production") {
   sessionOption.proxy = true;

@@ -8,8 +8,9 @@ const Domain = require("./domain");
 const Checkout = require("./checkout");
 
 const db = {};
+
 const sequelize = new Sequelize(
-  config.database,
+  "spb-api_dev",
   config.username,
   config.password,
   config
@@ -20,7 +21,7 @@ db.User = User;
 db.Post = Post;
 db.Hashtag = Hashtag;
 db.Domain = Domain;
-db.Checkout = Checkout;
+//db.Checkout = Checkout;
 
 User.init(sequelize);
 Post.init(sequelize);

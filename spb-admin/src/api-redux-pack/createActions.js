@@ -2,7 +2,7 @@ import {
   FETCH_LIST,
   CREATE,
   /*UPDATE, FETCH,*/ RESET,
-  // ADD_ADMIN,
+  LOGIN,
 } from "./actionTypes";
 import Api from "../Api";
 
@@ -26,6 +26,15 @@ export default (resourceName, key = "idx") => ({
     meta: {
       ...meta,
       key: "id",
+      resourceName,
+    },
+  }),
+  login: (data, params = {}, meta = {}) => ({
+    type: LOGIN,
+    promise: Api.post(resourceName, data, { params }),
+    meta: {
+      ...meta,
+      key: "email",
       resourceName,
     },
   }),

@@ -15,7 +15,6 @@ class TransactionSearchFilter extends PureComponent {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit(params) {
-    //console.dir(params);
     const { /*setFilter,*/ history } = this.props;
     const cleanedParams = Object.entries(params)
       .filter(([key, value]) => !!value && !!key)

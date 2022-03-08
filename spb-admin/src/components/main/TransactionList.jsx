@@ -10,8 +10,6 @@ import TransactionPaginationContainer from "../../containers/main/TransactionPag
 class TransactionList extends PureComponent {
   render() {
     const { transactions, loading } = this.props;
-    // console.dir(transactions);
-    // console.dir(loading["transaction/FETCH_TRANSACTION_LIST"]);
     return (
       <div>
         <Heading level={3}>거래 로그</Heading>

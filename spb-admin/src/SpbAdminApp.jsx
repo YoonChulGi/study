@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import AppLayout from "./components/AppLayout";
 import MainPage from "./AsyncMainPage";
+import LoginContainer from "./containers/login/LoginContainer";
 import configureStore from "./store/configureStore";
 import ModalProvider from "./ModalProvider";
 import NotificationContainer from "./containers/main/NotificationContainer";
@@ -21,6 +22,7 @@ class SpbAdminApp extends PureComponent {
             <AppLayout>
               <Switch>
                 <Route path="/" exact render={() => <MainPage />} />
+                <Route path="/login" exact render={() => <LoginContainer />} />
                 <Route path="*" component={NotFound} />
               </Switch>
               <NotificationContainer />

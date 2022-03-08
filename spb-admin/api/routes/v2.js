@@ -4,12 +4,14 @@ const cors = require("cors");
 const url = require("url");
 const { Op } = require("sequelize");
 
-const passport = require("passport");
-const bcrypt = require("bcrypt");
+const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 
 const { verifyToken, apiLimiter } = require("./middlewares");
 const { Domain, User } = require("../models").db;
 const { Checkout } = require("../models").db2;
+
+const passport = require("passport");
+const bcrypt = require("bcrypt");
 
 const router = express.Router();
 
@@ -157,4 +159,57 @@ router.post("/addAdmin", apiLimiter, verifyToken, async (req, res, next) => {
     return next(error);
   }
 });
+
+router.post("/loginAdmin", isNotLoggedIn, (req, res, next) => {
+  console.log("/v2/logAdmin");
+  const { email, password } = req.body;
+  console.log(`email: ${email}`);
+  console.log(`password: ${password}`);
+  console.dir(req.session);
+  passport.authenticate("local", (authError, user, info) => {
+    if (authError) {
+      console.error(authError);
+      return res.status(498).json({
+        code: 498,
+        message: "authenticate error",
+        authError,
+      });
+    }
+    if (!user) {
+      console.dir(info);
+      return res.status(497).json({
+        code: 497,
+        message: info.message,
+      });
+    }
+    req.login(user, (loginError) => {
+      if (loginError) {
+        console.error(loginError);
+        return res.status(496).json({
+          code: 496,
+          message: loginError,
+          loginError,
+        });
+      }
+      console.dir(req.session);
+      return res.status(200).json({
+        code: 200,
+        message: "관리자로 로그인 되었습니다.",
+        email,
+      });
+    });
+  })(req, res, next);
+});
+
+router.get("/logout", (req, res, next) => {
+  console.log("/v2/logout");
+  req.logout();
+  req.session.destroy();
+  console.dir(req.session);
+});
+
+router.get("/isNotLoggedIn", (req, res, next) => {
+  return isNotLoggedIn(req, res, next);
+});
+
 module.exports = router;
