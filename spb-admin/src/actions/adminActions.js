@@ -22,6 +22,10 @@ export function loginAdmin(data, onComplete) {
     data,
     {},
     {
+      notification: {
+        success: "관리자 로그인 성공",
+        error: "관리자 로그인 실패",
+      },
       onSuccess: onComplete,
       onFailure: onComplete,
     }

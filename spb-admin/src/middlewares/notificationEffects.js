@@ -14,9 +14,13 @@ export default (store) => (nextRunner) => (action) => {
   if (meta && meta.notification) {
     const { success, error } = meta.notification;
     if (success && meta[KEY.LIFECYCLE] === LIFECYCLE.SUCCESS) {
-      store.dispatch(showMessage(success));
+      console.log(payload);
+      const { message } = payload.data ? payload.data : {};
+      // console.dir(success);
+      store.dispatch(showMessage(message || success));
     } else if (error && meta[KEY.LIFECYCLE] === LIFECYCLE.FAILURE) {
       const { errorMessage } = payload.response ? payload.response.data : {};
+      // console.dir(payload);
       // console.dir(errorMessage);
       // console.dir(error);
       store.dispatch(showMessage(errorMessage || error, true));

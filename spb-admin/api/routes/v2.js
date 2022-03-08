@@ -16,7 +16,6 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 
 router.use(async (req, res, next) => {
-  console.log(url.parse(req.get("origin")).host);
   const domain = await Domain.findOne({
     where: { host: url.parse(req.get("origin")).host },
   });
@@ -132,8 +131,6 @@ router.get("/checkout", apiLimiter, verifyToken, async (req, res, next) => {
 });
 
 router.post("/addAdmin", apiLimiter, verifyToken, async (req, res, next) => {
-  // console.log("##################v2.js - req.body");
-  // console.log(req.body);
   const { email, nick, password } = req.body;
   try {
     const exUser = await User.findOne({ where: { email } });
@@ -161,17 +158,14 @@ router.post("/addAdmin", apiLimiter, verifyToken, async (req, res, next) => {
 });
 
 router.post("/loginAdmin", isNotLoggedIn, (req, res, next) => {
-  console.log("/v2/logAdmin");
   const { email, password } = req.body;
-  console.log(`email: ${email}`);
-  console.log(`password: ${password}`);
-  console.dir(req.session);
+
   passport.authenticate("local", (authError, user, info) => {
     if (authError) {
       console.error(authError);
       return res.status(498).json({
         code: 498,
-        message: "authenticate error",
+        errorMessage: "authenticate error",
         authError,
       });
     }
@@ -179,37 +173,15 @@ router.post("/loginAdmin", isNotLoggedIn, (req, res, next) => {
       console.dir(info);
       return res.status(497).json({
         code: 497,
-        message: info.message,
+        errorMessage: info.message,
       });
     }
-    req.login(user, (loginError) => {
-      if (loginError) {
-        console.error(loginError);
-        return res.status(496).json({
-          code: 496,
-          message: loginError,
-          loginError,
-        });
-      }
-      console.dir(req.session);
-      return res.status(200).json({
-        code: 200,
-        message: "관리자로 로그인 되었습니다.",
-        email,
-      });
+    return res.status(200).json({
+      code: 200,
+      message: "관리자로 로그인 되었습니다.",
+      email,
     });
   })(req, res, next);
-});
-
-router.get("/logout", (req, res, next) => {
-  console.log("/v2/logout");
-  req.logout();
-  req.session.destroy();
-  console.dir(req.session);
-});
-
-router.get("/isNotLoggedIn", (req, res, next) => {
-  return isNotLoggedIn(req, res, next);
 });
 
 module.exports = router;
