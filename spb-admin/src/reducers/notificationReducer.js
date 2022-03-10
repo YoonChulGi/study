@@ -11,7 +11,6 @@ const initState = {
 
 export default (state = initState, action) => {
   const { type, payload } = action;
-
   switch (type) {
     case SHOW_NOTIFICATION: {
       const { message, warning } = payload;

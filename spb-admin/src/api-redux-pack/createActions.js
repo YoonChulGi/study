@@ -38,4 +38,9 @@ export default (resourceName, key = "idx") => ({
       resourceName,
     },
   }),
+  logout: () => {
+    sessionStorage.setItem("isLoggedIn", false);
+    sessionStorage.setItem("email", null);
+    document.location.reload();
+  },
 });

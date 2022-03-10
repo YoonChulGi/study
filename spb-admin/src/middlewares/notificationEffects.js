@@ -14,7 +14,7 @@ export default (store) => (nextRunner) => (action) => {
   if (meta && meta.notification) {
     const { success, error } = meta.notification;
     if (success && meta[KEY.LIFECYCLE] === LIFECYCLE.SUCCESS) {
-      console.log(payload);
+      // console.log(payload);
       const { message } = payload.data ? payload.data : {};
       // console.dir(success);
       store.dispatch(showMessage(message || success));
@@ -27,7 +27,6 @@ export default (store) => (nextRunner) => (action) => {
     }
   } else if (type === SHOW_NOTIFICATION) {
     const hide = () => store.dispatch(hideMessage());
-
     debounceRunner(hide);
   }
   return result;

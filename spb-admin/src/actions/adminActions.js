@@ -1,7 +1,8 @@
+import { LOGIN_SUCCESS, LOGIN_FAILURE } from "../api-redux-pack/actionTypes";
 import createActions from "../api-redux-pack/createActions";
 
 const { create } = createActions("/api/addAdmin");
-const { login } = createActions("/api/loginAdmin");
+const { login, logout } = createActions("/api/loginAdmin");
 export function createAdmin(data, onComplete) {
   return create(
     data,
@@ -17,7 +18,7 @@ export function createAdmin(data, onComplete) {
   );
 }
 
-export function loginAdmin(data, onComplete) {
+export function loginAdmin(data) {
   return login(
     data,
     {},
@@ -26,8 +27,23 @@ export function loginAdmin(data, onComplete) {
         success: "관리자 로그인 성공",
         error: "관리자 로그인 실패",
       },
-      onSuccess: onComplete,
-      onFailure: onComplete,
     }
   );
+}
+
+export function loginSuccess(email) {
+  return {
+    type: LOGIN_SUCCESS,
+    payload: { email },
+  };
+}
+
+export function loginFailure() {
+  return {
+    type: LOGIN_FAILURE,
+  };
+}
+
+export function logoutAdmin() {
+  return logout();
 }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import Text from "../../ui/Text";
 import Spacing from "../../ui/Spacing";
 import Input from "../../ui/Input";
@@ -11,23 +11,15 @@ class AddAdmin extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.loginCb = this.loginCb.bind(this);
   }
   handleSubmit(params) {
     const { loginAdmin } = this.props;
-    loginAdmin(params, this.loginCb);
+    loginAdmin(params);
   }
-  loginCb() {
-    console.log("loginCb");
-  }
+
   render() {
-    // const { initValues } = this.props;
-    // console.log(initValues);
     return (
-      <Form
-        onSubmit={(values) => this.handleSubmit(values)}
-        // initValues={initValues}
-      >
+      <Form onSubmit={(values) => this.handleSubmit(values)}>
         <Form.Consumer>
           {({ onChange, values }) => (
             <Spacing horizontal={4} vertical={8}>
@@ -53,7 +45,7 @@ class AddAdmin extends Component {
               </Spacing>
               <InlineList spacingBetween={2}>
                 <Button primary>로그인</Button>
-                <Button secondary>비밀번호 찾기</Button>
+                {/* <Button secondary>비밀번호 찾기</Button> */}
                 {/* <Button onPress={closeModal}>취소</Button> */}
               </InlineList>
             </Spacing>
@@ -64,8 +56,8 @@ class AddAdmin extends Component {
   }
 }
 
-// AddAdmin.propTypes = {
-//   createTransaction: PropTypes.func,
-// };
+AddAdmin.propTypes = {
+  loginAdmin: PropTypes.func,
+};
 
 export default AddAdmin;

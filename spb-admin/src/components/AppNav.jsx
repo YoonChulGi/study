@@ -1,16 +1,19 @@
 import React, { PureComponent } from "react";
 import { withStyles, css, withStylesPropTypes } from "../ui/withStyles";
 import Heading from "../ui/Heading";
-// import Text from "../ui/Text";
+import InlineList from "../ui/InlineList";
 import Button from "../ui/Button";
 
 import { Consumer as Modal } from "../ui/Modal/context";
 import { ADD_ADMIN_MODAL } from "../constants/modals";
 
+import { logoutAdmin } from "../actions/adminActions";
+
 export const HEIGHT = 64;
 
 class AppNav extends PureComponent {
   render() {
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn");
     const { styles } = this.props;
     return (
       <Modal>
@@ -20,15 +23,21 @@ class AppNav extends PureComponent {
               <Heading level={3} inverse>
                 Spb Admin
               </Heading>
-              <Button
-                inverse
-                bold
-                large
-                right
-                onPress={() => openModal(ADD_ADMIN_MODAL)}
-              >
-                관리자 추가
-              </Button>
+              {isLoggedIn === "true" ? (
+                <InlineList align="right">
+                  <Button
+                    inverse
+                    bold
+                    large
+                    onPress={() => openModal(ADD_ADMIN_MODAL)}
+                  >
+                    관리자 추가
+                  </Button>
+                  <Button inverse bold large onPress={() => logoutAdmin()}>
+                    로그아웃
+                  </Button>
+                </InlineList>
+              ) : null}
             </div>
           </div>
         )}

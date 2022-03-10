@@ -6,6 +6,7 @@ import notificationEffects from "../middlewares/notificationEffects";
 import { middleware as reduxPackMiddleware } from "redux-pack";
 import searchFilterEffects from "../middlewares/searchFilterEffects";
 import routerEffects from "../middlewares/routerEffects";
+import adminEffects from "../middlewares/adminEffects";
 
 export default (initStates) =>
   createStore(
@@ -17,7 +18,8 @@ export default (initStates) =>
         reduxPackMiddleware,
         notificationEffects,
         searchFilterEffects,
-        routerEffects
+        routerEffects,
+        adminEffects
       )
     )
   );
