@@ -6,13 +6,20 @@ import { withRouter } from "react-router";
 import compose from "recompose/compose";
 
 class RouterState extends PureComponent {
+  isLoggedIn = sessionStorage.getItem("isLoggedIn");
   componentDidMount() {
     const { setLocation, location } = this.props;
-    setLocation(location);
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+    if (isLoggedIn === "true") {
+      setLocation(location);
+    }
   }
   componentDidUpdate() {
     const { setLocation, location } = this.props;
-    setLocation(location);
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+    if (isLoggedIn === "true") {
+      setLocation(location);
+    }
   }
   render() {
     return null;

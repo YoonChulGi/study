@@ -1,8 +1,13 @@
-import { LOGIN_SUCCESS, LOGIN_FAILURE } from "../api-redux-pack/actionTypes";
+// import {
+//   LOGIN_SUCCESS,
+//   LOGIN_FAILURE,
+//   // LOGOUT,
+// } from "../api-redux-pack/actionTypes";
 import createActions from "../api-redux-pack/createActions";
 
 const { create } = createActions("/api/addAdmin");
-const { login, logout } = createActions("/api/loginAdmin");
+const { login } = createActions("/api/loginAdmin");
+const { logout } = createActions("/api/logoutAdmin");
 export function createAdmin(data, onComplete) {
   return create(
     data,
@@ -31,19 +36,25 @@ export function loginAdmin(data) {
   );
 }
 
-export function loginSuccess(email) {
-  return {
-    type: LOGIN_SUCCESS,
-    payload: { email },
-  };
-}
+// export function loginSuccess(email) {
+//   return {
+//     type: LOGIN_SUCCESS,
+//     payload: { email },
+//   };
+// }
 
-export function loginFailure() {
-  return {
-    type: LOGIN_FAILURE,
-  };
-}
+// export function loginFailure() {
+//   return {
+//     type: LOGIN_FAILURE,
+//   };
+// }
 
 export function logoutAdmin() {
-  return logout();
+  console.log("logoutAdmin");
+  return logout({
+    notification: {
+      success: "관리자 로그아웃 성공",
+      error: "관리자 로그아웃 실패",
+    },
+  });
 }

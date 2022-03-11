@@ -5,16 +5,16 @@ import InlineList from "../ui/InlineList";
 import Button from "../ui/Button";
 
 import { Consumer as Modal } from "../ui/Modal/context";
-import { ADD_ADMIN_MODAL } from "../constants/modals";
+import { ADD_ADMIN_MODAL, MANAGE_BANNER } from "../constants/modals";
 
-import { logoutAdmin } from "../actions/adminActions";
+// import { logoutAdmin } from "../actions/adminActions";
 
 export const HEIGHT = 64;
 
 class AppNav extends PureComponent {
   render() {
     const isLoggedIn = sessionStorage.getItem("isLoggedIn");
-    const { styles } = this.props;
+    const { styles, logoutAdmin } = this.props;
     return (
       <Modal>
         {({ openModal }) => (
@@ -25,6 +25,14 @@ class AppNav extends PureComponent {
               </Heading>
               {isLoggedIn === "true" ? (
                 <InlineList align="right">
+                  <Button
+                    inverse
+                    bold
+                    large
+                    onPress={() => openModal(MANAGE_BANNER)}
+                  >
+                    배너 광고 관리
+                  </Button>
                   <Button
                     inverse
                     bold

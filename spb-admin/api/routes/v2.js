@@ -184,4 +184,11 @@ router.post("/loginAdmin", isNotLoggedIn, (req, res, next) => {
   })(req, res, next);
 });
 
+router.get("/logoutAdmin", (req, res, next) => {
+  return res.status(200).json({
+    code: 200,
+    message: "관리자 로그아웃 완료.",
+  });
+});
+
 module.exports = router;

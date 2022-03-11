@@ -84,4 +84,14 @@ router.post("/loginAdmin", async (req, res, next) => {
   }
 });
 
+router.get("/logoutAdmin", async (req, res, next) => {
+  try {
+    const result = await request(req, "/logoutAdmin");
+    res.status(result.data.code).json(result.data);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 module.exports = router;

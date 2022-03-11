@@ -3,6 +3,7 @@ import {
   CREATE,
   /*UPDATE, FETCH,*/ RESET,
   LOGIN,
+  LOGOUT,
 } from "./actionTypes";
 import Api from "../Api";
 
@@ -38,9 +39,13 @@ export default (resourceName, key = "idx") => ({
       resourceName,
     },
   }),
-  logout: () => {
-    sessionStorage.setItem("isLoggedIn", false);
-    sessionStorage.setItem("email", null);
-    document.location.reload();
-  },
+  logout: (meta = {}) => ({
+    type: LOGOUT,
+    promise: Api.get(resourceName),
+    meta: {
+      ...meta,
+      key: "email",
+      resourceName,
+    },
+  }),
 });

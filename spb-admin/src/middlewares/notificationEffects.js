@@ -9,7 +9,6 @@ const debounceRunner = debounce((action) => action(), 4000);
 
 export default (store) => (nextRunner) => (action) => {
   const { type, payload, meta } = action;
-
   const result = nextRunner(action);
   if (meta && meta.notification) {
     const { success, error } = meta.notification;
