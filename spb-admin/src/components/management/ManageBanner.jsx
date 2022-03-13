@@ -13,19 +13,43 @@ class ManageBanner extends Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleSubmit(params, closeModal) {}
+  handleSubmit(params, closeModal) {
+    const { uploadBanner } = this.props;
+    uploadBanner(params, closeModal);
+  }
 
   render() {
     return (
       <Modal>
         {({ closeModal }) => (
-          <Form onSubmit={(values) => this.handleSubmit(values, closeModal)}>
+          <Form
+            onSubmit={(values) => this.handleSubmit(values, closeModal)}
+            encType="multipart/form-data"
+          >
             <Form.Consumer>
               {({ onChange, values }) => (
                 <Spacing horizontal={4} vertical={8}>
                   <Text xlarge bold>
                     배너 광고 관리
                   </Text>
+                  <Spacing bottom={2}>
+                    <Input
+                      name="adTitle"
+                      type="text"
+                      label="광고 명"
+                      value={values["adTitle"]}
+                      onChange={onChange}
+                    />
+                  </Spacing>
+                  <Spacing bottom={2}>
+                    <Input
+                      name="adDesc"
+                      type="text"
+                      label="광고 문구"
+                      value={values["adDesc"]}
+                      onChange={onChange}
+                    />
+                  </Spacing>
                   <Spacing bottom={2}>
                     <Input
                       type="file"
@@ -35,17 +59,8 @@ class ManageBanner extends Component {
                       onChange={onChange}
                     />
                   </Spacing>
-                  <Spacing bottom={2}>
-                    <Input
-                      name="password"
-                      type="password"
-                      label="패스워드"
-                      value={values["password"]}
-                      onChange={onChange}
-                    />
-                  </Spacing>
                   <InlineList spacingBetween={2}>
-                    <Button primary>로그인</Button>
+                    <Button primary>등록</Button>
                     <Button onPress={closeModal}>취소</Button>
                     {/* <Button secondary>비밀번호 찾기</Button> */}
                     {/* <Button onPress={closeModal}>취소</Button> */}
@@ -60,6 +75,8 @@ class ManageBanner extends Component {
   }
 }
 
-ManageBanner.propTypes = {};
+ManageBanner.propTypes = {
+  uploadBanner: PropTypes.func,
+};
 
 export default ManageBanner;

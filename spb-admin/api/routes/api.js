@@ -94,4 +94,15 @@ router.get("/logoutAdmin", async (req, res, next) => {
   }
 });
 
+router.post("/uploadBanner", async (req, res, next) => {
+  console.dir(req.body);
+  try {
+    const result = await request(req, "/uploadBanner", "post");
+    res.status(result.data.code).json(result.data);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 module.exports = router;

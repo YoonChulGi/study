@@ -191,4 +191,11 @@ router.get("/logoutAdmin", (req, res, next) => {
   });
 });
 
+router.post("/uploadBanner", (req, res, next) => {
+  return res.status(200).json({
+    code: 200,
+    message: "uploadOk",
+  });
+});
+
 module.exports = router;

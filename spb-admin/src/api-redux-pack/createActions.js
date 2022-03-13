@@ -4,6 +4,7 @@ import {
   /*UPDATE, FETCH,*/ RESET,
   LOGIN,
   LOGOUT,
+  UPLOAD_BANNER,
 } from "./actionTypes";
 import Api from "../Api";
 
@@ -45,6 +46,14 @@ export default (resourceName, key = "idx") => ({
     meta: {
       ...meta,
       key: "email",
+      resourceName,
+    },
+  }),
+  upload: (data, params = {}, meta = {}) => ({
+    type: UPLOAD_BANNER,
+    promise: Api.post(resourceName, data, { params }),
+    meta: {
+      ...meta,
       resourceName,
     },
   }),

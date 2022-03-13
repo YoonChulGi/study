@@ -71,7 +71,9 @@ class FormProvider extends React.PureComponent {
           reset: this.reset,
         }}
       >
-        <form onSubmit={this.handleSubmit}>{this.props.children}</form>
+        <form onSubmit={this.handleSubmit} encType={this.props.encType}>
+          {this.props.children}
+        </form>
       </Provider>
     );
   }

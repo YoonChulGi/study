@@ -7,3 +7,4 @@ export const LOGIN = "api-redux-pack/LOGIN";
 export const LOGOUT = "api-redux-pack/LOGOUT";
 export const LOGIN_SUCCESS = "api-redux-pack/LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "api-redux-pack/LOGIN_FAILURE";
+export const UPLOAD_BANNER = "api-redux-pack/UPLOAD_BANNER";
