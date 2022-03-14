@@ -11,11 +11,38 @@ import { Consumer as Modal } from "../../ui/Modal/context"; // 모달 소비자�
 class ManageBanner extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      selectedFile: null,
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleFileInput = this.handleFileInput.bind(this);
   }
+  handleFileInput(e) {
+    this.setState({
+      selectedFile: e.target.files[0],
+    });
+  }
+
   handleSubmit(params, closeModal) {
+    const formData = new FormData();
+    // console.dir(params);
+    Object.keys(params).forEach(function (key) {
+      if (key !== "file") {
+        formData.append(key, params[key]);
+      }
+    });
+
+    if (params.file) {
+      formData.append("file", this.state.selectedFile);
+    }
+
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0]);
+    //   console.dir(pair[1]);
+    // }
+
     const { uploadBanner } = this.props;
-    uploadBanner(params, closeModal);
+    uploadBanner(formData, closeModal);
   }
 
   render() {
@@ -34,19 +61,37 @@ class ManageBanner extends Component {
                   </Text>
                   <Spacing bottom={2}>
                     <Input
-                      name="adTitle"
+                      name="bid"
                       type="text"
-                      label="광고 명"
-                      value={values["adTitle"]}
+                      label="상품 번호"
+                      value={values["bid"]}
                       onChange={onChange}
                     />
                   </Spacing>
                   <Spacing bottom={2}>
                     <Input
-                      name="adDesc"
+                      name="ad_title"
+                      type="text"
+                      label="광고 명"
+                      value={values["ad_title"]}
+                      onChange={onChange}
+                    />
+                  </Spacing>
+                  <Spacing bottom={2}>
+                    <Input
+                      name="ad_desc"
                       type="text"
                       label="광고 문구"
-                      value={values["adDesc"]}
+                      value={values["ad_desc"]}
+                      onChange={onChange}
+                    />
+                  </Spacing>
+                  <Spacing bottom={2}>
+                    <Input
+                      name="end_date"
+                      type="text"
+                      label="광고 종료일"
+                      value={values["end_date"]}
                       onChange={onChange}
                     />
                   </Spacing>
@@ -57,6 +102,7 @@ class ManageBanner extends Component {
                       label="파일"
                       value={values["file"]}
                       onChange={onChange}
+                      onhandleFileInput={this.handleFileInput}
                     />
                   </Spacing>
                   <InlineList spacingBetween={2}>

@@ -1,7 +1,39 @@
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+const AWS = require("aws-sdk");
+const multerS3 = require("multer-s3");
+
 const router = express.Router();
+
+const { Banner } = require("../models").db2;
+
+try {
+  fs.readdirSync("uploads");
+} catch (error) {
+  console.error("uploads 폴더가 없어 uploads 폴더를 생성합니다.");
+  fs.mkdirSync("uploads");
+}
+
+AWS.config.update({
+  accessKeyId: process.env.S3_ACCESS_KEY_ID,
+  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+  region: "ap-northeast-2",
+});
+
+const upload = multer({
+  storage: multerS3({
+    s3: new AWS.S3(),
+    bucket: "spb-admin",
+    key(req, file, cb) {
+      cb(null, `original/${Date.now()}${path.basename(file.originalname)}`);
+    },
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 },
+});
 
 router.use(
   cors({
@@ -94,14 +126,34 @@ router.get("/logoutAdmin", async (req, res, next) => {
   }
 });
 
-router.post("/uploadBanner", async (req, res, next) => {
-  console.dir(req.body);
+router.post("/uploadBanner", upload.single("file"), async (req, res, next) => {
+  console.log("uploadBanner!#!#!");
+  const { bid, ad_title, ad_desc, end_date } = req.body;
+  console.dir({ bid, ad_title, ad_desc, end_date });
+  console.log(req.file);
+  const { originalname, mimetype, size, bucket, key, location } = req.file;
   try {
-    const result = await request(req, "/uploadBanner", "post");
-    res.status(result.data.code).json(result.data);
+    const banner = await Banner.create({
+      bid,
+      ad_title,
+      ad_desc,
+      originalname,
+      mimetype,
+      size,
+      bucket,
+      key,
+      end_date,
+      url: location,
+    });
+    res.status(200).json({
+      banner,
+    });
   } catch (error) {
     console.error(error);
-    next(error);
+    return res.json({
+      code: 444,
+      errorMessage: error,
+    });
   }
 });
 

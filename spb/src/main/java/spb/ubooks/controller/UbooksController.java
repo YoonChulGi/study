@@ -22,6 +22,7 @@ import spb.ubooks.dto.MemberDto;
 import spb.ubooks.entity.CheckoutEntity;
 import spb.ubooks.entity.CombookEntity;
 import spb.ubooks.mapper.CombookMapper;
+import spb.ubooks.service.BannerService;
 import spb.ubooks.service.CartService;
 import spb.ubooks.service.MemberService;
 import spb.ubooks.service.SearchService;
@@ -46,9 +47,15 @@ public class UbooksController {
 	@Autowired
 	CombookMapper combookMapper;
 	
+	@Autowired
+	BannerService bannerService;
+	
+	
 	@RequestMapping(value = { "/", "/index" })
 	public ModelAndView ubooksHome() throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/index");
+		List<Map<String, Object>> bannerInfo = bannerService.selectBannerList();
+		mv.addObject("bannerInfo", bannerInfo);
 		return mv;
 	}
 

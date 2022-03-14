@@ -23,6 +23,20 @@ FACEBOOK: https://www.facebook.com/themefisher
 <!-- Start Top Header Bar -->
 <th:block th:replace="/ubooks/common/top :: headTop"></th:block>
 <div class="hero-slider">
+	<th:block th:each="item : ${bannerInfo}">
+		<div class="slider-item th-fullpage hero-area" th:style="'background-image: url('+@{${item.url}}+');'">
+	    <div class="container">
+	      <div class="row">
+	        <div class="col-lg-8 text-center">
+	          <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1" th:text="${item.ad_title}"></p>
+	          <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5" th:text="${item.ad_desc}"></h1>
+	          <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" th:href="${'/complete-works/' + item.bid}" th:text="${'Shop Now'}"></a>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</th:block>
+  
   <div class="slider-item th-fullpage hero-area" th:style="'background-image: url('+ @{images/ubooks/slider/slider-1.jpg} +');'">
     <div class="container">
       <div class="row">

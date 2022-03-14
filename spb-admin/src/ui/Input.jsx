@@ -7,11 +7,17 @@ class Input extends PureComponent {
     super(props);
     this.setRef = this.setRef.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      selectedFile: null,
+    };
   }
   handleChange(e) {
-    const { name, onChange } = this.props;
+    const { name, onChange, onhandleFileInput } = this.props;
     if (onChange) {
       onChange(name, e.target.value);
+    }
+    if (onhandleFileInput) {
+      onhandleFileInput(e);
     }
   }
   componentDidMount() {

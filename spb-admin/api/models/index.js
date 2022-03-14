@@ -5,7 +5,9 @@ const User = require("./user");
 const Post = require("./post");
 const Hashtag = require("./hashtag");
 const Domain = require("./domain");
+
 const Checkout = require("./checkout");
+const Banner = require("./banner");
 
 const db = {};
 
@@ -44,9 +46,14 @@ const sequelize2 = new Sequelize(
 );
 
 db2.sequelize = sequelize2;
-db2.Checkout = Checkout;
-Checkout.init(sequelize2);
 
+db2.Checkout = Checkout;
+db2.Banner = Banner;
+
+Checkout.init(sequelize2);
+Banner.init(sequelize2);
+
+Checkout.associate(db2);
 Checkout.associate(db2);
 
 module.exports = { db, db2 };
