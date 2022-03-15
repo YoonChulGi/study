@@ -157,4 +157,22 @@ router.post("/uploadBanner", upload.single("file"), async (req, res, next) => {
   }
 });
 
+router.get("/banner", async (req, res, next) => {
+  console.log("/banner - get");
+  try {
+    const result = await request(req, "/banner");
+    res.json(result.data);
+  } catch (error) {
+    console.error(error);
+    if (error.code) {
+      return res.status(error.code).json({
+        code: error.code,
+        errorMessage: error,
+      });
+    } else {
+      next(error);
+    }
+  }
+});
+
 module.exports = router;

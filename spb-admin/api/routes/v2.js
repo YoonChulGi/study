@@ -8,7 +8,7 @@ const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 
 const { verifyToken, apiLimiter } = require("./middlewares");
 const { Domain, User } = require("../models").db;
-const { Checkout } = require("../models").db2;
+const { Checkout, Banner } = require("../models").db2;
 
 const passport = require("passport");
 const bcrypt = require("bcrypt");
@@ -113,7 +113,7 @@ router.get("/checkout", apiLimiter, verifyToken, async (req, res, next) => {
   }
 
   queryOption.order = [["checkout_time", "DESC"]];
-  console.dir(queryOption);
+
   Checkout.findAll(queryOption)
     .then((results) => {
       res.json({
@@ -157,7 +157,7 @@ router.post("/addAdmin", apiLimiter, verifyToken, async (req, res, next) => {
   }
 });
 
-router.post("/loginAdmin", isNotLoggedIn, (req, res, next) => {
+router.post("/loginAdmin", apiLimiter, verifyToken, (req, res, next) => {
   const { email, password } = req.body;
 
   passport.authenticate("local", (authError, user, info) => {
@@ -184,18 +184,87 @@ router.post("/loginAdmin", isNotLoggedIn, (req, res, next) => {
   })(req, res, next);
 });
 
-router.get("/logoutAdmin", (req, res, next) => {
+router.get("/logoutAdmin", apiLimiter, verifyToken, (req, res, next) => {
   return res.status(200).json({
     code: 200,
     message: "관리자 로그아웃 완료.",
   });
 });
 
-router.post("/uploadBanner", (req, res, next) => {
+router.post("/uploadBanner", apiLimiter, verifyToken, (req, res, next) => {
   return res.status(200).json({
     code: 200,
     message: "uploadOk",
   });
 });
 
+router.get("/banner", apiLimiter, verifyToken, (req, res, next) => {
+  let queryOption = {};
+
+  // if (
+  //   req.query.query ||
+  //   req.query.searchField ||
+  //   req.query.from ||
+  //   req.query.to
+  // ) {
+  //   queryOption.where = {};
+  //   if (req.query.from || req.query.to) {
+  //     queryOption.where["checkout_time"] = {};
+  //   }
+  // }
+  // if (req.query._limit) {
+  //   queryOption.limit = req.query._limit * 1;
+  // }
+
+  // if (req.query._page) {
+  //   let { _page, _limit } = req.query; // _page: 1 _limit: 10 offset: 1   page:2 _limit:10 offset = 11
+  //   _page *= 1;
+  //   _limit *= 1;
+  //   const offset = (_page - 1) * _limit;
+  //   queryOption.offset = offset;
+  // }
+
+  // if (req.query.query && req.query.searchField) {
+  //   queryOption.where[req.query.searchField] = req.query.query;
+  // }
+
+  // if (req.query.from) {
+  //   queryOption.where["checkout_time"][Op.gte] = req.query.from;
+  // }
+
+  // if (req.query.to) {
+  //   queryOption.where["checkout_time"][Op.lte] = req.query.to;
+  // }
+
+  // queryOption.order = [["checkout_time", "DESC"]];
+  Banner.findAll(queryOption)
+    .then((results) => {
+      res.json({
+        code: 200,
+        payload: results,
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(445).json({
+        code: 445,
+        errorMessage: "서버 에러",
+      });
+    });
+
+  // Checkout.findAll(queryOption)
+  // .then((results) => {
+  //   res.json({
+  //     code: 200,
+  //     payload: results,
+  //   });
+  // })
+  // .catch((error) => {
+  //   console.error(error);
+  //   return res.status(500).json({
+  //     code: 500,
+  //     message: "서버 에러",
+  //   });
+  // });
+});
 module.exports = router;

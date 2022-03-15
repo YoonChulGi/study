@@ -1,5 +1,11 @@
 import { handle } from "redux-pack";
-import { CREATE, /*UPDATE, FETCH,*/ FETCH_LIST, RESET } from "./actionTypes";
+import {
+  CREATE,
+  /*UPDATE, FETCH,*/ FETCH_LIST,
+  RESET,
+  FETCH_BANNER_LIST,
+  RESET_BANNER,
+} from "./actionTypes";
 
 export default (...reducerNames) => {
   return reducerNames.reduce((apiReducers, name) => {
@@ -11,23 +17,31 @@ export default (...reducerNames) => {
         // [`${UPDATE}/${name}`]: false,
         // [`${FETCH}/${name}`]: false,
         [`${FETCH_LIST}/${name}`]: false,
+        [`${FETCH_BANNER_LIST}/${name}`]: false,
       },
       errorState: {
         [`${CREATE}/${name}`]: false,
         // [`${UPDATE}/${name}`]: false,
         // [`${FETCH}/${name}`]: false,
         [`${FETCH_LIST}/${name}`]: false,
+        [`${FETCH_BANNER_LIST}/${name}`]: false,
       },
       pagination: {},
     };
     apiReducers[name] = (state = initState, action) => {
       const { type, payload, meta } = action;
       const { resourceName, key } = meta || {};
+      if (type === FETCH_BANNER_LIST) {
+        console.log({ type, payload, meta });
+        console.log({ resourceName, key });
+      }
       if (resourceName !== name) {
+        console.log(resourceName, name);
         return state;
       }
       switch (type) {
         case CREATE:
+        case FETCH_BANNER_LIST:
         case FETCH_LIST: {
           return handle(state, action, {
             start: (prevState) => ({
@@ -42,9 +56,11 @@ export default (...reducerNames) => {
               },
             }),
             success: (prevState) => {
+              console.log("success", type);
               const { data } = payload;
-              if (type === FETCH_LIST) {
+              if (type === FETCH_LIST || type === FETCH_BANNER_LIST) {
                 const { pageNumber, pageSize } = meta || {};
+
                 const indexes = data.payload.map((entity) => entity[key]);
                 const entities = data.payload.reduce(
                   (finalEntities, entity) => ({
@@ -90,7 +106,7 @@ export default (...reducerNames) => {
                 //     },
                 //   };
               } else {
-                //console.log(data);
+                console.log("else");
                 const indexes = data.payload[key];
                 return {
                   ...prevState,
@@ -112,7 +128,7 @@ export default (...reducerNames) => {
             },
             failure: (prevState) => {
               // const { errorMessage } = payload.response ? payload.response.data : {};
-              const { errorMessage } = payload.message;
+              const { errorMessage } = payload.message || payload.errorMessage;
               return {
                 ...prevState,
                 loadingState: {
@@ -128,6 +144,7 @@ export default (...reducerNames) => {
           });
         }
         case RESET:
+        case RESET_BANNER:
           return initState;
 
         default:

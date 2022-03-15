@@ -5,6 +5,8 @@ import {
   LOGIN,
   LOGOUT,
   UPLOAD_BANNER,
+  FETCH_BANNER_LIST,
+  RESET_BANNER,
 } from "./actionTypes";
 import Api from "../Api";
 
@@ -18,8 +20,21 @@ export default (resourceName, key = "idx") => ({
       resourceName,
     },
   }),
+  bannerList: (params = {}, meta = {}) => ({
+    type: FETCH_BANNER_LIST,
+    promise: Api.get(resourceName, { params }),
+    meta: {
+      ...meta,
+      key: "id",
+      resourceName,
+    },
+  }),
   reset: () => ({
     type: RESET,
+    meta: { resourceName },
+  }),
+  resetBanner: () => ({
+    type: RESET_BANNER,
     meta: { resourceName },
   }),
   create: (data, params = {}, meta = {}) => ({

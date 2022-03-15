@@ -1,19 +1,28 @@
 import { createSelector } from "reselect";
-import { CREATE, /*UPDATE,*/ FETCH_LIST /*FETCH*/ } from "./actionTypes";
+import {
+  CREATE,
+  /*UPDATE,*/ FETCH_LIST,
+  FETCH_BANNER_LIST,
+} from "./actionTypes";
 
 export default function createSelectors(resourceName) {
   const resourceSelector = (state) => state[resourceName];
-
   const entitiesSelector = (state) => resourceSelector(state).entities;
   const collectionSelector = createSelector(
     [resourceSelector],
     ({ indexes, entities }) => indexes.map((idx) => entities[idx])
     // ({ ids, entities }) => ids.map((id) => entities[id])
   );
+  const bannerSelector = createSelector(
+    [resourceSelector],
+    ({ indexes, entities }) => indexes.map((idx) => entities[idx])
+  );
   const loadingStateSelector = (state) => resourceSelector(state).loadingState;
   // const errorStateSelector = (state) => resourceSelector(state).errorState;
   const collectionLoadingStateSelector = (state) =>
     loadingStateSelector(state)[`${FETCH_LIST}/${resourceName}`];
+  const bannerLoadingStateSelector = (state) =>
+    loadingStateSelector(state)[`${FETCH_BANNER_LIST}/${resourceName}`];
   const createLoadingStateSelector = (state) =>
     loadingStateSelector(state)[`${CREATE}/${resourceName}`];
   // const updateLoadingStateSelector = state => loadingStateSelector(state)[`${UPDATE}/${resourceName}`];
@@ -37,7 +46,9 @@ export default function createSelectors(resourceName) {
     resourceSelector,
     entitiesSelector,
     collectionSelector,
+    bannerSelector,
     collectionLoadingStateSelector,
+    bannerLoadingStateSelector,
     createLoadingStateSelector,
     // updateLoadingStateSelector,
     // memberLoadingStateSelector,

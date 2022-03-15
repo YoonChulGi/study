@@ -8,6 +8,8 @@ import InlineList from "../../ui/InlineList";
 import Form from "../../ui/Form";
 import { Consumer as Modal } from "../../ui/Modal/context"; // 모달 소비자의 closeModal() 함수를 사용
 
+import BannerListContainer from "../../containers/management/BannerListContainer";
+
 class ManageBanner extends Component {
   constructor(props) {
     super(props);
@@ -47,76 +49,79 @@ class ManageBanner extends Component {
 
   render() {
     return (
-      <Modal>
-        {({ closeModal }) => (
-          <Form
-            onSubmit={(values) => this.handleSubmit(values, closeModal)}
-            encType="multipart/form-data"
-          >
-            <Form.Consumer>
-              {({ onChange, values }) => (
-                <Spacing horizontal={4} vertical={8}>
-                  <Text xlarge bold>
-                    배너 광고 관리
-                  </Text>
-                  <Spacing bottom={2}>
-                    <Input
-                      name="bid"
-                      type="text"
-                      label="상품 번호"
-                      value={values["bid"]}
-                      onChange={onChange}
-                    />
+      <>
+        <Modal>
+          {({ closeModal }) => (
+            <Form
+              onSubmit={(values) => this.handleSubmit(values, closeModal)}
+              encType="multipart/form-data"
+            >
+              <Form.Consumer>
+                {({ onChange, values }) => (
+                  <Spacing horizontal={4} vertical={8}>
+                    <Text xlarge bold>
+                      배너 광고 관리
+                    </Text>
+                    <Spacing bottom={2}>
+                      <Input
+                        name="bid"
+                        type="text"
+                        label="상품 번호"
+                        value={values["bid"]}
+                        onChange={onChange}
+                      />
+                    </Spacing>
+                    <Spacing bottom={2}>
+                      <Input
+                        name="ad_title"
+                        type="text"
+                        label="광고 명"
+                        value={values["ad_title"]}
+                        onChange={onChange}
+                      />
+                    </Spacing>
+                    <Spacing bottom={2}>
+                      <Input
+                        name="ad_desc"
+                        type="text"
+                        label="광고 문구"
+                        value={values["ad_desc"]}
+                        onChange={onChange}
+                      />
+                    </Spacing>
+                    <Spacing bottom={2}>
+                      <Input
+                        name="end_date"
+                        type="text"
+                        label="광고 종료일"
+                        value={values["end_date"]}
+                        onChange={onChange}
+                      />
+                    </Spacing>
+                    <Spacing bottom={2}>
+                      <Input
+                        type="file"
+                        name="file"
+                        label="파일"
+                        value={values["file"]}
+                        onChange={onChange}
+                        onhandleFileInput={this.handleFileInput}
+                      />
+                    </Spacing>
+                    <InlineList spacingBetween={2}>
+                      <Button primary>등록</Button>
+                      <Button onPress={closeModal}>취소</Button>
+                      {/* <Button secondary>비밀번호 찾기</Button> */}
+                      {/* <Button onPress={closeModal}>취소</Button> */}
+                    </InlineList>
                   </Spacing>
-                  <Spacing bottom={2}>
-                    <Input
-                      name="ad_title"
-                      type="text"
-                      label="광고 명"
-                      value={values["ad_title"]}
-                      onChange={onChange}
-                    />
-                  </Spacing>
-                  <Spacing bottom={2}>
-                    <Input
-                      name="ad_desc"
-                      type="text"
-                      label="광고 문구"
-                      value={values["ad_desc"]}
-                      onChange={onChange}
-                    />
-                  </Spacing>
-                  <Spacing bottom={2}>
-                    <Input
-                      name="end_date"
-                      type="text"
-                      label="광고 종료일"
-                      value={values["end_date"]}
-                      onChange={onChange}
-                    />
-                  </Spacing>
-                  <Spacing bottom={2}>
-                    <Input
-                      type="file"
-                      name="file"
-                      label="파일"
-                      value={values["file"]}
-                      onChange={onChange}
-                      onhandleFileInput={this.handleFileInput}
-                    />
-                  </Spacing>
-                  <InlineList spacingBetween={2}>
-                    <Button primary>등록</Button>
-                    <Button onPress={closeModal}>취소</Button>
-                    {/* <Button secondary>비밀번호 찾기</Button> */}
-                    {/* <Button onPress={closeModal}>취소</Button> */}
-                  </InlineList>
-                </Spacing>
-              )}
-            </Form.Consumer>
-          </Form>
-        )}
-      </Modal>
+                )}
+              </Form.Consumer>
+            </Form>
+          )}
+        </Modal>
+        <BannerListContainer />
+      </>
     );
   }
 }

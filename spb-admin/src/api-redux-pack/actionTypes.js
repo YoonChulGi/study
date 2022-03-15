@@ -1,8 +1,10 @@
 export const FETCH_LIST = "api-redux-pack/FETCH_LIST";
+export const FETCH_BANNER_LIST = "api-redux-pack/FETCH_BANNER_LIST";
 export const FETCH = "api-redux-pack/FETCH";
 export const UPDATE = "api-redux-pack/UPDATE";
 export const CREATE = "api-redux-pack/CREATE";
 export const RESET = "api-redux-pack/RESET";
+export const RESET_BANNER = "api-redux-pack/RESET_BANNER";
 export const LOGIN = "api-redux-pack/LOGIN";
 export const LOGOUT = "api-redux-pack/LOGOUT";
 export const LOGIN_SUCCESS = "api-redux-pack/LOGIN_SUCCESS";
