@@ -5,8 +5,14 @@ import { unit } from "./Theme";
 
 class InlineList extends PureComponent {
   render() {
-    const { align, children, styles, spacingBetween, verticalAlign } =
-      this.props;
+    const {
+      align,
+      children,
+      styles,
+      spacingBetween,
+      spacingBottom,
+      verticalAlign,
+    } = this.props;
     return (
       <div
         {...css(
@@ -18,7 +24,14 @@ class InlineList extends PureComponent {
         )}
       >
         {React.Children.map(children, (child) => (
-          <div {...css({ marginRight: spacingBetween * unit })}>{child}</div>
+          <div
+            {...css({
+              marginRight: spacingBetween * unit,
+              marginBottom: spacingBottom * unit,
+            })}
+          >
+            {child}
+          </div>
         ))}
       </div>
     );
@@ -30,11 +43,13 @@ InlineList.propTypes = {
   align: PropTypes.oneOf(["left", "center", "right"]),
   verticalAlign: PropTypes.oneOf(["top", "middle", "bottom"]),
   spacingBetween: PropTypes.number,
+  spacingBottom: PropTypes.number,
   children: PropTypes.node,
 };
 
 InlineList.defaultProps = {
   spacingBetween: 1,
+  spacingBottom: 0,
 };
 
 export default withStyles(() => ({

@@ -8,9 +8,7 @@ import InlineList from "../../ui/InlineList";
 import Form from "../../ui/Form";
 import { Consumer as Modal } from "../../ui/Modal/context"; // 모달 소비자의 closeModal() 함수를 사용
 
-import BannerListContainer from "../../containers/management/BannerListContainer";
-
-class ManageBanner extends Component {
+class AddBanner extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -60,7 +58,7 @@ class ManageBanner extends Component {
                 {({ onChange, values }) => (
                   <Spacing horizontal={4} vertical={8}>
                     <Text xlarge bold>
-                      배너 광고 관리
+                      배너 광고 추가
                     </Text>
                     <Spacing bottom={2}>
                       <Input
@@ -120,14 +118,13 @@ class ManageBanner extends Component {
             </Form>
           )}
         </Modal>
-        <BannerListContainer />
       </>
     );
   }
 }
 
-ManageBanner.propTypes = {
+AddBanner.propTypes = {
   uploadBanner: PropTypes.func,
 };
 
-export default ManageBanner;
+export default AddBanner;

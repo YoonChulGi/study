@@ -9,18 +9,17 @@ import Form from "../../ui/Form";
 import Select, { Option } from "../../ui/Select";
 import { withRouter } from "react-router-dom";
 
-class TransactionSearchFilter extends PureComponent {
+class BannerSearchFilter extends PureComponent {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit(params) {
-    params.search_type = "transaction";
+    params.search_type = "banner";
     const { /*setFilter,*/ history } = this.props;
     const cleanedParams = Object.entries(params)
       .filter(([key, value]) => !!value && !!key)
       .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
-    console.dir(cleanedParams);
     const queryString = Object.entries(cleanedParams)
       .map(([key, value]) => {
         return `${key}=${value}`;
@@ -44,9 +43,10 @@ class TransactionSearchFilter extends PureComponent {
                 onChange={onChange}
                 value={values["searchField"]}
               >
-                <Option label="거래번호" value="idx" />
-                <Option label="구매자" value="full_name" />
-                <Option label="품목 ID" value="prd_ids" />
+                <Option label="배너 번호" value="id" />
+                <Option label="광고 제목" value="ad_title" />
+                <Option label="광고 문구" value="ad_desc" />
+                <Option label="상품 id" value="bid" />
               </Select>
               <Input
                 name="query"
@@ -55,16 +55,10 @@ class TransactionSearchFilter extends PureComponent {
                 value={values["query"]}
               />
               <Input
-                name="from"
-                label="거래 일시 from"
+                name="end_date"
+                label="광고 만기일"
                 onChange={onChange}
-                value={values["from"]}
-              />
-              <Input
-                name="to"
-                label="거래 일시 to"
-                onChange={onChange}
-                value={values["to"]}
+                value={values["end_date"]}
               />
               <Button type="submit" primary>
                 검색
@@ -77,9 +71,9 @@ class TransactionSearchFilter extends PureComponent {
   }
 }
 
-TransactionSearchFilter.propTypes = {
+BannerSearchFilter.propTypes = {
   setTransactionList: PropTypes.func,
   setFilter: PropTypes.func,
 };
 
-export default withRouter(TransactionSearchFilter);
+export default withRouter(BannerSearchFilter);

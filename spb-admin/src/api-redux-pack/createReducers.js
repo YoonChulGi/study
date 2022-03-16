@@ -31,12 +31,11 @@ export default (...reducerNames) => {
     apiReducers[name] = (state = initState, action) => {
       const { type, payload, meta } = action;
       const { resourceName, key } = meta || {};
-      if (type === FETCH_BANNER_LIST) {
-        console.log({ type, payload, meta });
-        console.log({ resourceName, key });
-      }
+      // if (type === FETCH_BANNER_LIST) {
+      //   console.log({ type, payload, meta });
+      //   console.log({ resourceName, key });
+      // }
       if (resourceName !== name) {
-        console.log(resourceName, name);
         return state;
       }
       switch (type) {
@@ -56,7 +55,6 @@ export default (...reducerNames) => {
               },
             }),
             success: (prevState) => {
-              console.log("success", type);
               const { data } = payload;
               if (type === FETCH_LIST || type === FETCH_BANNER_LIST) {
                 const { pageNumber, pageSize } = meta || {};

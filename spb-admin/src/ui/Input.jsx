@@ -72,7 +72,14 @@ class Input extends PureComponent {
 
 Input.propTypes = {
   ...withStylesPropTypes,
-  type: PropTypes.oneOf(["text", "number", "price", "password", "file"]),
+  type: PropTypes.oneOf([
+    "text",
+    "number",
+    "price",
+    "password",
+    "file",
+    "hidden",
+  ]),
   name: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   errorMessage: PropTypes.string,

@@ -16,6 +16,7 @@ Option.propTypes = {
   disabled: PropTypes.bool,
   value: PropTypes.string.isRequired,
   label: PropTypes.string,
+  selected: PropTypes.bool,
 };
 
 export default Option;

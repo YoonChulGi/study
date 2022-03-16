@@ -4,25 +4,20 @@ import React, { PureComponent } from "react";
 import Card from "../../ui/Card";
 
 // import TransactionSearchFilterContainer from "../../containers/main/TransactionSearchFilterContainer";
+import BannerSearchFilterContainer from "../../containers/management/BannerSearchFilterContainer";
 import BannerTable from "./BannerTable";
 // import TransactionPaginationContainer from "../../containers/main/TransactionPaginationContainer";
 
 class BannerList extends PureComponent {
-  componentDidMount() {
-    const { requestBannerList } = this.props;
-    requestBannerList();
-  }
   render() {
     const { bannerList, loading } = this.props;
-    console.dir({ bannerList, loading });
     return (
       <div>
-        {/* <Heading level={3}>거래 로그</Heading>
         <Card vertical={4} horizontal={4}>
-          <TransactionSearchFilterContainer />
-        </Card> */}
+          {/* <TransactionSearchFilterContainer /> */}
+          <BannerSearchFilterContainer />
+        </Card>
         <Card>
-          {/* <TransactionTable transactions={transactions} isLoading={loading} /> */}
           <BannerTable bannerList={bannerList} isLoading={loading} />
           {/* bannerList={transactions} */}
         </Card>

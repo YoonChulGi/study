@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import ManageBanner from "../../components/management/ManageBanner";
+import AddBanner from "../../components/management/AddBanner";
 import { uploadBanner } from "../../actions/bannerActions";
 // import { adminLoginLoadingStateSelector } from "../../selectors/adminSelectors";
 
@@ -8,4 +8,4 @@ export default connect(
     // loading: adminLoginLoadingStateSelector(state),
   }),
   { uploadBanner }
-)(ManageBanner);
+)(AddBanner);

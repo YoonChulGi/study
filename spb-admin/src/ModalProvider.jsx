@@ -1,9 +1,9 @@
 import createProvider from "./ui/Modal/create";
-import { ADD_ADMIN_MODAL, MANAGE_BANNER } from "./constants/modals";
+import { ADD_ADMIN_MODAL, ADD_BANNER } from "./constants/modals";
 import AddAdmin from "./containers/signup/addAdminContainer";
-import ManageBanner from "./containers/management/ManageBannerContainer";
+import AddBanner from "./containers/management/AddBannerContainer";
 
 export default createProvider({
   [ADD_ADMIN_MODAL]: AddAdmin,
-  [MANAGE_BANNER]: ManageBanner,
+  [ADD_BANNER]: AddBanner,
 });

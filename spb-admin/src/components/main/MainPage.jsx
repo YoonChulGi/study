@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import Overview from "./Overview";
-import TransactionListContainer from "../../containers/main/TransactionListContainer";
+import MainContent from "./MainContent";
+// import TransactionListContainer from "../../containers/main/TransactionListContainer";
 import LoginContainer from "../../containers/login/LoginContainer";
 
 class MainPage extends PureComponent {
@@ -9,7 +10,7 @@ class MainPage extends PureComponent {
     return isLoggedIn === "true" ? (
       <React.Fragment>
         <Overview />
-        <TransactionListContainer />
+        <MainContent />
       </React.Fragment>
     ) : (
       <LoginContainer />

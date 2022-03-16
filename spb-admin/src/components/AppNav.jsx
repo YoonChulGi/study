@@ -5,7 +5,7 @@ import InlineList from "../ui/InlineList";
 import Button from "../ui/Button";
 
 import { Consumer as Modal } from "../ui/Modal/context";
-import { ADD_ADMIN_MODAL, MANAGE_BANNER } from "../constants/modals";
+import { ADD_ADMIN_MODAL, ADD_BANNER } from "../constants/modals";
 
 // import { logoutAdmin } from "../actions/adminActions";
 
@@ -29,9 +29,9 @@ class AppNav extends PureComponent {
                     inverse
                     bold
                     large
-                    onPress={() => openModal(MANAGE_BANNER)}
+                    onPress={() => openModal(ADD_BANNER)}
                   >
-                    배너 광고 관리
+                    배너 광고 추가
                   </Button>
                   <Button
                     inverse

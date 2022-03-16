@@ -5,7 +5,6 @@ const PAGE_SIZE = 10;
 const isLoggedIn = sessionStorage.getItem("isLoggedIn");
 export const resetBannerList = resetBanner;
 export function requestBannerList(params, _page = 1) {
-  console.log("requestBannerList called");
   if (isLoggedIn === "true") {
     const meta = {
       pageNumber: _page,

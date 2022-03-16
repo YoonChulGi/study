@@ -19,7 +19,6 @@ const LoadingMessage = (
 class BannerTable extends PureComponent {
   render() {
     const { bannerList } = this.props;
-    console.dir(bannerList);
     return (
       <Table>
         <TableHead>
@@ -30,18 +29,20 @@ class BannerTable extends PureComponent {
             <TableCell align="left">광고 문구</TableCell>
             <TableCell align="left">광고 이미지</TableCell>
             <TableCell align="left">광고 상품 id</TableCell>
+            <TableCell align="left">광고 만기일</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {bannerList.map(({ id, ad_title, ad_desc, url, bid }) => (
+          {bannerList.map(({ id, ad_title, ad_desc, url, bid, end_date }) => (
             <TableRow key={id}>
               <TableCell align="left">{id}</TableCell>
               <TableCell align="left">{ad_title}</TableCell>
               <TableCell align="left">{ad_desc}</TableCell>
               <TableCell align="left">
-                <img src={url} />
+                <img src={url} alt="img" />
               </TableCell>
               <TableCell align="left">{bid}</TableCell>
+              <TableCell align="left">{end_date}</TableCell>
             </TableRow>
           ))}
         </TableBody>

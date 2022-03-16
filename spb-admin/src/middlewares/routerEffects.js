@@ -1,5 +1,6 @@
 import { SET_LOCATION } from "../actions/routerActions";
 import { setFilter } from "../actions/searchFilterActions";
+import { setBannerFilter } from "../actions/searchBannerFilterActions";
 
 const isLoggedIn = sessionStorage.getItem("isLoggedIn");
 
@@ -22,8 +23,23 @@ export default (store) => (nextRunner) => (action) => {
   const result = nextRunner(action);
   if (type === SET_LOCATION) {
     const { pathname, search } = payload.location;
+    const parsedSearchParams = parse(search);
+
     if (pathname === "/" && isLoggedIn === "true") {
-      store.dispatch(setFilter(parse(search)));
+      if (
+        !parsedSearchParams.search_type ||
+        parsedSearchParams.search_type === "transaction"
+      ) {
+        store.dispatch(setFilter(parsedSearchParams));
+        // store.dispatch(setBannerFilter());
+      }
+      if (
+        parsedSearchParams.search_type &&
+        parsedSearchParams.search_type === "banner"
+      ) {
+        // store.dispatch(setFilter());
+        store.dispatch(setBannerFilter(parsedSearchParams));
+      }
     }
   }
   return result;

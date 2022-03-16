@@ -76,40 +76,35 @@ router.get("/test", verifyToken, apiLimiter, (req, res) => {
 
 router.get("/checkout", apiLimiter, verifyToken, async (req, res, next) => {
   let queryOption = {};
-
-  if (
-    req.query.query ||
-    req.query.searchField ||
-    req.query.from ||
-    req.query.to
-  ) {
+  let { query, searchField, from, to, _limit, _page } = req.query;
+  if (!searchField) searchField = "idx";
+  if (query || searchField || from || to) {
     queryOption.where = {};
-    if (req.query.from || req.query.to) {
+    if (from || to) {
       queryOption.where["checkout_time"] = {};
     }
   }
-  if (req.query._limit) {
-    queryOption.limit = req.query._limit * 1;
+  if (_limit) {
+    queryOption.limit = _limit * 1;
   }
 
   if (req.query._page) {
-    let { _page, _limit } = req.query; // _page: 1 _limit: 10 offset: 1   page:2 _limit:10 offset = 11
     _page *= 1;
     _limit *= 1;
     const offset = (_page - 1) * _limit;
     queryOption.offset = offset;
   }
 
-  if (req.query.query && req.query.searchField) {
-    queryOption.where[req.query.searchField] = req.query.query;
+  if (query && searchField) {
+    queryOption.where[searchField] = query;
   }
 
-  if (req.query.from) {
-    queryOption.where["checkout_time"][Op.gte] = req.query.from;
+  if (from) {
+    queryOption.where["checkout_time"][Op.gte] = from;
   }
 
-  if (req.query.to) {
-    queryOption.where["checkout_time"][Op.lte] = req.query.to;
+  if (to) {
+    queryOption.where["checkout_time"][Op.lte] = to;
   }
 
   queryOption.order = [["checkout_time", "DESC"]];
@@ -200,6 +195,15 @@ router.post("/uploadBanner", apiLimiter, verifyToken, (req, res, next) => {
 
 router.get("/banner", apiLimiter, verifyToken, (req, res, next) => {
   let queryOption = {};
+  console.dir(req.query);
+  let { searchField, query, end_date, search_type, _page, _limit } = req.query;
+  if (!searchField) searchField = "id";
+  if (searchField || query || end_date) {
+    queryOption.where = {};
+    if (end_date) {
+      queryOption.where["end_date"] = {};
+    }
+  }
 
   // if (
   //   req.query.query ||
@@ -212,21 +216,22 @@ router.get("/banner", apiLimiter, verifyToken, (req, res, next) => {
   //     queryOption.where["checkout_time"] = {};
   //   }
   // }
-  // if (req.query._limit) {
-  //   queryOption.limit = req.query._limit * 1;
-  // }
+  if (_limit) {
+    queryOption.limit = _limit * 1;
+  }
 
-  // if (req.query._page) {
-  //   let { _page, _limit } = req.query; // _page: 1 _limit: 10 offset: 1   page:2 _limit:10 offset = 11
-  //   _page *= 1;
-  //   _limit *= 1;
-  //   const offset = (_page - 1) * _limit;
-  //   queryOption.offset = offset;
-  // }
-
-  // if (req.query.query && req.query.searchField) {
-  //   queryOption.where[req.query.searchField] = req.query.query;
-  // }
+  if (_page) {
+    _page *= 1;
+    _limit *= 1;
+    const offset = (_page - 1) * _limit;
+    queryOption.offset = offset;
+  }
+  if (query && searchField) {
+    queryOption.where[searchField] = query;
+  }
+  if (end_date) {
+    queryOption.where["end_date"] = end_date + "T00:00:00.000Z";
+  }
 
   // if (req.query.from) {
   //   queryOption.where["checkout_time"][Op.gte] = req.query.from;
@@ -236,7 +241,8 @@ router.get("/banner", apiLimiter, verifyToken, (req, res, next) => {
   //   queryOption.where["checkout_time"][Op.lte] = req.query.to;
   // }
 
-  // queryOption.order = [["checkout_time", "DESC"]];
+  queryOption.order = [["id", "DESC"]];
+  console.dir(queryOption);
   Banner.findAll(queryOption)
     .then((results) => {
       res.json({
