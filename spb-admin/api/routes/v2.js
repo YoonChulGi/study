@@ -199,10 +199,10 @@ router.get("/banner", apiLimiter, verifyToken, (req, res, next) => {
   let { searchField, query, end_date, search_type, _page, _limit } = req.query;
   if (!searchField) searchField = "id";
   if (searchField || query || end_date) {
-    queryOption.where = {};
-    if (end_date) {
-      queryOption.where["end_date"] = {};
-    }
+    queryOption.where = [];
+    // if (end_date) {
+    //   queryOption.where["end_date"] = {};
+    // }
   }
 
   // if (
@@ -227,10 +227,23 @@ router.get("/banner", apiLimiter, verifyToken, (req, res, next) => {
     queryOption.offset = offset;
   }
   if (query && searchField) {
-    queryOption.where[searchField] = query;
+    if (searchField === "id" || searchField === "bid") {
+      queryOption.where.push({
+        [searchField]: query,
+      });
+    } else {
+      queryOption.where.push({
+        [searchField]: {
+          [Op.like]: "%" + query + "%",
+        },
+      });
+    }
   }
   if (end_date) {
-    queryOption.where["end_date"] = end_date + "T00:00:00.000Z";
+    // queryOption.where["end_date"] = end_date + "T00:00:00.000Z";
+    queryOption.where.push({
+      ["end_date"]: end_date + "T00:00:00.000Z",
+    });
   }
 
   // if (req.query.from) {

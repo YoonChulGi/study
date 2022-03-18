@@ -14,6 +14,7 @@ const v2 = require("./routes/v2");
 const authRouter = require("./routes/auth");
 const indexRouter = require("./routes");
 const apiRouter = require("./routes/api");
+const test = require("./routes/test");
 
 const { sequelize } = require("./models").db;
 const { sequelize: sequelize2 } = require("./models").db2;
@@ -86,6 +87,7 @@ app.use("/v1", v1);
 app.use("/v2", v2);
 app.use("/auth", authRouter);
 app.use("/api", apiRouter);
+app.use("/test", test);
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
   error.status = 404;
