@@ -129,8 +129,6 @@ router.get("/logoutAdmin", async (req, res, next) => {
 router.post("/uploadBanner", upload.single("file"), async (req, res, next) => {
   console.log("uploadBanner!#!#!");
   const { bid, ad_title, ad_desc, end_date } = req.body;
-  console.dir({ bid, ad_title, ad_desc, end_date });
-  console.log(req.file);
   const { originalname, mimetype, size, bucket, key, location } = req.file;
   try {
     const banner = await Banner.create({
@@ -162,6 +160,72 @@ router.get("/banner", async (req, res, next) => {
   try {
     const result = await request(req, "/banner");
     res.json(result.data);
+  } catch (error) {
+    console.error(error);
+    if (error.code) {
+      return res.status(error.code).json({
+        code: error.code,
+        errorMessage: error,
+      });
+    } else {
+      next(error);
+    }
+  }
+});
+
+router.put("/banner", upload.single("file"), async (req, res, next) => {
+  console.log("/banner - put");
+  const { ad_desc, ad_title, bid, end_date, id } = req.body;
+  const { originalname, mimetype, size, bucket, key, location } = req.file;
+  try {
+    const banner = await Banner.update(
+      {
+        bid,
+        ad_title,
+        ad_desc,
+        originalname,
+        mimetype,
+        size,
+        bucket,
+        key,
+        end_date,
+        url: location,
+      },
+      {
+        where: { id },
+      }
+    );
+    res.status(200).json({
+      banner,
+    });
+  } catch (error) {
+    console.error(error);
+    if (error.code) {
+      return res.status(error.code).json({
+        code: error.code,
+        errorMessage: error,
+      });
+    } else {
+      next(error);
+    }
+  }
+});
+
+router.delete("/banner", async (req, res, next) => {
+  console.log("/banner - delete");
+  const { id } = req.body;
+  try {
+    const banner = await Banner.update(
+      {
+        deleted_yn: "y",
+      },
+      {
+        where: { id },
+      }
+    );
+    res.status(200).json({
+      banner,
+    });
   } catch (error) {
     console.error(error);
     if (error.code) {

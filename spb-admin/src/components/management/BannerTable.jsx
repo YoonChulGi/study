@@ -8,7 +8,12 @@ import TableBody from "../../ui/TableBody";
 
 import Text from "../../ui/Text";
 import Spacing from "../../ui/Spacing";
+import Button from "../../ui/Button";
+import InlineList from "../../ui/InlineList";
 import withLoading from "../withLoading";
+
+import { Consumer as Modal } from "../../ui/Modal/context";
+import { UPDATE_BANNER, DELETE_BANNER } from "../../constants/modals";
 
 const LoadingMessage = (
   <Spacing vertical={4} horizontal={2}>
@@ -24,27 +29,65 @@ class BannerTable extends PureComponent {
         <TableHead>
           <TableRow>
             {/* id,ad_title,ad_desc,url,bid */}
-            <TableCell align="left">배너 번호</TableCell>
+            <TableCell align="center">배너 번호</TableCell>
             <TableCell align="left">광고 제목</TableCell>
             <TableCell align="left">광고 문구</TableCell>
-            <TableCell align="left">광고 이미지</TableCell>
-            <TableCell align="left">광고 상품 id</TableCell>
+            <TableCell align="center">광고 이미지</TableCell>
+            <TableCell align="center">광고 상품 id</TableCell>
             <TableCell align="left">광고 만기일</TableCell>
+            <TableCell align="center">삭제 여부</TableCell>
+            <TableCell align="center">배너 관리</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {bannerList.map(({ id, ad_title, ad_desc, url, bid, end_date }) => (
-            <TableRow key={id}>
-              <TableCell align="left">{id}</TableCell>
-              <TableCell align="left">{ad_title}</TableCell>
-              <TableCell align="left">{ad_desc}</TableCell>
-              <TableCell align="left">
-                <img src={url} alt="img" />
-              </TableCell>
-              <TableCell align="left">{bid}</TableCell>
-              <TableCell align="left">{end_date}</TableCell>
-            </TableRow>
-          ))}
+          {bannerList.map(
+            ({ id, ad_title, ad_desc, url, bid, end_date, deleted_yn }) => (
+              <TableRow key={id}>
+                <TableCell align="center">{id}</TableCell>
+                <TableCell align="left">{ad_title}</TableCell>
+                <TableCell align="left">{ad_desc}</TableCell>
+                <TableCell align="center">
+                  <img src={url} alt="img" />
+                </TableCell>
+                <TableCell align="center">{bid}</TableCell>
+                <TableCell align="left">{end_date}</TableCell>
+                <TableCell align="center">{deleted_yn}</TableCell>
+                <TableCell align="center">
+                  <Modal>
+                    {({ openModal }) => (
+                      // <div {...css(styles.wrapper)}>
+                      //   <div {...css(styles.container)}>
+                      <InlineList align="center">
+                        <Button
+                          primary
+                          onPress={() =>
+                            openModal(UPDATE_BANNER, {
+                              id,
+                              bid,
+                              ad_title,
+                              ad_desc,
+                              end_date: end_date.replace("T00:00:00.000Z", ""),
+                              url,
+                            })
+                          }
+                        >
+                          수정
+                        </Button>
+                        <Button
+                          secondary
+                          onPress={() => openModal(DELETE_BANNER, { id })}
+                        >
+                          삭제
+                        </Button>
+                      </InlineList>
+                      //   </div>
+                      // </div>
+                    )}
+                  </Modal>
+                </TableCell>
+              </TableRow>
+            )
+          )}
         </TableBody>
       </Table>
     );

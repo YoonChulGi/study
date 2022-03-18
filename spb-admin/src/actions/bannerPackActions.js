@@ -1,6 +1,7 @@
 import createActions from "../api-redux-pack/createActions";
 
-const { bannerList, resetBanner } = createActions("/api/banner");
+const { bannerList, resetBanner, update, delBanner } =
+  createActions("/api/banner");
 const PAGE_SIZE = 10;
 const isLoggedIn = sessionStorage.getItem("isLoggedIn");
 export const resetBannerList = resetBanner;
@@ -23,6 +24,36 @@ export function requestBannerList(params, _page = 1) {
       meta
     );
   }
+}
+
+export function updateBanner(data, onComplete) {
+  return update(
+    data,
+    {},
+    {
+      notification: {
+        success: "배너 광고 수정이 성공적으로 완료되었습니다.",
+        error: "배너 광고 수정에 실패했습니다.",
+      },
+      onSuccess: onComplete,
+      onFailure: onComplete,
+    }
+  );
+}
+
+export function deleteBanner(data, onComplete) {
+  return delBanner(
+    data,
+    {},
+    {
+      notification: {
+        success: "배너 광고 삭제가 성공적으로 완료되었습니다.",
+        error: "배너 광고 삭제를 실패했습니다.",
+      },
+      onSuccess: onComplete,
+      onFailure: onComplete,
+    }
+  );
 }
 
 // export function createTransaction(data, onComplete) {

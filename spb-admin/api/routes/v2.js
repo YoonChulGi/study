@@ -196,26 +196,12 @@ router.post("/uploadBanner", apiLimiter, verifyToken, (req, res, next) => {
 router.get("/banner", apiLimiter, verifyToken, (req, res, next) => {
   let queryOption = {};
   console.dir(req.query);
-  let { searchField, query, end_date, search_type, _page, _limit } = req.query;
+  let { searchField, query, end_date, _page, _limit } = req.query;
   if (!searchField) searchField = "id";
   if (searchField || query || end_date) {
     queryOption.where = [];
-    // if (end_date) {
-    //   queryOption.where["end_date"] = {};
-    // }
   }
 
-  // if (
-  //   req.query.query ||
-  //   req.query.searchField ||
-  //   req.query.from ||
-  //   req.query.to
-  // ) {
-  //   queryOption.where = {};
-  //   if (req.query.from || req.query.to) {
-  //     queryOption.where["checkout_time"] = {};
-  //   }
-  // }
   if (_limit) {
     queryOption.limit = _limit * 1;
   }
@@ -240,19 +226,10 @@ router.get("/banner", apiLimiter, verifyToken, (req, res, next) => {
     }
   }
   if (end_date) {
-    // queryOption.where["end_date"] = end_date + "T00:00:00.000Z";
     queryOption.where.push({
       ["end_date"]: end_date + "T00:00:00.000Z",
     });
   }
-
-  // if (req.query.from) {
-  //   queryOption.where["checkout_time"][Op.gte] = req.query.from;
-  // }
-
-  // if (req.query.to) {
-  //   queryOption.where["checkout_time"][Op.lte] = req.query.to;
-  // }
 
   queryOption.order = [["id", "DESC"]];
   console.dir(queryOption);
@@ -270,20 +247,11 @@ router.get("/banner", apiLimiter, verifyToken, (req, res, next) => {
         errorMessage: "서버 에러",
       });
     });
-
-  // Checkout.findAll(queryOption)
-  // .then((results) => {
-  //   res.json({
-  //     code: 200,
-  //     payload: results,
-  //   });
-  // })
-  // .catch((error) => {
-  //   console.error(error);
-  //   return res.status(500).json({
-  //     code: 500,
-  //     message: "서버 에러",
-  //   });
-  // });
 });
+
+router.put("/banner", apiLimiter, verifyToken, (req, res, next) => {
+  console.log("v2 put - /banner");
+  console.dir(req.body);
+});
+
 module.exports = router;

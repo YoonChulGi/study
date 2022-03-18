@@ -10,3 +10,5 @@ export const LOGOUT = "api-redux-pack/LOGOUT";
 export const LOGIN_SUCCESS = "api-redux-pack/LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "api-redux-pack/LOGIN_FAILURE";
 export const UPLOAD_BANNER = "api-redux-pack/UPLOAD_BANNER";
+export const UPDATE_BANNER = "api-redux-pack/UPDATE_BANNER";
+export const DELETE_BANNER = "api-redux-pack/DELETE_BANNER";

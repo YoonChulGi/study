@@ -7,6 +7,8 @@ import {
   UPLOAD_BANNER,
   FETCH_BANNER_LIST,
   RESET_BANNER,
+  UPDATE_BANNER,
+  DELETE_BANNER,
 } from "./actionTypes";
 import Api from "../Api";
 
@@ -67,6 +69,22 @@ export default (resourceName, key = "idx") => ({
   upload: (data, params = {}, meta = {}) => ({
     type: UPLOAD_BANNER,
     promise: Api.post(resourceName, data, { params }),
+    meta: {
+      ...meta,
+      resourceName,
+    },
+  }),
+  update: (data, params = {}, meta = {}) => ({
+    type: UPDATE_BANNER,
+    promise: Api.put(resourceName, data, { params }),
+    meta: {
+      ...meta,
+      resourceName,
+    },
+  }),
+  delBanner: (data, params = {}, meta = {}) => ({
+    type: DELETE_BANNER,
+    promise: Api.delete(resourceName, { data }, { params }),
     meta: {
       ...meta,
       resourceName,
