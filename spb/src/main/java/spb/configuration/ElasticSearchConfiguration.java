@@ -29,9 +29,9 @@ public class ElasticSearchConfiguration {
 	
 	@Bean
     public RestHighLevelClient restHighLevelClient() {
-		log.debug("##RestHighLevelClient##");
-		log.debug("hostname: " + hostname);
-		log.debug("port: " + port);
+//		log.debug("##RestHighLevelClient##");
+//		log.debug("hostname: " + hostname);
+//		log.debug("port: " + port);
 		
         return new RestHighLevelClient(RestClient.builder(new HttpHost(hostname, port, "http")));
     }

@@ -13,13 +13,29 @@ public class LoggerInterceptor implements HandlerInterceptor{
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
-		log.debug("====================================START====================================");
-		log.debug(" Request URI \t: " + request.getRequestURI());
+		String requestUri = request.getRequestURI();
+		
+		if(!requestUri.contains("/plugins/") && 
+			!requestUri.contains("/images/") &&
+			!requestUri.contains("/css/") &&
+			!requestUri.contains("/js/")
+			) {
+			log.debug("====================================START====================================");
+			log.debug(" Request URI \t: " + request.getRequestURI());			
+		}
 		return true;
 	}
 	
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-		log.debug("=====================================END=====================================");
+		String requestUri = request.getRequestURI();
+		
+		if(!requestUri.contains("/plugins/") && 
+			!requestUri.contains("/images/") &&
+			!requestUri.contains("/css/") &&
+			!requestUri.contains("/js/")
+			) {
+			log.debug("=====================================END=====================================");			
+		} 
 	}
 }
