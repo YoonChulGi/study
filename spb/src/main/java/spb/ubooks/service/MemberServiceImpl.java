@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import spb.ubooks.dto.MemberDto;
 import spb.ubooks.exception.DuplicatedIdException;
 import spb.ubooks.mapper.MemberMapper;
+import spb.ubooks.mongoEntity.LoginLog;
+import spb.ubooks.mongoRepository.LoginLogRepository;
 
 @Service
 @Slf4j
@@ -21,6 +23,9 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private LoginLogRepository loginLogRepository;
 
 	@Override
 	public int checkId(String memberId) throws Exception {
@@ -48,10 +53,20 @@ public class MemberServiceImpl implements MemberService{
 				HttpSession session = request.getSession();
 				session.setAttribute("memberId", m.getMemberId());
 				session.setAttribute("memberName", m.getMemberName());
+//				log.debug("user_ip: "+ request.getRemoteAddr());
+				putLoginLog(m.getMemberId(), request.getRemoteAddr());
 				return "redirect:/";
 			}
 		}
 		return "redirect:/loginFail";
+	}
+
+	@Override
+	public void putLoginLog(String userId, String userIp) throws Exception {
+		LoginLog loginLogEntity = new LoginLog();
+		loginLogEntity.setUser_id(userId);
+		loginLogEntity.setUser_ip(userIp);
+		loginLogRepository.save(loginLogEntity);
 	}
 
 //	@Override

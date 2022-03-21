@@ -1,12 +1,9 @@
 import React, { PureComponent } from "react";
 
-// import Heading from "../../ui/Heading";
 import Card from "../../ui/Card";
-
-// import TransactionSearchFilterContainer from "../../containers/main/TransactionSearchFilterContainer";
 import BannerSearchFilterContainer from "../../containers/management/BannerSearchFilterContainer";
 import BannerTable from "./BannerTable";
-// import TransactionPaginationContainer from "../../containers/main/TransactionPaginationContainer";
+import BannerPaginationContainer from "../../containers/management/BannerPaginationContainer";
 
 class BannerList extends PureComponent {
   render() {
@@ -14,14 +11,12 @@ class BannerList extends PureComponent {
     return (
       <div>
         <Card vertical={4} horizontal={4}>
-          {/* <TransactionSearchFilterContainer /> */}
           <BannerSearchFilterContainer />
         </Card>
         <Card>
           <BannerTable bannerList={bannerList} isLoading={loading} />
-          {/* bannerList={transactions} */}
         </Card>
-        {/* <TransactionPaginationContainer /> */}
+        <BannerPaginationContainer />
       </div>
     );
   }

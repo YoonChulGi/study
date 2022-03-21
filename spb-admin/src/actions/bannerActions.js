@@ -1,7 +1,6 @@
 import createActions from "../api-redux-pack/createActions";
 
 const { upload } = createActions("/api/uploadBanner");
-const { update } = createActions("/api/updateBanner");
 // export function createAdmin(data, onComplete) {
 //   return upload(
 //     data,
