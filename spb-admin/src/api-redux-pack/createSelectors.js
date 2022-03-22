@@ -3,6 +3,7 @@ import {
   CREATE,
   /*UPDATE,*/ FETCH_LIST,
   FETCH_BANNER_LIST,
+  FETCH_LOGIN_LOG_LIST,
 } from "./actionTypes";
 
 export default function createSelectors(resourceName) {
@@ -17,12 +18,18 @@ export default function createSelectors(resourceName) {
     [resourceSelector],
     ({ indexes, entities }) => indexes.map((idx) => entities[idx])
   );
+  const loginLogSelector = createSelector(
+    [resourceSelector],
+    ({ indexes, entities }) => indexes.map((idx) => entities[idx])
+  );
   const loadingStateSelector = (state) => resourceSelector(state).loadingState;
   // const errorStateSelector = (state) => resourceSelector(state).errorState;
   const collectionLoadingStateSelector = (state) =>
     loadingStateSelector(state)[`${FETCH_LIST}/${resourceName}`];
   const bannerLoadingStateSelector = (state) =>
     loadingStateSelector(state)[`${FETCH_BANNER_LIST}/${resourceName}`];
+  const loginLogLoadingStateSelector = (state) =>
+    loadingStateSelector(state)[`${FETCH_LOGIN_LOG_LIST}/${resourceName}`];
   const createLoadingStateSelector = (state) =>
     loadingStateSelector(state)[`${CREATE}/${resourceName}`];
   // const updateLoadingStateSelector = state => loadingStateSelector(state)[`${UPDATE}/${resourceName}`];
@@ -52,6 +59,9 @@ export default function createSelectors(resourceName) {
     createLoadingStateSelector,
     // updateLoadingStateSelector,
     // memberLoadingStateSelector,
+    loginLogSelector,
+    loginLogLoadingStateSelector,
+
     paginationSelector,
   };
 }

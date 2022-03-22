@@ -79,6 +79,10 @@ if (process.env.NODE_ENV === "production") {
   // sessionOption.cookie.secure = true;
 }
 
+// mongoose
+const connect = require("./schemas");
+connect();
+
 app.use(session(sessionOption));
 app.use(passport.initialize());
 app.use(passport.session());

@@ -9,6 +9,8 @@ import {
   RESET_BANNER,
   UPDATE_BANNER,
   DELETE_BANNER,
+  FETCH_LOGIN_LOG_LIST,
+  RESET_LOGIN_LOG_LIST,
 } from "./actionTypes";
 import Api from "../Api";
 
@@ -31,12 +33,25 @@ export default (resourceName, key = "idx") => ({
       resourceName,
     },
   }),
+  loginLogList: (params = {}, meta = {}) => ({
+    type: FETCH_LOGIN_LOG_LIST,
+    promise: Api.get(resourceName, { params }),
+    meta: {
+      ...meta,
+      key: "_id",
+      resourceName,
+    },
+  }),
   reset: () => ({
     type: RESET,
     meta: { resourceName },
   }),
   resetBanner: () => ({
     type: RESET_BANNER,
+    meta: { resourceName },
+  }),
+  resetLoginLog: () => ({
+    type: RESET_LOGIN_LOG_LIST,
     meta: { resourceName },
   }),
   create: (data, params = {}, meta = {}) => ({

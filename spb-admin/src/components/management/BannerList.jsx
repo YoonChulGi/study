@@ -23,7 +23,7 @@ class BannerList extends PureComponent {
 }
 
 BannerList.defaultProps = {
-  transactions: [],
+  bannerList: [],
   loading: false,
 };
 

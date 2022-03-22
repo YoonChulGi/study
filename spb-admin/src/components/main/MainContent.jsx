@@ -1,6 +1,9 @@
 import React, { PureComponent } from "react";
+
 import TransactionListContainer from "../../containers/main/TransactionListContainer";
 import BannerListContainer from "../../containers/management/BannerListContainer";
+import LoginLogListContainer from "../../containers/management/LoginLogListContainer";
+
 import InlineList from "../../ui/InlineList";
 import Button from "../../ui/Button";
 import { withRouter } from "react-router-dom";
@@ -13,6 +16,8 @@ class MainContent extends PureComponent {
     let flag = "";
     if (search_type === "banner") {
       flag = "배너 광고 관리";
+    } else if (search_type === "loginLog") {
+      flag = "로그인 로그";
     } else if (
       !search_type ||
       search_type === "" ||
@@ -46,6 +51,8 @@ class MainContent extends PureComponent {
     });
     if (param === "배너 광고 관리") {
       history.push("/?search_type=banner");
+    } else if (param === "로그인 로그") {
+      history.push("/?search_type=loginLog");
     } else if (param === "거래 로그") {
       history.push("/");
     }
@@ -73,11 +80,21 @@ class MainContent extends PureComponent {
           >
             배너 광고 관리
           </Button>
+          <Button
+            inverse
+            bold
+            large
+            onPress={() => this.handleButtonPress("로그인 로그")}
+            primary={flag === "로그인 로그" ? true : false}
+          >
+            로그인 로그
+          </Button>
         </InlineList>
         {flag === "거래 로그" || flag === "" ? (
           <TransactionListContainer />
         ) : null}
         {flag === "배너 광고 관리" ? <BannerListContainer /> : null}
+        {flag === "로그인 로그" ? <LoginLogListContainer /> : null}
       </>
     );
   }

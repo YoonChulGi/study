@@ -5,6 +5,7 @@ import {
   RESET,
   FETCH_BANNER_LIST,
   RESET_BANNER,
+  FETCH_LOGIN_LOG_LIST,
 } from "./actionTypes";
 
 export default (...reducerNames) => {
@@ -40,6 +41,7 @@ export default (...reducerNames) => {
       }
       switch (type) {
         case CREATE:
+        case FETCH_LOGIN_LOG_LIST:
         case FETCH_BANNER_LIST:
         case FETCH_LIST: {
           return handle(state, action, {
@@ -56,7 +58,11 @@ export default (...reducerNames) => {
             }),
             success: (prevState) => {
               const { data } = payload;
-              if (type === FETCH_LIST || type === FETCH_BANNER_LIST) {
+              if (
+                type === FETCH_LIST ||
+                type === FETCH_BANNER_LIST ||
+                type === FETCH_LOGIN_LOG_LIST
+              ) {
                 const { pageNumber, pageSize } = meta || {};
 
                 const indexes = data.payload.map((entity) => entity[key]);

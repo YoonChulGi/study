@@ -239,4 +239,22 @@ router.delete("/banner", async (req, res, next) => {
   }
 });
 
+router.get("/loginLog", async (req, res, next) => {
+  console.log("/loginLog - get");
+  try {
+    const result = await request(req, "/loginLog");
+    res.status(200).json(result.data);
+  } catch (error) {
+    console.error(error);
+    if (error.code) {
+      return res.status(error.code).json({
+        code: error.code,
+        errorMessage: error,
+      });
+    } else {
+      next(error);
+    }
+  }
+});
+
 module.exports = router;
