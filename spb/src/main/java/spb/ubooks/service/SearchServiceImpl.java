@@ -102,6 +102,7 @@ public class SearchServiceImpl implements SearchService{
             System.out.println("REST API End");
         }catch(Exception e) {
             e.printStackTrace();
+            
         }
         return outResult.toString();
 	}
@@ -569,29 +570,20 @@ public class SearchServiceImpl implements SearchService{
 		TermsAggregationBuilder aggregation = AggregationBuilders.terms("by_query").field("query.keyword");
 		// aggregation.subAggregation(AggregationBuilders.sum("sum_query").field("query.keyword"));
 		searchSourceBuilder.aggregation(aggregation);
-		try {
-			SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-			
-			Terms byQuery = searchResponse.getAggregations().get("by_query");
-			int i=0;
-			for(Terms.Bucket entry : byQuery.getBuckets()) {
-				Map<String,Object> popwordEntry = new HashMap<>();
-				popwordEntry.put("key", entry.getKeyAsString());
-				popwordEntry.put("count", entry.getDocCount());
-				popwordEntry.put("status", "new");
-				popwordEntry.put("value", 0);
-				resultList.add(popwordEntry);
-				if(i==9) break; // 10개만
-			}
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-			Map<String,Object> errorInfo = new HashMap<>();
-			errorInfo.put("error", e);
-			resultList.add(errorInfo);
-			return resultList;
-		}
+
+		SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 		
+		Terms byQuery = searchResponse.getAggregations().get("by_query");
+		int i=0;
+		for(Terms.Bucket entry : byQuery.getBuckets()) {
+			Map<String,Object> popwordEntry = new HashMap<>();
+			popwordEntry.put("key", entry.getKeyAsString());
+			popwordEntry.put("count", entry.getDocCount());
+			popwordEntry.put("status", "new");
+			popwordEntry.put("value", 0);
+			resultList.add(popwordEntry);
+			if(i==9) break; // 10개만
+		}
 		// end popword - 현재시점
 		
 		// start popword - 과거시점
@@ -615,46 +607,40 @@ public class SearchServiceImpl implements SearchService{
 		searchRequestOld.source(searchSourceBuilder2);
 		searchSourceBuilder2.aggregation(aggregation);
 		List<Map<String,Object>> resultList2 = new ArrayList<>();
-		try {
-			SearchResponse searchResponse2 = client.search(searchRequestOld, RequestOptions.DEFAULT);
-			Terms byQuery = searchResponse2.getAggregations().get("by_query");
-			int i=0;
-			for(Terms.Bucket entry : byQuery.getBuckets()) {
-				Map<String,Object> popwordEntry = new HashMap<>();
-				popwordEntry.put("key", entry.getKeyAsString());
-				popwordEntry.put("count", entry.getDocCount());
+		
+		SearchResponse searchResponse2 = client.search(searchRequestOld, RequestOptions.DEFAULT);
+		Terms byQuery2 = searchResponse2.getAggregations().get("by_query");
+		int i2=0;
+		for(Terms.Bucket entry : byQuery2.getBuckets()) {
+			Map<String,Object> popwordEntry = new HashMap<>();
+			popwordEntry.put("key", entry.getKeyAsString());
+			popwordEntry.put("count", entry.getDocCount());
 
-				resultList2.add(popwordEntry);
-				if(i==9) break; // 10개만
-			}
-			log.debug("resultList2.toString()");
-			log.debug(resultList2.toString());
-			for(int idx=0;idx<resultList.size();idx++) {
-				for(int j=0;j<resultList2.size();j++) {
-					if(resultList.get(idx).get("key").equals(resultList2.get(j).get("key"))) {
-						Map<String,Object> m = resultList.get(idx);
-						String status;
-						if(idx < j) {
-							status = "up";
-							m.put("status", status);
-						} else if (idx == j) {
-							status = "-";
-							m.put("status", status);
-						} else {
-							status = "down";
-							m.put("status", status);
-						}
-						m.put("value", j-idx);
+			resultList2.add(popwordEntry);
+			if(i2==9) break; // 10개만
+		}
+		log.debug("resultList2.toString()");
+		log.debug(resultList2.toString());
+		for(int idx=0;idx<resultList.size();idx++) {
+			for(int j=0;j<resultList2.size();j++) {
+				if(resultList.get(idx).get("key").equals(resultList2.get(j).get("key"))) {
+					Map<String,Object> m = resultList.get(idx);
+					String status;
+					if(idx < j) {
+						status = "up";
+						m.put("status", status);
+					} else if (idx == j) {
+						status = "-";
+						m.put("status", status);
+					} else {
+						status = "down";
+						m.put("status", status);
 					}
+					m.put("value", j-idx);
 				}
 			}
-		}catch (Exception e) {
-			e.printStackTrace();
-			Map<String,Object> errorInfo = new HashMap<>();
-			errorInfo.put("error", e);
-			resultList.add(errorInfo);
-			return resultList;
 		}
+		
 		// end popword - 과거시점
 		
 		

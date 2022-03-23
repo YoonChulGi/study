@@ -33,20 +33,28 @@ Spb Admin
       테이블 형식으로 조회 및 수정 가능하게 하면 될듯. - 완료 
       spb-admin 배너리스트 페이징 처리 - 완료, 
       spb 로그인시 몽고디비에 로그인 로직 추가 - 완료
+      spb-admin - 사용자 로그인 로그 조회 기능 개발하기 - loginLog - apiserverside router 만들기 - 완료
+      , mongoose 사용하여 mongodb <-> node 연동하기 - 완료
+      , 
+      서버 에러 로그 - 404 및 엘라스틱 일부 에러 로그 몽고디비에 수집하도록 로직 수정 - 완료
   TODO) 
-      spb-admin - 사용자 로그인 로그 조회 기능 개발하기 - loginLog - apiserverside router 만들기, mongoose 사용하여 mongodb <-> node 연동하기
-
-      , 서버 에러 로그
+      spb-admin 서버 에러로그 조회 만들기
         DB: MONGO, NODE: MONGOOSE
       spb-admin - 서버 에러 로그
       
       mongodb 연동부분 포스팅하기 - public 공개
-      
+
       
        
 
-  5. 로그 열람 기능 - 사용자 로그인, 거래 로그(상품 CRUD관련, 판매, 구매 로그), 서버 에러 로그
-    - 판매로그 - spb-checkout
+  5. 로그 열람 기능 - 사용자 로그인, - 완료 
+     거래 로그(상품 CRUD관련, 판매 로그), - 완료
+     서버 에러 로그
+    
+    - 판매로그 - spb-checkout - mariadb
+    - 사용자 로그인 - spb/login-log - mongodb
+    - 서버 에러 로그 - spb/spb-error - mongodb
+
   6. Overview - 일일 방문자, 총 방문자 숫자 카운팅
   
 
