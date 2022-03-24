@@ -11,6 +11,7 @@ const { Domain, User } = require("../models").db;
 const { Checkout, Banner } = require("../models").db2;
 
 const LoginLog = require("../schemas/LoginLog");
+const ErrorLog = require("../schemas/ErrorLog");
 
 const passport = require("passport");
 const bcrypt = require("bcrypt");
@@ -303,4 +304,63 @@ router.get("/loginLog", apiLimiter, verifyToken, async (req, res, next) => {
   }
 });
 
+router.get("/errorLog", apiLimiter, verifyToken, async (req, res, next) => {
+  console.dir(req.query);
+  let { searchField, query, timestamp, _page, _limit } = req.query;
+  let offset = 0;
+
+  let queryOption = {};
+
+  if (!searchField) {
+    searchField = "user_id";
+  }
+
+  if (searchField && query) {
+    if (searchField === "status") {
+      query = query.trim();
+      query *= 1;
+      queryOption[searchField] = query;
+    } else {
+      queryOption[searchField] = { $regex: query.trim() };
+    }
+  }
+
+  if (timestamp) {
+    let tomorrow = new Date(timestamp.trim() + "T00:00:00.000Z");
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    queryOption["timestamp"] = {
+      $gte: new Date(timestamp.trim() + "T00:00:00.000Z"),
+      $lt: tomorrow,
+    };
+  }
+
+  if (_limit) {
+    _limit *= 1;
+  }
+
+  if (_page) {
+    _page *= 1;
+    _limit *= 1;
+    offset = (_page - 1) * _limit;
+  }
+
+  console.dir(queryOption);
+
+  try {
+    const errorLogs = await ErrorLog.find(queryOption)
+      .skip(offset)
+      .limit(_limit);
+    res.status(200).json({
+      code: 200,
+      payload: errorLogs,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(445).json({
+      code: 445,
+      errorMessage: "서버 에러",
+    });
+  }
+});
 module.exports = router;

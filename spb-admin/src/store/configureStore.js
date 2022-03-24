@@ -9,6 +9,7 @@ import searchBannerFilterEffects from "../middlewares/searchBannerFilterEffects"
 import routerEffects from "../middlewares/routerEffects";
 import adminEffects from "../middlewares/adminEffects";
 import searchLoginLogFilterEffects from "../middlewares/searchLoginLogFilterEffects";
+import searchErrorLogFilterEffects from "../middlewares/searchErrorLogFilterEffects";
 
 export default (initStates) =>
   createStore(
@@ -22,6 +23,7 @@ export default (initStates) =>
         searchFilterEffects,
         searchBannerFilterEffects,
         searchLoginLogFilterEffects,
+        searchErrorLogFilterEffects,
         routerEffects,
         adminEffects
       )

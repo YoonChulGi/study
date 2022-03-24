@@ -11,6 +11,8 @@ import {
   DELETE_BANNER,
   FETCH_LOGIN_LOG_LIST,
   RESET_LOGIN_LOG_LIST,
+  FETCH_ERROR_LOG_LIST,
+  RESET_ERROR_LOG_LIST,
 } from "./actionTypes";
 import Api from "../Api";
 
@@ -42,6 +44,15 @@ export default (resourceName, key = "idx") => ({
       resourceName,
     },
   }),
+  errorLogList: (params = {}, meta = {}) => ({
+    type: FETCH_ERROR_LOG_LIST,
+    promise: Api.get(resourceName, { params }),
+    meta: {
+      ...meta,
+      key: "_id",
+      resourceName,
+    },
+  }),
   reset: () => ({
     type: RESET,
     meta: { resourceName },
@@ -52,6 +63,10 @@ export default (resourceName, key = "idx") => ({
   }),
   resetLoginLog: () => ({
     type: RESET_LOGIN_LOG_LIST,
+    meta: { resourceName },
+  }),
+  resetErrorLog: () => ({
+    type: RESET_ERROR_LOG_LIST,
     meta: { resourceName },
   }),
   create: (data, params = {}, meta = {}) => ({

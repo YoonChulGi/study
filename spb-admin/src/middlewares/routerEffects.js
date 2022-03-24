@@ -2,6 +2,7 @@ import { SET_LOCATION } from "../actions/routerActions";
 import { setFilter } from "../actions/searchFilterActions";
 import { setBannerFilter } from "../actions/searchBannerFilterActions";
 import { setLoginLogFilter } from "../actions/searchLoginLogFilterActions";
+import { setErrorLogFilter } from "../actions/searchErrorLogFilterActions";
 
 const isLoggedIn = sessionStorage.getItem("isLoggedIn");
 
@@ -44,6 +45,12 @@ export default (store) => (nextRunner) => (action) => {
         parsedSearchParams.search_type === "loginLog"
       ) {
         store.dispatch(setLoginLogFilter(parsedSearchParams));
+      }
+      if (
+        parsedSearchParams.search_type &&
+        parsedSearchParams.search_type === "errorLog"
+      ) {
+        store.dispatch(setErrorLogFilter(parsedSearchParams));
       }
     }
   }

@@ -37,25 +37,23 @@ Spb Admin
       , mongoose 사용하여 mongodb <-> node 연동하기 - 완료
       , 
       서버 에러 로그 - 404 및 엘라스틱 일부 에러 로그 몽고디비에 수집하도록 로직 수정 - 완료
-  TODO) 
-      spb-admin 서버 에러로그 조회 만들기
+      spb-admin 서버 에러로그 조회 만들기 - 완료
         DB: MONGO, NODE: MONGOOSE
       spb-admin - 서버 에러 로그
-      
-      mongodb 연동부분 포스팅하기 - public 공개
-
-      
-       
-
-  5. 로그 열람 기능 - 사용자 로그인, - 완료 
+      5. 로그 열람 기능 - 사용자 로그인, - 완료 
      거래 로그(상품 CRUD관련, 판매 로그), - 완료
-     서버 에러 로그
+     서버 에러 로그 - 완료
     
     - 판매로그 - spb-checkout - mariadb
     - 사용자 로그인 - spb/login-log - mongodb
     - 서버 에러 로그 - spb/spb-error - mongodb
+  TODO)
+    mongodb 연동부분 포스팅하기 - public 공개
+  6. Overview - 일일 방문자, 총 방문자 숫자 카운팅 
+   - 일일 방문자 로그 몽고 디비에 남기기 - spb - 세션 생성 시마다 하면 될듯
+   - 오늘 방문자 수, 총 방문자 수 카운팅하여 집계 뽑기
 
-  6. Overview - 일일 방문자, 총 방문자 숫자 카운팅
+
   
 
 

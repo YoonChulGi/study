@@ -6,6 +6,9 @@ import {
   FETCH_BANNER_LIST,
   RESET_BANNER,
   FETCH_LOGIN_LOG_LIST,
+  FETCH_ERROR_LOG_LIST,
+  RESET_LOGIN_LOG_LIST,
+  RESET_ERROR_LOG_LIST,
 } from "./actionTypes";
 
 export default (...reducerNames) => {
@@ -19,6 +22,8 @@ export default (...reducerNames) => {
         // [`${FETCH}/${name}`]: false,
         [`${FETCH_LIST}/${name}`]: false,
         [`${FETCH_BANNER_LIST}/${name}`]: false,
+        [`${FETCH_LOGIN_LOG_LIST}/${name}`]: false,
+        [`${FETCH_ERROR_LOG_LIST}/${name}`]: false,
       },
       errorState: {
         [`${CREATE}/${name}`]: false,
@@ -26,6 +31,8 @@ export default (...reducerNames) => {
         // [`${FETCH}/${name}`]: false,
         [`${FETCH_LIST}/${name}`]: false,
         [`${FETCH_BANNER_LIST}/${name}`]: false,
+        [`${FETCH_LOGIN_LOG_LIST}/${name}`]: false,
+        [`${FETCH_ERROR_LOG_LIST}/${name}`]: false,
       },
       pagination: {},
     };
@@ -41,6 +48,7 @@ export default (...reducerNames) => {
       }
       switch (type) {
         case CREATE:
+        case FETCH_ERROR_LOG_LIST:
         case FETCH_LOGIN_LOG_LIST:
         case FETCH_BANNER_LIST:
         case FETCH_LIST: {
@@ -61,7 +69,8 @@ export default (...reducerNames) => {
               if (
                 type === FETCH_LIST ||
                 type === FETCH_BANNER_LIST ||
-                type === FETCH_LOGIN_LOG_LIST
+                type === FETCH_LOGIN_LOG_LIST ||
+                type === FETCH_ERROR_LOG_LIST
               ) {
                 const { pageNumber, pageSize } = meta || {};
 
@@ -149,6 +158,8 @@ export default (...reducerNames) => {
         }
         case RESET:
         case RESET_BANNER:
+        case RESET_LOGIN_LOG_LIST:
+        case RESET_ERROR_LOG_LIST:
           return initState;
 
         default:
