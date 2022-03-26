@@ -47,11 +47,11 @@ Spb Admin
     - 판매로그 - spb-checkout - mariadb
     - 사용자 로그인 - spb/login-log - mongodb
     - 서버 에러 로그 - spb/spb-error - mongodb
+    mongodb 연동부분 포스팅하기 - public 공개 - 완료
+    방문자 로그 몽고 디비에 남기기 - spb - 세션 생성 시마다 하면 될듯 - 완료
   TODO)
-    mongodb 연동부분 포스팅하기 - public 공개
   6. Overview - 일일 방문자, 총 방문자 숫자 카운팅 
-   - 일일 방문자 로그 몽고 디비에 남기기 - spb - 세션 생성 시마다 하면 될듯
-   - 오늘 방문자 수, 총 방문자 수 카운팅하여 집계 뽑기
+   - 오늘 방문자 수,이번달 방문자수, 총 방문자 수 카운팅하여 집계 뽑기 - spbadmin
 
 
   

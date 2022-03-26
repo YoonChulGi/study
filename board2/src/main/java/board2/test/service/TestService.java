@@ -1,7 +1,12 @@
 package board2.test.service;
 
-import java.util.Map;
+import java.util.List;
+
+import board2.test.entity.TestDataEntity;
 
 public interface TestService {
-	Map<String,Object> doSearch() throws Exception;
+	void insertData() throws Exception;
+	List<TestDataEntity> findData() throws Exception;
+	void updateData() throws Exception;
+	void deleteData() throws Exception;
 }
