@@ -275,4 +275,22 @@ router.get("/errorLog", async (req, res, next) => {
   }
 });
 
+router.get("/overview", async (req, res, next) => {
+  console.log("/overview - get");
+  try {
+    const result = await request(req, "/overview");
+    res.status(200).json(result.data);
+  } catch (error) {
+    console.error(error);
+    if (error.code) {
+      return res.status(error.code).json({
+        code: error.code,
+        errorMessage: error,
+      });
+    } else {
+      next(error);
+    }
+  }
+});
+
 module.exports = router;

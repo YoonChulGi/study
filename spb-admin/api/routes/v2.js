@@ -12,6 +12,7 @@ const { Checkout, Banner } = require("../models").db2;
 
 const LoginLog = require("../schemas/LoginLog");
 const ErrorLog = require("../schemas/ErrorLog");
+const Overview = require("../schemas/Overview");
 
 const passport = require("passport");
 const bcrypt = require("bcrypt");
@@ -363,4 +364,120 @@ router.get("/errorLog", apiLimiter, verifyToken, async (req, res, next) => {
     });
   }
 });
+
+router.get("/overview", apiLimiter, verifyToken, async (req, res, next) => {
+  try {
+    let overviewList = [];
+    let today = new Date();
+    today.setHours(0);
+    today.setMinutes(0);
+    today.setSeconds(0);
+    today.setMilliseconds(0);
+    let tomorrow = new Date(
+      `${today.getUTCFullYear()}-${addZero(today.getUTCMonth() + 1)}-${addZero(
+        today.getUTCDate() + 1
+      )}T${addZero(today.getUTCHours())}:00:00.000Z`
+    );
+    console.dir(today);
+    const dayCnt = await Overview.countDocuments({
+      timestamp: {
+        $gte: today,
+        $lte: tomorrow,
+      },
+    });
+    overviewList.push({ _id: "일간 방문자", value: dayCnt });
+
+    let weekStartDate = new Date(fn_getThisWeek()[0]);
+    let weekEndDate = new Date(fn_getThisWeek()[1]);
+    weekStartDate.setHours(weekStartDate.getHours() - 9);
+    weekEndDate.setHours(weekEndDate.getHours() - 9);
+
+    const weekCnt = await Overview.countDocuments({
+      timestamp: {
+        $gte: weekStartDate,
+        $lte: weekEndDate,
+      },
+    });
+    overviewList.push({ _id: "주간 방문자", value: weekCnt });
+
+    let monthStartDate = new Date(
+      `${today.getUTCFullYear()}-${addZero(today.getUTCMonth() + 1)}-${addZero(
+        1
+      )}T${addZero(today.getUTCHours())}:00:00.000Z`
+    );
+    monthStartDate.setUTCDate(addZero(monthStartDate.getUTCDate() - 1));
+
+    let monthEndDate = new Date(
+      `${today.getUTCFullYear()}-${addZero(today.getUTCMonth() + 2)}-${addZero(
+        1
+      )}T${addZero(today.getUTCHours())}:00:00.000Z`
+    );
+    monthEndDate.setUTCDate(monthEndDate.getUTCDate() - 1);
+
+    const monthCnt = await Overview.countDocuments({
+      timestamp: {
+        $gte: monthStartDate,
+        $lte: monthEndDate,
+      },
+    });
+    overviewList.push({ _id: "월간 방문자", value: monthCnt });
+
+    const totalCnt = await Overview.countDocuments({});
+    overviewList.push({ _id: "총 방문자", value: totalCnt });
+
+    console.dir(overviewList);
+    res.status(200).json({
+      code: 200,
+      payload: overviewList,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(445).json({
+      code: 445,
+      errorMessage: "서버 에러",
+    });
+  }
+});
+
+function addZero(time) {
+  let res = "";
+  if (time < 10) {
+    res += "0" + time;
+  } else {
+    res += time;
+  }
+  return res;
+}
+
+function fn_getThisWeek() {
+  var value = [];
+  var formatDate = function (date) {
+    var myMonth = date.getMonth() + 1;
+    var myWeekDay = date.getDate();
+
+    var addZero = function (num) {
+      if (num < 10) {
+        num = "0" + num;
+      }
+      return num;
+    };
+    var md = `${addZero(myMonth)}-${addZero(myWeekDay)}`;
+
+    return md;
+  };
+
+  var now = new Date();
+  var nowDayOfWeek = now.getDay();
+  var nowDay = now.getDate();
+  var nowMonth = now.getMonth();
+  var nowYear = now.getYear();
+  nowYear += nowYear < 2000 ? 1900 : 0;
+  var weekStartDate = new Date(nowYear, nowMonth, nowDay - nowDayOfWeek);
+  var weekEndDate = new Date(nowYear, nowMonth, nowDay + (6 - nowDayOfWeek));
+  value.push(`${nowYear}-${formatDate(weekStartDate)}`);
+  value.push(`${nowYear}-${formatDate(weekEndDate)}`);
+
+  return value;
+}
+
 module.exports = router;

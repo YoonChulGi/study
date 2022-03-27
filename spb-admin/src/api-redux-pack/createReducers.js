@@ -9,6 +9,7 @@ import {
   FETCH_ERROR_LOG_LIST,
   RESET_LOGIN_LOG_LIST,
   RESET_ERROR_LOG_LIST,
+  FETCH_OVERVIEW,
 } from "./actionTypes";
 
 export default (...reducerNames) => {
@@ -73,7 +74,6 @@ export default (...reducerNames) => {
                 type === FETCH_ERROR_LOG_LIST
               ) {
                 const { pageNumber, pageSize } = meta || {};
-
                 const indexes = data.payload.map((entity) => entity[key]);
                 const entities = data.payload.reduce(
                   (finalEntities, entity) => ({
@@ -156,6 +156,79 @@ export default (...reducerNames) => {
             },
           });
         }
+        case FETCH_OVERVIEW: {
+          return handle(state, action, {
+            start: (prevState) => ({
+              ...prevState,
+            }),
+            success: (prevState) => {
+              const { data } = payload;
+              if (type === FETCH_OVERVIEW) {
+                console.dir(data.payload);
+                const indexes = data.payload.map((entity) => entity[key]);
+                const entities = data.payload.reduce(
+                  (finalEntities, entity) => ({
+                    ...finalEntities,
+                    [entity[key]]: entity,
+                  }),
+                  {}
+                );
+                return {
+                  ...prevState,
+                  indexes,
+                  entities: { ...prevState.entities, ...entities },
+                };
+                // } else if (type === CREATE) {
+                //   console.log(data);
+                //   const indexes = data.payload[key];
+                //   return {
+                //     ...prevState,
+                //     indexes,
+                //     entities: {
+                //       ...prevState.entities,
+                //       [indexes]: data.payload,
+                //     },
+                //     loadingState: {
+                //       ...prevState.loadingState,
+                //       [`${type}/${name}`]: false,
+                //     },
+                //     errorState: {
+                //       ...prevState.errorState,
+                //       [`${type}/${name}`]: false,
+                //     },
+                //   };
+              } else {
+                console.log("else");
+                const indexes = data.payload[key];
+                return {
+                  ...prevState,
+                  indexes,
+                  entities: {
+                    ...prevState.entities,
+                    [indexes]: data.payload,
+                  },
+                  loadingState: {
+                    ...prevState.loadingState,
+                    [`${type}/${name}`]: false,
+                  },
+                  errorState: {
+                    ...prevState.errorState,
+                    [`${type}/${name}`]: false,
+                  },
+                };
+              }
+            },
+            failure: (prevState) => {
+              // const { errorMessage } = payload.response ? payload.response.data : {};
+              const { errorMessage } = payload.message || payload.errorMessage;
+              return {
+                ...prevState,
+                errorMessage,
+              };
+            },
+          });
+        }
+
         case RESET:
         case RESET_BANNER:
         case RESET_LOGIN_LOG_LIST:

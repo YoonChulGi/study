@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import Overview from "./Overview";
+import Overview from "../../containers/main/OverviewContainer";
 import MainContent from "./MainContent";
 // import TransactionListContainer from "../../containers/main/TransactionListContainer";
 import LoginContainer from "../../containers/login/LoginContainer";

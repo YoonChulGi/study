@@ -1,3 +1,4 @@
+export const FETCH_OVERVIEW = "api-redux-pack/FETCH_OVERVIEW";
 export const FETCH_LIST = "api-redux-pack/FETCH_LIST";
 export const FETCH_BANNER_LIST = "api-redux-pack/FETCH_BANNER_LIST";
 export const FETCH_LOGIN_LOG_LIST = "api-redux-pack/FETCH_LOGIN_LOG_LIST";

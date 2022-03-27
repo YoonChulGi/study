@@ -1,4 +1,5 @@
 import {
+  FETCH_OVERVIEW,
   FETCH_LIST,
   CREATE,
   /*UPDATE, FETCH,*/ RESET,
@@ -17,6 +18,15 @@ import {
 import Api from "../Api";
 
 export default (resourceName, key = "idx") => ({
+  overviewList: (meta = {}) => ({
+    type: FETCH_OVERVIEW,
+    promise: Api.get("/api/overview"),
+    meta: {
+      ...meta,
+      key: "_id",
+      resourceName,
+    },
+  }),
   collection: (params = {}, meta = {}) => ({
     type: FETCH_LIST,
     promise: Api.get("/api/checkout", { params }),

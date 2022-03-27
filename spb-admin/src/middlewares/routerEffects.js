@@ -3,6 +3,7 @@ import { setFilter } from "../actions/searchFilterActions";
 import { setBannerFilter } from "../actions/searchBannerFilterActions";
 import { setLoginLogFilter } from "../actions/searchLoginLogFilterActions";
 import { setErrorLogFilter } from "../actions/searchErrorLogFilterActions";
+import { requestOverviewList } from "../actions/overviewPackActions";
 
 const isLoggedIn = sessionStorage.getItem("isLoggedIn");
 
@@ -28,6 +29,7 @@ export default (store) => (nextRunner) => (action) => {
     const parsedSearchParams = parse(search);
 
     if (pathname === "/" && isLoggedIn === "true") {
+      store.dispatch(requestOverviewList());
       if (
         !parsedSearchParams.search_type ||
         parsedSearchParams.search_type === "transaction"

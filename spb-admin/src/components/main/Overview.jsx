@@ -7,13 +7,15 @@ import Dashlet from "./Dashlet";
 
 class Overview extends PureComponent {
   render() {
+    const { overviewList } = this.props;
+    console.dir(overviewList);
     return (
       <React.Fragment>
         <Heading level={3}>Overview</Heading>
         <InlineList>
-          <Dashlet name="비트코인" priceLabel="4,216,000원" />
-          <Dashlet name="이더리움" priceLabel="216,000원" />
-          <Dashlet name="두잇코인" priceLabel="30,000원" />
+          {overviewList.map(({ _id, value }) => (
+            <Dashlet key={_id} name={_id} cnt={value} />
+          ))}
         </InlineList>
       </React.Fragment>
     );

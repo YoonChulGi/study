@@ -10,10 +10,13 @@ import {
 export default function createSelectors(resourceName) {
   const resourceSelector = (state) => state[resourceName];
   const entitiesSelector = (state) => resourceSelector(state).entities;
+  const overviewSelector = createSelector(
+    [resourceSelector],
+    ({ indexes, entities }) => indexes.map((idx) => entities[idx])
+  );
   const collectionSelector = createSelector(
     [resourceSelector],
     ({ indexes, entities }) => indexes.map((idx) => entities[idx])
-    // ({ ids, entities }) => ids.map((id) => entities[id])
   );
   const bannerSelector = createSelector(
     [resourceSelector],
@@ -59,6 +62,7 @@ export default function createSelectors(resourceName) {
   return {
     resourceSelector,
     entitiesSelector,
+    overviewSelector,
     collectionSelector,
     bannerSelector,
     collectionLoadingStateSelector,

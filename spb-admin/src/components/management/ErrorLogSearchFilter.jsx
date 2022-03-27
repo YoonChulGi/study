@@ -57,7 +57,7 @@ class ErrorLogSearchFilter extends PureComponent {
               />
               <Input
                 name="timestamp"
-                label="로그인 시간"
+                label="에러 발생 시간"
                 onChange={onChange}
                 value={values["timestamp"]}
               />

@@ -11,7 +11,8 @@ const apiReducers = createReducers(
   "api/addAdmin",
   "/api/banner",
   "/api/loginLog",
-  "/api/errorLog"
+  "/api/errorLog",
+  "/api/overview"
 );
 export default {
   ...apiReducers,
