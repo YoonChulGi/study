@@ -1,25 +1,5 @@
 function getAutoComplete(el){
 	let query = el.value;
-	/*$.ajax({
-		type: "GET",
-		url: "/autoComplete",
-		dataType: 'json',
-		data: {"query" : query},
-		success: function(data) {
-			const ul = document.querySelector(".pop_rel_keywords");
-			const searchInput = document.querySelector(".search_input");
-			const relContainer = document.querySelector(".rel_search");
-			
-			for(let i=0;i<data.length;i++) {
-				console.log(data[i].auto_complete);
-			}
-		},
-		error:function(request,status,error) {
-			console.dir(request);
-			console.dir(status);
-			console.error(error);
-		}
-	});*/
 }
 
 const ul = document.querySelector(".pop_rel_keywords");
