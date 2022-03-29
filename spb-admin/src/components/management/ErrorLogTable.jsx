@@ -28,6 +28,7 @@ class ErrorLogTable extends PureComponent {
             <TableCell align="left">접속자 ID</TableCell>
             <TableCell align="left">접속자 IP</TableCell>
             <TableCell align="center">에러 코드</TableCell>
+            <TableCell align="left">URI</TableCell>
             <TableCell align="left">에러 메시지</TableCell>
             <TableCell align="left">에러 상세</TableCell>
             <TableCell align="left">Timestamp</TableCell>
@@ -41,6 +42,7 @@ class ErrorLogTable extends PureComponent {
               user_id,
               user_ip,
               status,
+              url,
               message,
               exception,
               timestamp,
@@ -51,6 +53,7 @@ class ErrorLogTable extends PureComponent {
                 <TableCell align="left">{user_id}</TableCell>
                 <TableCell align="left">{user_ip}</TableCell>
                 <TableCell align="center"> {"  " + status + "  "} </TableCell>
+                <TableCell align="left">{url}</TableCell>
                 <TableCell align="left">{message}</TableCell>
                 <TableCell align="left">{exception}</TableCell>
                 <TableCell align="left">{timestamp}</TableCell>
@@ -70,6 +73,7 @@ ErrorLogTable.propTypes = {
       user_id: PropTypes.string,
       user_ip: PropTypes.string,
       status: PropTypes.number,
+      url: PropTypes.string,
       message: PropTypes.string,
       exception: PropTypes.string,
       timestamp: PropTypes.string,

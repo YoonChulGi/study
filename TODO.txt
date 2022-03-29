@@ -53,6 +53,7 @@ Spb Admin
    - 오늘 방문자 수,이번달 방문자수, 총 방문자 수 카운팅하여 집계 뽑기 - spbadmin - 완료
    3. spb - redis 연동하여 session 관리 - 완료
   TODO)
+2. redis node 연동하여 카운팅하기...... 일간 주간 월간 전체 조회하기 ........
 3. elasticsearch docker해보기
 4. 스프링부트 시작하기 책데로 진도 끝내보기
 5. 코딩테스트 책사서 공부하기, notion 포트폴리오 만들기 

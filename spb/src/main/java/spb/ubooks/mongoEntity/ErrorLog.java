@@ -18,6 +18,7 @@ public class ErrorLog {
 	private String user_id = null;
 	private String user_ip;
 	private int status;
+	private String url;
 	private String message;
 	private String exception;
 	private LocalDateTime timestamp = LocalDateTime.now();

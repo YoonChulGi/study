@@ -5,11 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.elasticsearch.ElasticsearchException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.NoHandlerFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 import spb.ubooks.service.ErrorLogService;
@@ -42,7 +39,7 @@ public class ExceptionHandler {
 		mv.addObject("exception",exception);
 		log.error("exception",exception); // 에러 로그를 출력합니다. 
 		
-		errorLogService.putErrorLog(request, response, exception, 501, false);
+		errorLogService.putErrorLog(request, response, exception, 501, false, request.getRequestURI());
 		
 		log.debug("ElasticSearchExceptionHandler - end");
 		return mv;
@@ -56,7 +53,7 @@ public class ExceptionHandler {
 		mv.addObject("exception",exception);
 		log.error("exception",exception); // 에러 로그를 출력합니다. 
 		
-		errorLogService.putErrorLog(request, response, exception, 500, false);
+		errorLogService.putErrorLog(request, response, exception, 500, false, request.getRequestURI());
 		log.debug("defaultExceptionHandler - end");
 		return mv;
 	}

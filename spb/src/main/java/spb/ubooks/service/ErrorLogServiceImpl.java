@@ -20,12 +20,13 @@ public class ErrorLogServiceImpl implements ErrorLogService{
 	ErrorLogRepository errorLogRepository;
 
 	@Override
-	public void putErrorLog(HttpServletRequest request, HttpServletResponse response, Exception exception, int httpStatus, boolean isBasicError) throws Exception {
+	public void putErrorLog(HttpServletRequest request, HttpServletResponse response, Exception exception, int httpStatus, boolean isBasicError, String url) throws Exception {
 		if(isBasicError) {
 			try {
 				Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 				ErrorLog errorLogEntity = new ErrorLog();
 				errorLogEntity.setStatus( Integer.parseInt(status.toString()) );
+				errorLogEntity.setUrl(url);
 				errorLogEntity.setMessage("page not found error");
 				errorLogEntity.setException(exception.toString());
 				HttpSession session = request.getSession();
@@ -42,6 +43,7 @@ public class ErrorLogServiceImpl implements ErrorLogService{
 			try {
 				ErrorLog errorLogEntity = new ErrorLog();
 				errorLogEntity.setStatus(httpStatus);
+				errorLogEntity.setUrl(url);
 				errorLogEntity.setMessage(exception.getMessage());
 				errorLogEntity.setException(exception.toString());
 				HttpSession session = request.getSession();

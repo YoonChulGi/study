@@ -291,7 +291,8 @@ router.get("/loginLog", apiLimiter, verifyToken, async (req, res, next) => {
   try {
     const loginLogs = await LoginLog.find(queryOption)
       .skip(offset)
-      .limit(_limit);
+      .limit(_limit)
+      .sort({ timestamp: "desc" });
     res.status(200).json({
       code: 200,
       payload: loginLogs,
@@ -351,7 +352,8 @@ router.get("/errorLog", apiLimiter, verifyToken, async (req, res, next) => {
   try {
     const errorLogs = await ErrorLog.find(queryOption)
       .skip(offset)
-      .limit(_limit);
+      .limit(_limit)
+      .sort({ timestamp: "desc" });
     res.status(200).json({
       code: 200,
       payload: errorLogs,

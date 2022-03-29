@@ -1,11 +1,13 @@
 package spb.ubooks.controller;
 
+import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,7 @@ import spb.ubooks.service.CartService;
 import spb.ubooks.service.MemberService;
 import spb.ubooks.service.SearchService;
 import spb.ubooks.service.SellService;
+import spb.ubooks.service.VisitorService;
 
 @Slf4j
 @Controller
@@ -50,12 +53,18 @@ public class UbooksController {
 	@Autowired
 	BannerService bannerService;
 	
+	@Autowired
+	VisitorService visitorService;
+	
 	
 	@RequestMapping(value = { "/", "/index" })
-	public ModelAndView ubooksHome() throws Exception {
+	public ModelAndView ubooksHome(HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("/ubooks/index");
+		
 		List<Map<String, Object>> bannerInfo = bannerService.selectBannerList();
 		mv.addObject("bannerInfo", bannerInfo);
+		visitorService.putVisitorLogWithRedis(request);
+		
 		return mv;
 	}
 

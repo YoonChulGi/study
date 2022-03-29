@@ -1,6 +1,7 @@
 package spb.ubooks.service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,20 @@ public class VisitorServiceImpl implements VisitorService {
 			e.printStackTrace();
 		}
 		
+	}
+
+	@Override
+	public void putVisitorLogWithRedis(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		VisitorEntity visitorEntity = new VisitorEntity();
+		visitorEntity.set_id(session.getId());
+		visitorEntity.setIp(request.getRemoteAddr());
+		visitorEntity.setSession_id(session.getId());
+		visitorEntity.setAgent(request.getHeader("User-Agent")); // browser Info
+		visitorEntity.setRefer(request.getHeader("referer")); // prev site info
+		
+		visitorRepository.save(visitorEntity);
 	}
 
 }

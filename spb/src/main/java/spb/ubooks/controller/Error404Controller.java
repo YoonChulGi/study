@@ -27,6 +27,8 @@ public class Error404Controller implements ErrorController{
 		log.debug("/error");
 		Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 		Object errorMessage = request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
+		String url = request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI).toString();
+		
 		ModelAndView mv = new ModelAndView("/ubooks/common/error");  
 		mv.addObject("httpStatus",status);
 		if ("404".equals(status.toString())) {
@@ -34,7 +36,7 @@ public class Error404Controller implements ErrorController{
 			mv.addObject("exception",e);
 			log.error("exception", e); // 에러 로그를 출력합니다. 
 			
-			errorLogService.putErrorLog(request, response, e, Integer.parseInt(status.toString()), true);
+			errorLogService.putErrorLog(request, response, e, Integer.parseInt(status.toString()), true, url);
 			log.debug("/error - end");
 		}
 		return mv;

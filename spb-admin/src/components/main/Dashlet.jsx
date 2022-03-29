@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Heading from "../../ui/Heading";
 import Card from "../../ui/Card";
 import Text from "../../ui/Text";
-import Spacing from "../../ui/Spacing";
 import InlineList from "../../ui/InlineList";
 
 class Dashlet extends PureComponent {
