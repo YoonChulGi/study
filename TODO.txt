@@ -58,12 +58,20 @@ Spb Admin
     spring security 부분 로그아웃하여도 session invalidate 하지 않고 memberId, memberName 값만 지우도록 하여 로그인 로그아웃에 따른 카운트 수 영향 없도록 개발
     loginlog, errorlog sort timestamp desc
     errorLog - uri 필드 추가함
+    3. elasticsearch docker해보기 - elasticsearch docker로 띄우기 완료. elasticsearch 설정 및 데이터 이관하기 - 완료
+     - WLS2기반으로 windows에서 docker 실행. 
+     docker 에서 image 받아서 elasticsearch7.14.1 설치
+     docker 에서 image 받아서 kibana7.14.1 설치
+     docker exec -it 사용하여 elasticsearch /bin/bash 접속
+     plugin 모듈 실행하여 nori_tokenizer 설치
+     - 자동완성, 인기검색어 테스트 완료
+     
 
 
 
   TODO)
 
-3. elasticsearch docker해보기 - elasticsearch docker로 띄우기 완료. elasticsearch 설정 및 데이터 이관하기
+
 4. 스프링부트 시작하기 책데로 진도 끝내보기
 5. 코딩테스트 책사서 공부하기, notion 포트폴리오 만들기 
 
