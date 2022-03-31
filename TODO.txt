@@ -59,20 +59,27 @@ Spb Admin
     loginlog, errorlog sort timestamp desc
     errorLog - uri 필드 추가함
     3. elasticsearch docker해보기 - elasticsearch docker로 띄우기 완료. elasticsearch 설정 및 데이터 이관하기 - 완료
-     - WLS2기반으로 windows에서 docker 실행. 
-     docker 에서 image 받아서 elasticsearch7.14.1 설치
-     docker 에서 image 받아서 kibana7.14.1 설치
-     docker exec -it 사용하여 elasticsearch /bin/bash 접속
-     plugin 모듈 실행하여 nori_tokenizer 설치
-     - 자동완성, 인기검색어 테스트 완료
-     
+      - WLS2기반으로 windows에서 docker 실행. 
+      docker 에서 image 받아서 elasticsearch7.14.1 설치
+      docker 에서 image 받아서 kibana7.14.1 설치
+      docker exec -it 사용하여 elasticsearch /bin/bash 접속
+      plugin 모듈 실행하여 nori_tokenizer 설치
+      - 자동완성, 인기검색어 테스트 완료
+    4. 스프링부트 시작하기 책데로 진도 끝내보기
+    - jenkins 설치 완료. 
+    -openjdk 관련 이슈 - binary 압축 푼 jdk로는 jenkins의 font를 가져오는 부분이 jdk에 없는듯하여 apt-get으로 jdk를 추가 설치. 
+    기존 jdk는 그대로 tomcat이 사용.   - 완료
+    - jenkins 초기 세팅 실행 시 cpu 사용량 증가로 인한 서버 다운 - https://tape22.tistory.com/22 참조하여 SWAP 메모리 기능 사용하여 해결 - 완료
 
 
 
   TODO)
 
+  9.5.3 플러그인 설치 - 비트버킷과 연동하기 위한 플러그인과 빌드 도구인 그레이들, 깃 설치하기. 
+  젠킨스 유저 변경하기 - ubuntu로 변경하기 
+  젠킨스 SSH 등록하기,
+  톰켓에 JAVA_HOME 설정하기
 
-4. 스프링부트 시작하기 책데로 진도 끝내보기
 5. 코딩테스트 책사서 공부하기, notion 포트폴리오 만들기 
 
 
