@@ -73,7 +73,7 @@ public class CartServiceImpl implements CartService{
 		} else {
 			Cookie[] myCookies = request.getCookies();
 			for(Cookie c : myCookies) {
-				if("cartInfo".equals(c.getName())) { // 이미 존재 하는경우
+				if("cartInfo".equals(c.getName()) && !c.getValue().equals("")) { // 이미 존재 하는경우
 					String val = c.getValue();
 					if("@".equals(val.charAt(c.getValue().length()-1)+"")) {
 						val = StringUtils.substring(val, 0, val.length()-1);
