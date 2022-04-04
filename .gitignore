@@ -15,7 +15,9 @@ local.properties
 .metadata/.log
 .svn
 board2/images/
-application.properties
+application*.properties
+application*.yml
+bootstrap*.yml
 spb/images/
 spb/src/main/resources/static/images/
 config.json
