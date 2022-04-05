@@ -78,10 +78,14 @@ Spb Admin
     - spb 비 로그인 시 장바구니 쿠키명존재하고, 쿠키값이 ""일 때 500 에러 발생 - 분기처리하여 해결 - 완료 
     10.2 스프링 프로파일 적용하기 공부 및 포스팅 - 완료
     10.3 스프링 Cloud Config 사용하기 공부 및 포스팅 - 완료
+    10.4 수동으로 톰켓에 배포하기 - cloud-config 404 해결하기 
+      - 해결. Tomcat 9.0으로 업데이트하여 web4.0 warning 해결, 
+      - CloudConfigApplication 에 SpringBootServletInitializer를 extends 하여 web.xml이 없어서 tomcat호출시 404 에러 해결
+      - gradle에서 java version 1.8로 downgrade 하여 tomcat의 java version과 맞춤
   TODO)
+    포스팅및 spb 구동을 위한 포트포워딩 (이중 공유기 아빠 없을때 거실 공유기 뒷면 확인하여 비밀번호 알아내기)
     
     
-    10.4 수동으로 톰켓에 배포하기
     10.5 젠킨스를 사용해서 자동 빌드 & 배포 환경 구성하기 
      - 이러면 스프링부트 시작하기 책 끝!!!!!! 
 
