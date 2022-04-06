@@ -38,7 +38,7 @@ const timer = (beforeInput) => {
 
 
 const loadData = (input) => {
-  const url = `http://127.0.0.1:8080/autoComplete?query=${input}`;
+  const url = `/autoComplete?query=${input}`;
   
   if(cache === url) return;
   else {

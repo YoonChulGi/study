@@ -82,6 +82,9 @@ Spb Admin
       - 해결. Tomcat 9.0으로 업데이트하여 web4.0 warning 해결, 
       - CloudConfigApplication 에 SpringBootServletInitializer를 extends 하여 web.xml이 없어서 tomcat호출시 404 에러 해결
       - gradle에서 java version 1.8로 downgrade 하여 tomcat의 java version과 맞춤
+    포스팅및 spb 구동을 위한 포트포워딩 (이중 공유기 아빠 없을때 거실 공유기 뒷면 확인하여 비밀번호 알아내기) -완료
+      - 해결 - U+ 고객센터에 전화연결하여 gateway 패스워드 제공받아서 성공. 거실공유기는 관련없었던거고 상위 공유기 (신발장같은곳에 있을거라고 한다) 관리페이지 접속 성공
+
   TODO)
     포스팅및 spb 구동을 위한 포트포워딩 (이중 공유기 아빠 없을때 거실 공유기 뒷면 확인하여 비밀번호 알아내기)
     
