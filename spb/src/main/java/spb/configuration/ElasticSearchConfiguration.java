@@ -6,10 +6,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
+	
 @Configuration
 public class ElasticSearchConfiguration {
 	/*
@@ -29,10 +26,6 @@ public class ElasticSearchConfiguration {
 	
 	@Bean
     public RestHighLevelClient restHighLevelClient() {
-//		log.debug("##RestHighLevelClient##");
-//		log.debug("hostname: " + hostname);
-//		log.debug("port: " + port);
-		
         return new RestHighLevelClient(RestClient.builder(new HttpHost(hostname, port, "http")));
     }
 

@@ -4,23 +4,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import board2.board.dto.BoardDto;
 import board2.board.dto.BoardFileDto;
 import board2.board.mapper.BoardMapper;
-import board2.common.FileUtils;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private BoardMapper boardMapper;
 	
-	@Autowired
-	private FileUtils fileUtils;
+//	@Autowired
+//	private FileUtils fileUtils;
 	
 	@Override
 	public List<BoardDto> selectBoardList() throws Exception {

@@ -5,9 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.elasticsearch.search.aggregations.Aggregation;
-import org.elasticsearch.search.aggregations.Aggregations;
-
 public interface SearchService {
 	public String sendREST(String sendUrl, String jsonValue) throws IllegalStateException;
 

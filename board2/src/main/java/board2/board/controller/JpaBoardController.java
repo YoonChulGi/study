@@ -13,15 +13,11 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import board2.board.dto.BoardDto;
-import board2.board.dto.BoardFileDto;
 import board2.board.entity.BoardEntity;
 import board2.board.entity.BoardFileEntity;
-import board2.board.service.BoardService;
 import board2.board.service.JpaBoardService;
 
 @Controller

@@ -17,7 +17,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import spb.ubooks.entity.CartEntity;
 import spb.ubooks.service.CartService;
 import spb.ubooks.service.MemberService;
 import spb.ubooks.service.SearchService;

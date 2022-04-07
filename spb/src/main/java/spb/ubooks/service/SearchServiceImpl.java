@@ -143,7 +143,7 @@ public class SearchServiceImpl implements SearchService{
 			dos.flush();
 			dos.close();
 			
-			int errorCode = 0;
+			//int errorCode = 0;
 			// -- Network error check
 			System.out.println("responseCode: " + uc.getResponseCode());
 			if(uc.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -156,7 +156,7 @@ public class SearchServiceImpl implements SearchService{
 				in.close();
 				uc.disconnect();
 			} else {
-				errorCode = uc.getResponseCode();
+				//errorCode = uc.getResponseCode();
 				return receiveMsg.toString();
 			}
 		}catch (Exception e) {
