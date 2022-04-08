@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import lombok.extern.slf4j.Slf4j;
 import spb.ubooks.dto.ComBookIndexDto;
 import spb.ubooks.dto.MemberDto;
 import spb.ubooks.entity.CheckoutEntity;
@@ -27,7 +28,6 @@ import spb.ubooks.service.MemberService;
 import spb.ubooks.service.SearchService;
 import spb.ubooks.service.SellService;
 import spb.ubooks.service.VisitorService;
-
 
 @Controller
 public class UbooksController {

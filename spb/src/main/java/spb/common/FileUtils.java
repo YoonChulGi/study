@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,9 +20,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import spb.ubooks.entity.FileEntity;
 
+
 @Slf4j
 @Component
 public class FileUtils {
+	
+	@Value("${spring.profiles.active}") 
+	private String activeProfile;
+	
 	public List<FileEntity> parseFileInfo(MultipartHttpServletRequest multipartHttpServletRequest, int bookId) throws Exception {
 		if(ObjectUtils.isEmpty(multipartHttpServletRequest)) {
 			return null;
@@ -29,7 +35,12 @@ public class FileUtils {
 		List<FileEntity> fileList = new ArrayList<>();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
 		ZonedDateTime current = ZonedDateTime.now();
-		String path = "/dev/workspace/spb/src/main/resources/static/images/ubooks/product/" + current.format(format);
+		String path = "";
+		if("dev".equals(activeProfile)) {
+			path = "/dev/workspace/spb/src/main/resources/static/images/ubooks/product/" + current.format(format); 
+		} else if ("production".equals(activeProfile)) {
+			path = "/home/ubuntu/src/images/ubooks/products/" + current.format(format); 
+		}
 		File file = new File(path);
 		log.debug("file.exists(): " + file.exists());
 		if(file.exists() == false) {
