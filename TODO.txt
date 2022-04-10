@@ -86,11 +86,18 @@ Spb Admin
       - 해결 - U+ 고객센터에 전화연결하여 gateway 패스워드 제공받아서 성공. 거실공유기는 관련없었던거고 상위 공유기 (신발장같은곳에 있을거라고 한다) 관리페이지 접속 성공
     10.5 젠킨스를 사용해서 자동 빌드 & 배포 환경 구성하기 - github, bitbucket 전전하다가 결국 bitbucket으로 결정. github에서는 .gitignore에 /spb-deploy 추가하여 해당 프로젝트는 올라가지 않게 했으며, spb프로젝트를 /spb-deploy로 복사하여 spb-deploy를 bitbucket으로 올림. 책 따라서 진행하면 될듯.
     spb 프로젝트 CI/CD 배포 자동화 완료 - 이러면 스프링부트 시작하기 책 끝!!!!!! 
-  TODO)
-     jenkins 포트개방 포스팅하기
     5. spb 프로젝트 완성하기 
-      - 상품등록 path 맞추기 - 완료
-      - 홈화면, 거래완료화면
+      - 상품등록 path 맞추기 - 완료 
+      - 홈화면 
+        1. products category - 완료 (mybatis query) - 쿼리한번에 땡길수 있는지 좀더 생각해보자
+         
+
+  TODO)
+
+      - 홈화면 - 2. trendy product 
+      , 거래완료화면
+    
+    jenkins 포트개방 포스팅하기
     6. 검색서버 분리하기 - docker 사용해보기
     7. 코딩테스트 책사서 공부하기, notion 포트폴리오 만들기 
 
