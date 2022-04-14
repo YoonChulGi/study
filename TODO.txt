@@ -102,12 +102,14 @@ Spb Admin
         10. 인기검색어 일, 주, 월 다시 확인하기 - 완료 - 월간 인기검색어 선택시 주간 인기검색어 노출되는 현상 해결, 과거 인기검색어 조회시 데이터가 없어서 0건이면 value, up, down 계산하는 로직 건너뛰도록 분기. - 완료 
 
     6. jenkins 포트개방 포스팅하기 - 완료
+    7. 검색서버 분리하기 - docker 사용해보기 
+      - 새 aws 계정 파서 프리티어로 ec2올림. window docker에서는 commit하여 새 이미지 생성하고 생성된 이미지를 save하여 tar로 저장 후 새 ec2에 업로드후 tar파일을 load, run하여 elasticsearch 이관 성공. 이제 pc의 docker를 실행시킬 필요가 없어졌다. 
 
   TODO)
-  
+    8. docker 이미지 옮기는 과정 포스팅하기. 
+    9. spb-admin은 gitlab - jenkins 연동해서 자동화하기. 
+    10. 코딩테스트 책사서 공부하기, notion 포트폴리오 만들기
 
-    7. 검색서버 분리하기 - docker 사용해보기
-    8. 코딩테스트 책사서 공부하기, notion 포트폴리오 만들기 
 
 
 
