@@ -104,9 +104,10 @@ Spb Admin
     6. jenkins 포트개방 포스팅하기 - 완료
     7. 검색서버 분리하기 - docker 사용해보기 
       - 새 aws 계정 파서 프리티어로 ec2올림. window docker에서는 commit하여 새 이미지 생성하고 생성된 이미지를 save하여 tar로 저장 후 새 ec2에 업로드후 tar파일을 load, run하여 elasticsearch 이관 성공. 이제 pc의 docker를 실행시킬 필요가 없어졌다. 
-
+    8. docker 이미지 옮기는 과정 포스팅하기.  - 완료
+    
   TODO)
-    8. docker 이미지 옮기는 과정 포스팅하기. 
+
     9. spb-admin은 gitlab - jenkins 연동해서 자동화하기. 
     10. 코딩테스트 책사서 공부하기, notion 포트폴리오 만들기
 
