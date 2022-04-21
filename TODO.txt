@@ -106,11 +106,12 @@ Spb Admin
       - 새 aws 계정 파서 프리티어로 ec2올림. window docker에서는 commit하여 새 이미지 생성하고 생성된 이미지를 save하여 tar로 저장 후 새 ec2에 업로드후 tar파일을 load, run하여 elasticsearch 이관 성공. 이제 pc의 docker를 실행시킬 필요가 없어졌다. 
     8. docker 이미지 옮기는 과정 포스팅하기.  - 완료
     0. spb-admin 유실 코드 복구 완료
+    9. spb-admin은 gitlab - jenkins 연동해서 자동화하기. 
+      - 기반 만들었고, cross env mongodb 생각해서 완성하기 - 완료
 
   TODO)
 
-    9. spb-admin은 gitlab - jenkins 연동해서 자동화하기. 
-      - 기반 만들었고, cross env mongodb 생각해서 완성하기. sequelize db1,2 모두 개발에 사용했던 db 사용하는거로 하자 
+
     10. 코딩테스트 책사서 공부하기, notion 포트폴리오 만들기
 
 
