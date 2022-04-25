@@ -110,11 +110,14 @@ Spb Admin
       - 기반 만들었고, cross env mongodb 생각해서 완성하기 - 완료
       - cross env 방법 알았고, 서버 실행하는 방법 알았음. cors 해결하기 - 완료 
       - apiserver(3333) <-> front(3000) cors 해결하기 - 완료
+      - jenkins build-admin, deploy-admin 연계하여 CI/CD환경 구축
+      - build-admin - build-deploy 연계하여 구축하기 - 완료
   TODO)
-  - jenkins build-admin, deploy-admin 연계하여 CI/CD환경 구축
-    - build-admin - build-deploy 연계하여 구축하기
 
-    10. 코딩테스트 책사서 공부하기, notion 포트폴리오 만들기
+    10. 코딩테스트 책사서 공부하기, notion 포트폴리오 만들기, 경력기술서 작성하기
+      - 1. 경력기술서 - 템플릿 찾아서 작성하기
+      - 2. notion 포트폴리오 - 다른사람들 만든것 보고 만들어보기 
+      - 3. 코딩테스트 - 프로그래머스 및 서치하여 만들어보기
 
 
 
