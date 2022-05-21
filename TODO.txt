@@ -119,6 +119,7 @@ Spb Admin
         - 프로젝트 부분 임수현 블로그 보고 따라 만들어보기
   TODO)
         - BStore, BStore Admin gitlab 및 bitbucket public으로 만들기 위해 application.yml, .env git에서 제거 및 Jenkins 다시 연동
+        - BStore application.yml history 제거 완료. public으로 돌리고 정보 노출되나 테스트해보기 - 노출되면 AWS 등 키 재발급
       - 3. 코딩테스트 - 프로그래머스 및 서치하여 만들어보기
 
 
