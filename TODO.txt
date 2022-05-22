@@ -117,9 +117,11 @@ Spb Admin
       - 2. notion 포트폴리오 - 다른사람들 만든것 보고 만들어보기 
         - TalentBank 포트폴리오 이미지 부분 보고 notion에 옮기기 부터 하면 됨 - 완료
         - 프로젝트 부분 임수현 블로그 보고 따라 만들어보기
+        - BStore, BStore Admin gitlab 및 bitbucket public으로 만들기 위해 application.yml, .env git에서 제거 및 Jenkins 다시 연동 - 완료
+        - BStore application.yml history 제거 완료. public으로 돌리고 정보 노출되나 테스트해보기 - 노출되면 AWS 등 키 재발급 - 완료
   TODO)
-        - BStore, BStore Admin gitlab 및 bitbucket public으로 만들기 위해 application.yml, .env git에서 제거 및 Jenkins 다시 연동
-        - BStore application.yml history 제거 완료. public으로 돌리고 정보 노출되나 테스트해보기 - 노출되면 AWS 등 키 재발급
+        - ppt 템플릿 선택 완료
+        - BStore Admin .env 제거 후 public으로 돌리고 key노출되는지 확인
       - 3. 코딩테스트 - 프로그래머스 및 서치하여 만들어보기
 
 
