@@ -1,5 +1,6 @@
 package board2;
 
+import org.elasticsearch.client.RestHighLevelClient;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +10,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 class Board2ApplicationTests {
 	
 	@Autowired
-	private SqlSessionTemplate sqlSession;
+	RestHighLevelClient client;
 	
 	@Test
 	void contextLoads() {
 	}
 	
 	@Test
-	public void testSqlSession() throws Exception {
-		System.out.println(sqlSession.toString());
+	public void restTest() throws Exception {
+		System.out.println(client);
 	}
 
 }

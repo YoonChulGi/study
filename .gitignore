@@ -17,6 +17,7 @@ local.properties
 board2/images/
 application*.properties
 application*.yml
+application.yml
 bootstrap*.yml
 spb/images/
 spb/src/main/resources/static/images/
@@ -30,3 +31,4 @@ uploads
 .env.local
 spb-deploy/
 spb-admin/
+woowa-search/
